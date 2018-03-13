@@ -1,21 +1,31 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const session = require('express-session');
+
+// Requiring passport as we've configured it
+var passport = require("./config/passport");
 
 const PORT = process.env.PORT || 3000;
-
-const app = express();
-
 // using sequelize to create tables in the database
-const db = require('./models/index.js');
+const db = require('./models');
 
-// Serve static content for the app from the "public" directory in the application directory.
-app.use(express.static("public"));
-
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
-
-// parse application/json
+// Creating express app and configuring middleware needed for authentication
+var app = express();
+// Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+
+app.use(express.static("public"));
+// We need to use sessions to keep track of our user's login status
+app.use(session({ 
+	secret: "keepitasecret",
+	resave: true, 
+	saveUninitialized: true 
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Set Handlebars.
 const exphbs = require("express-handlebars");
