@@ -1,9 +1,67 @@
-body{
-	background-image: url("../images/bg_1.jpg");
-	background-size: cover;
-	background-repeat: no-repeat;
+body {
+    margin: 0;
+    padding: 0;
+    background: url("../images/banner1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+form{
+	width:600px;
+	background:white;
+	padding:20px;
+	border-radius:10px 10px 10px 10px;
+	background:rgba(0,0,0,0.4);
+	position:absolute;
+	top:60%;
+	left:50%;
+	transform:translate(-50%,-50%);
+}
+label{
+	color:white;
+	font-size:20px;
+	font-weight: bold;
+	font-family: 'Quicksand', sans-serif;
+}
+.btn{
+	width:100px;
+	margin-right:20px;
+	margin-top:20px;
+	margin-bottom:30px;
 }
 
-header{
-	color: #fff;
+.btnContainer{
+	text-align:center;
+}
+.formTitle{
+	color:white;
+	text-align:center;
+}
+.toplogo{
+	color:white;
+	font-family:cursive;
+	text-align:center;
+	position:absolute;
+	top:20%;
+	left:50%;
+	transform:translate(-50%,-50%);
+}
+.toplogo h1{
+	font-size:3.5em;
+}
+
+@media screen and (max-width:940px){
+	form{
+		position:fixed;
+	}
+	.toplogo{
+		width:500px;
+	}
+	body{
+
+		width:640px;
+	background-size:940px;
+	}
+
+
 }
