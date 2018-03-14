@@ -34,7 +34,7 @@ label{
 	text-align:center;
 }
 
-.formTitle{
+.loginTitle {
 	color:white;
 	text-align:center;
 }
@@ -62,6 +62,9 @@ label{
 
 		width:640px;
 	background-size:940px;
+	}
+	.toplogo h3{
+	display:none;
 	}
 
 
