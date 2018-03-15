@@ -1,23 +1,12 @@
-// *********************************************************************************
-// api-routes.js - this file offers a set of routes for displaying and saving data to the db
-// *********************************************************************************
+// const express = require('express');
+// const router = express.Router();
+// const models = require('../models/index.js');
 
-// Dependencies
-// =============================================================
-var User = require("../models/user.js");
+// module.exports = function(app) {
+// 	router.get("/groups", function(req, res) {
+// 	   models.Group.findAll({}).then(function(results) {
+// 	      res.json(results);
+// 	   });
+// 	});
+// };
 
-
-// Routes
-// =============================================================
-module.exports = function(app) {
-
-  // Get all users
-  app.get("/api/all", function(req, res) {
-
-    User.findAll({}).then(function(results) {
-      res.json(results);
-    });
-
-  });
-
-};
