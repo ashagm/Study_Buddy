@@ -59,23 +59,24 @@ module.exports = function(sequelize, DataTypes) {
     	dialect: 'mysql'
   	});
 
+	//todo: this did not work, will have to revisit
 
-	User.hook('beforeCreate', function(user, {}, next) {
+	// User.hook('beforeCreate', function(user) {
 
-		bcrypt.genSalt(saltRounds, function(err, salt) {
-			if (err) {
-				return next(err);
-			}  
-			bcrypt.hash(user.password, salt, function(err, hash) {
-				if (err) {
-					return next(err);
-				}      
-				user.password = hash;
-				console.log('hashedPassword-', hash);
-				return next(null, user);
-			});
-		});
-	});
+	// 	bcrypt.genSalt(saltRounds, function(err, salt) {
+	// 		if (err) {
+	// 			return next(err);
+	// 		}  
+	// 		bcrypt.hash(user.user_password, salt, function(err, hash) {
+	// 			if (err) {
+	// 				return err;
+	// 			}      
+	// 			user.user_password = hash;
+	// 			// console.log('hashedPassword-', hash);
+	// 		});
+			
+	// 	});
+	// });
 
 	return User;
 };

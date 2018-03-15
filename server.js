@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const session = require('express-session');
+const session = require('client-sessions');
 
 const PORT = process.env.PORT || 3000;
 // using sequelize to create tables in the database
@@ -21,6 +21,15 @@ const exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
+//session handler middleware
+
+app.use(session({
+	cookieName: 'session',
+	secret: 'keep_this_a_secret',
+	duration: 30 * 60 * 1000,
+	activeDuration : 5 * 60 * 1000
+}));
 
 require("./routes/api-routes.js")(app);
 require("./routes/html-routes.js")(app);
