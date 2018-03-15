@@ -41,8 +41,8 @@ app.post("/api/signin", function(req, res) {
 
     db.user.findOne({
         where: {
-        user_name: reqUserName
-    }
+            user_name: reqUserName
+        }
     }).then(function(dbUser) {
         console.log("dbUser", dbUser);
         res.json(dbUser);
