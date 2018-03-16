@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   group_details.associate = function(models) {
     // associations can be defined here
+   group_details.belongsToMany(models.group, { through: 'allGroupDetails', foreignKey: 'group_id' });
   };
   return group_details;
 };

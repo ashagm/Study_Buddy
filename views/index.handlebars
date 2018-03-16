@@ -1,2 +1,13 @@
-
-{{!-- <h1> {{data}} </h1> --}}
+<div class="wrapper">
+	<a href="/user">View Your Profile</a>
+	</div>
+	<h1>Groups</h1>
+	<div class="group-div">
+		{{#each group}}
+			<li>
+				<a href="/details/{{id}}">{{group_name}}</a> <br>
+				{{group_desc}} <br>
+			</li>
+		{{/each}}
+	</div>
+</div>
