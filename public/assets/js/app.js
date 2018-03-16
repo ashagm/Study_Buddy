@@ -22,6 +22,7 @@ $(document).ready(function(){
   });
 
 	$("#signin-btn").on('click', function(event){
+		console.log("Signin button clicked");
 		event.preventDefault();
 
 	    var loginUser = {
@@ -35,8 +36,10 @@ $(document).ready(function(){
 	      type: "POST",
 	      data: loginUser
 	    }).then(
-	      function(result) {
-	      	console.log(result);
+	      function(data) {
+	      	console.log("result from ajax request returned");
+	      	console.log(data);
+	      	window.location.replace("/dashboard");
 	        // console.log("Logged in User");
 	      }
 	    );
