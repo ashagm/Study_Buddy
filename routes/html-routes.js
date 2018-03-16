@@ -30,11 +30,11 @@ module.exports = function(app){
 
 		if (req.mySession && req.mySession.user) { // Check if session exists
 		    let userName =  req.mySession.user.user_name;
-		     console.log(userName);
+		     console.log("Welcome ", userName);
 
 		    let loggedInUser = req.mySession.user; 
 	        res.locals.user = loggedInUser;		
-	        console.log(res.locals);
+	        // console.log(res.locals); //check how to access from locals
 	        res.render('dashboard', {"userId" : loggedInUser.id});
 	  	} else {
 		  	console.log("in else");
