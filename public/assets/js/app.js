@@ -1,7 +1,6 @@
 $(document).ready(function(){
 
 	$("#signup-btn").on('click', function(event){
-		alert("signinng up");
 		event.preventDefault();
 
 	    var newUser = {
@@ -23,8 +22,6 @@ $(document).ready(function(){
   });
 
 	$("#signin-btn").on('click', function(event){
-		alert ("Signin button clicked");
-
 		event.preventDefault();
 
 	    var loginUser = {
