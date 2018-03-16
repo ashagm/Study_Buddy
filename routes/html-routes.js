@@ -2,11 +2,11 @@ var db = require("../models");
 module.exports = function(app){
 
 	app.get("/", function(req, res) {
-	// If the user already has an account send them to the dashboard page
-	if (req.user) {
-	  	res.render("dashboard");
-	}
-		res.redirect("/signin");
+		if (req.mySession && req.mySession.user) {
+		  	res.render('dashboard', {"userId" : req.mySession.user.id});
+		}else{
+			res.redirect("/signin");
+		}
 	});
 
 	app.get('/signup', function(req,res){
@@ -14,12 +14,13 @@ module.exports = function(app){
 	});
 
 	app.get("/signin", function(req, res) {
-		// If the user already has an account send them to the members page
-		if (req.user) {
-		  	res.render("dashboard");
-		}
-			res.render('signin');
-		});
+		res.render('signin');
+	});
+
+	app.get('/signout', function(req,res){
+	 	req.mySession.destroy();
+  		res.redirect('/');
+	});
 
 //this requires some more tweaks to include the session as a middleware 
 //function so that it is available in every path.
@@ -32,7 +33,8 @@ module.exports = function(app){
 		     console.log(userName);
 
 		    let loggedInUser = req.mySession.user; 
-	        res.locals.user = loggedInUser;			 
+	        res.locals.user = loggedInUser;		
+	        console.log(res.locals);
 	        res.render('dashboard', {"userId" : loggedInUser.id});
 	  	} else {
 		  	console.log("in else");
