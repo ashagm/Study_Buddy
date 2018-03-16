@@ -6,6 +6,8 @@ const saltRounds = 10;
 
 module.exports = function(app) {
 
+/* ------------------- USER MODEL ROUTES ---------------------------------*/
+
     app.get("/api/all", function(req, res) {
         db.user.findAll({}).then(function(results) {
           res.json(results);
@@ -25,8 +27,9 @@ module.exports = function(app) {
               user_name: newUser.userName,
               user_password: newUser.password
             }).then(function(result){
-                console.log(result);
-                res.redirect(307, "/signin");
+                // console.log(result);
+                console.log("New user Created in the Database");
+                res.redirect("/signin");
             }).catch(function(err) {
                 console.log(err);
                 res.json(err);
@@ -54,10 +57,17 @@ module.exports = function(app) {
                 console.log("bcrypt response", result);
                 if(result) {
                     console.log("passwords match");
-                    // sets a cookie with the user's info
-                    // console.log(req.mySession);
                     req.mySession.user = dbUser;
-                    // console.log(req.mySession.user);
+
+                        db.user_status.create({
+                          user_id: dbUser.id,
+                          user_status: true
+                        }).then(function(result){
+                            console.log(result);
+                        }).catch(function(err) {
+                            console.log(err);
+                        });  
+
                     res.redirect('/dashboard');
                 } else {
                     console.log("passwords dont match");
@@ -69,6 +79,28 @@ module.exports = function(app) {
         }).catch(function(err){
             console.log(err);
         });
-    });  
+    }); 
+
+    app.post('/api/signout', function(req,res){
+        console.log("Signing out User", req.body.userId);
+        
+        db.user_status.destroy({
+            where: {
+                user_id: req.body.userId
+            }
+        }).then(function(result) {
+            res.redirect('/signout');
+        });
+        
+    });
+
+
+/* ------------------- GROUP MODEL ROUTES ---------------------------------*/ 
+    
+    //display all groups
+    
+    app.get("/api/groups", function(req, res) {
+
+    });
 
 }
