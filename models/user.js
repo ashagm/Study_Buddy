@@ -33,50 +33,7 @@ module.exports = function(sequelize, DataTypes) {
 						allowNull: false, 
 						validate: { notEmpty: true}
 					}
-	},
-	{
-		classMethods: {
-			validPassword: function(inputPswd, rightPswd, callback) {
-				console.log('validPassword -inputPswd', inputPswd);
-				console.log('validPassword -rightPswd', rightPswd);
-			
-				bcrypt.compare(inputPswd, rightPswd, function(err, isMatch) {
-					console.log('isMatch', isMatch);
-
-					if (isMatch) {
-						console.log('found match');
-						return callback(null, true);
-					} else {
-						console.log('returning false');
-						return callback(null, false);
-					}
-				});
-      		}
-    	}
-
-	},
-	{
-    	dialect: 'mysql'
-  	});
-
-	//todo: this did not work, will have to revisit
-
-	// User.hook('beforeCreate', function(user) {
-
-	// 	bcrypt.genSalt(saltRounds, function(err, salt) {
-	// 		if (err) {
-	// 			return next(err);
-	// 		}  
-	// 		bcrypt.hash(user.user_password, salt, function(err, hash) {
-	// 			if (err) {
-	// 				return err;
-	// 			}      
-	// 			user.user_password = hash;
-	// 			// console.log('hashedPassword-', hash);
-	// 		});
-			
-	// 	});
-	// });
+	});
 
 	return User;
 };

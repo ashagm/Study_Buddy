@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
 	$("#signup-btn").on('click', function(event){
+		alert("signinng up");
 		event.preventDefault();
 
 	    var newUser = {
@@ -22,7 +23,8 @@ $(document).ready(function(){
   });
 
 	$("#signin-btn").on('click', function(event){
-		console.log("Signin button clicked");
+		alert ("Signin button clicked");
+
 		event.preventDefault();
 
 	    var loginUser = {
@@ -40,7 +42,28 @@ $(document).ready(function(){
 	      	console.log("result from ajax request returned");
 	      	console.log(data);
 	      	window.location.replace("/dashboard");
-	        // console.log("Logged in User");
+	      }
+	    );
+
+	});
+
+	$("#signout-btn").on('click', function(event){
+		console.log("Signout button clicked");
+		event.preventDefault();
+
+	    var logoutUser = {
+	     	userId: $(this).attr('data-id')
+	    };
+
+	    console.log(logoutUser);
+
+	    $.ajax("/api/signout", {
+	      type: "POST",
+	      data: logoutUser
+	    }).then(
+	      function(result) {
+	      	console.log("result from ajax request returned");
+	      	window.location.replace("/signin");
 	      }
 	    );
 
