@@ -8,6 +8,8 @@ const db = require('./models');
 
 // Creating express app and configuring middleware needed for authentication
 var app = express();
+
+
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,13 +25,14 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 //session handler middleware
-
-app.use(session({
-	cookieName: 'session',
-	secret: 'keep_this_a_secret',
-	duration: 30 * 60 * 1000,
-	activeDuration : 5 * 60 * 1000
-}));
+app.use(
+	session({
+  		cookieName: 'mySession', // cookie name dictates the key name added to the request object 
+  		secret: 'thisisasecretkept', // should be a large unguessable string 
+  		duration: 24 * 60 * 60 * 1000, // how long the session will stay valid in ms 
+  		activeDuration: 1000 * 60 * 5 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds 
+	})
+);
 
 require("./routes/api-routes.js")(app);
 require("./routes/html-routes.js")(app);
