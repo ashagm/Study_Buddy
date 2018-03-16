@@ -38,7 +38,8 @@ module.exports = function(app){
 		    let loggedInUser = req.mySession.user; 
 	        res.locals.user = loggedInUser;		
 	        // console.log(res.locals); //check how to access from locals
-	        res.render('dashboard', {"userId" : loggedInUser.id});
+	        // res.render('dashboard', {"userId" : loggedInUser.id});
+	        res.render('dashboard', {"user" : loggedInUser});
 	  	} else {
 		  	console.log("in else");
 		    res.redirect('/signin');

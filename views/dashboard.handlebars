@@ -1,5 +1,31 @@
-<div style="color: #fff">
- 	<h1> Welcome to the page!! Your USERID {{userId}}
- 		<button class="btn btn-danger" id="signout-btn" data-id={{userId}}> 
- 		 Sign out </button></h1>
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div style="color: #fff">
+ 				<h1> Welcome to Study Buddy!! 
+ 					{{user.user_name}}
+ 				<button class="btn btn-danger" id="signout-btn" data-id={{user.id}}> 
+ 		 		Sign out </button></h1>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+ 		 	<input TYPE="button" class="btn btn-lg btn-info btn-block" 
+			id="btn-all-groups" value="VIEW ALL GROUPS"
+			onclick="window.location.href='/groups'"> 
+		</div>
+		<div class="col-md-12">
+ 		 	<input TYPE="button" class="btn btn-lg btn-success btn-block" 
+			id="btn-your-groups" value="VIEW YOUR GROUPS"
+			onclick="window.location.href='/groups/{{user.id}}'"> 
+		</div>
+		<div class="col-md-12">
+			<input TYPE="button" class="btn btn-lg btn-warning btn-block" 
+			id="btn-create-group" value="CREATE A GROUP"
+			onclick="window.location.href='/api/new'"> 
+		</div>
+	</div>
 </div>
