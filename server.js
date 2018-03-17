@@ -32,8 +32,14 @@ app.use(
 	})
 );
 
-require("./routes/api-routes.js")(app);
-require("./routes/html-routes.js")(app);
+// require("./routes/api-routes.js")(app);
+// require("./routes/html-routes.js")(app);
+
+const routes = require("./controllers/study_controller.js");
+app.use(routes);
+
+let models = require('./models')
+models.sequelize.sync();
 
 db.sequelize.sync().then(function () {
 	app.listen(PORT, function() {
