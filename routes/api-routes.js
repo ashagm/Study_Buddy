@@ -99,6 +99,19 @@ module.exports = function(app) {
     
     //display all groups
     
+    app.get("/api/groups", function(req, res) {
+        db.group.findAll({}).then(function(results) {
+          res.json(results);
+        });
+    });
+
+    //display user groups
+    
+    app.get("/api/groups/:userId", function(req, res) {
+
+    });
+       
+    //create group
     app.post("/api/group", function(req, res) {
         console.log("Creating new group for user", req.mySession.user.id);
         let newGroup = req.body;
@@ -115,9 +128,11 @@ module.exports = function(app) {
                 }).then(function(subResult){
                     // console.log(result);
                     console.log("New group_member row Created!!");
+                    // res.redirect('/dashboard');
                 }).catch(function(err) {
                     console.log(err);
-                });         
+                });  
+
             }).catch(function(err) {
                 console.log(err);
                 res.json(err);
