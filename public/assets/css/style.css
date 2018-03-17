@@ -1,15 +1,13 @@
 body {
     margin: 0;
+   
     padding: 0;
     background: url("../images/banner1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-
 }
 
-/*replacing form with id's of forms, since it affects everywhere else*/
-#signup-form,
-#signin-form{
+ form{
 	width:600px;
 	background:white;
 	padding:20px;
@@ -19,26 +17,46 @@ body {
 	top:60%;
 	left:50%;
 	transform:translate(-50%,-50%);
-}
+	text-align:center;
+} 
 label{
 	color:white;
 	font-size:20px;
 	font-weight: bold;
 	font-family: 'Quicksand', sans-serif;
 }
-
 .btn{
-	width:150px;
+	width:100px;
 	margin-right:20px;
 	margin-top:20px;
 	margin-bottom:30px;
-}
+	transition:1s;
 
+}
+.btn-primary{
+	background-color:#FFCA54 !important;
+	border-color:#FFCA54 !important;
+}
+.btn-primary:hover{
+	background-color:#E851C8 !important;
+	font-weight: bold;
+	transition:0.2s;
+}
 .btnContainer{
 	text-align:center;
 }
+.subtitle{
+	color:white;
+}
+
 
 .loginTitle {
+	color:white;
+	text-align:center;
+	background:grey;
+	border-radius:20px;
+}
+.formTitle{
 	color:white;
 	text-align:center;
 }
@@ -54,22 +72,43 @@ label{
 .toplogo h1{
 	font-size:3.5em;
 }
+.form-group label{
+	font-size:15px;
+}
+.form-control {
+	width:100% !important;
+}
+
+#not-member{
+	color:white;
+	font-size:20px;
+}
+#not-member:hover .btn{
+width:130px;
+padding:15px 15px 15px 15px;
+transition:0.5s;
+
+}
 
 @media screen and (max-width:940px){
-	form{
-		position:fixed;
-	}
+
 	.toplogo{
 		width:500px;
 	}
 	body{
-
-		width:640px;
+	width:640px;
 	background-size:940px;
 	}
-	.toplogo h3{
+	.toplogo h3, h1 {
 	display:none;
 	}
+	
+} 
+@media screen and (max-height:574px){
 
-
+	.toplogo{
+		display:none;
+	}
+		
 }
+
