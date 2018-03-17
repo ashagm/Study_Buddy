@@ -1,1 +1,2 @@
-# Study_Buddy
+# Study Buddy
+### For you need to study smart, not just hard.

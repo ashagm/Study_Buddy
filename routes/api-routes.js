@@ -99,8 +99,29 @@ module.exports = function(app) {
     
     //display all groups
     
-    app.get("/api/groups", function(req, res) {
+    app.post("/api/group", function(req, res) {
+        console.log("Creating new group for user", req.mySession.user.id);
+        let newGroup = req.body;
 
+            db.group.create({
+                group_name: newGroup.groupName,
+                group_desc: newGroup.groupDesc
+            }).then(function(result){
+                console.log("New group Created in the Database", result.group_id);
+                db.group_member.create({
+                    group_id: result.group_id,
+                    user_id: req.mySession.user.id,
+                    is_admin: true
+                }).then(function(subResult){
+                    // console.log(result);
+                    console.log("New group_member row Created!!");
+                }).catch(function(err) {
+                    console.log(err);
+                });         
+            }).catch(function(err) {
+                console.log(err);
+                res.json(err);
+            });                  
     });
 
 }

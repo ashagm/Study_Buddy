@@ -6,7 +6,10 @@ body {
     background-size: cover;
 
 }
-form{
+
+/*replacing form with id's of forms, since it affects everywhere else*/
+#signup-form,
+#signin-form{
 	width:600px;
 	background:white;
 	padding:20px;
@@ -23,8 +26,9 @@ label{
 	font-weight: bold;
 	font-family: 'Quicksand', sans-serif;
 }
+
 .btn{
-	width:100px;
+	width:150px;
 	margin-right:20px;
 	margin-top:20px;
 	margin-bottom:30px;
