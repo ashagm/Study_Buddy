@@ -1,33 +1,41 @@
-<form id="signup-form" name="signup" method="post" action="">
-    <div class="formTitle">
-        <h2>Sign Up</h2>
+
+<div class="formwrapper">
+    <form>
+        <div class="formTitle">
+        <h2>SIGN UP</h2>
     </div>
-    <div class="form-group">
-        <label for="signup-firstname">Firstname</label>
-        <input type="text" class="form-control" name="signup-firstname" id="signup-firstname" placeholder="Enter firstname">
+    <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="signup-firstname">First Name</label>
+      <input type="text" class="form-control" id="signup-firstname" placeholder="Enter firstname">
     </div>
-    <div class="form-group">
-        <label for="signup-lastname">Lastname</label>
-        <input type="text" class="form-control" name="signup-lastname" id="signup-lastname" placeholder="Enter lastname">
+    <div class="form-group col-md-6">
+      <label for="signup-lastname">Last name</label>
+      <input type="text" class="form-control" id="signup-lastname" placeholder="Enter lastname">
     </div>
-    <div class="form-group">
-        <label for="signup-email">Email</label>
-        <input type="email" class="form-control" name="signup-email" id="signup-email" placeholder="Enter email">
+</div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="signup-email">Email</label>
+      <input type="email" class="form-control" id="signup-email" placeholder="Enter email">
     </div>
-    <div class="form-group">
-        <label for="signup-username">Username</label>
-        <input type="text" class="form-control" name="signup-username" id="signup-username" placeholder="Enter Username">
+    <div class="form-group col-md-6">
+      <label for="signup-username">User Name</label>
+      <input type="text" class="form-control" id="signup-username" placeholder="Enter User Name">
     </div>
-    <div class="form-group">
-        <label for="signup-password">Password</label>
-        <input type="password" class="form-control" name="signup-password" id="signup-password" placeholder="Enter Password">
+  </div>
+<div class="form-row">
+<div class="form-group col-md-6">
+      <label for="signup-password">Password</label>
+      <input type="password" class="form-control" id="signup-password" placeholder="Password">
     </div>
-    <div class="form-group">
-        <label for="signup-confirm-password">Confirm Password</label>
-        <input type="password" class="form-control" name="signup-confirm-password" id="signup-confirm-password" placeholder="Confirm Password">
+    <div class="form-group col-md-6">
+      <label for="signup-confirm-password">Confirm Password</label>
+      <input type="password" class="form-control" id="signup-confirm-password" placeholder="Confirm Password">
     </div>
+</div>  
     <div class="btnContainer">
-        <a href="/signin" class="btn btn-primary btn-lg" id="signup-in-btn"><span class="glyphicon glyphicon-plus"></span> Sign in</a>
-        <a href="" class="btn btn-primary btn-lg" id="signup-btn"><span class="glyphicon glyphicon-plus"></span> Sign Up</a>
+        <a href="" class="btn btn-primary btn-lg" id="signup-btn"><span class="glyphicon glyphicon-plus"></span> Sign up</a>
+         <a href="/" class="btn btn-primary btn-lg" id="signup-btn"><span class="glyphicon glyphicon-plus"></span> Back</a>
     </div>    
-</form>
