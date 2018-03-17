@@ -6,10 +6,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   group.associate = function(models) {
     // associations can be defined here
-    group.belongsToMany(models.user, { through: 'userGroups', foreignKey: 'user_id' });
-    group.belongsToMany(models.group_details, { through: 'allGroupDetails', foreignKey: 'group_details_id' });
-    group.hasMany(models.group_member)
-    group.hasMany(models.group_member_message)
+    group.belongsToMany(models.user, { through: 'user_groups' });
+    group.belongsToMany(models.group_details, { through: 'group_details_joined' });
+    // group.hasMany(models.group_details);
+    // group.hasMany(models.group_member_message);
   };
   return group;
 };
