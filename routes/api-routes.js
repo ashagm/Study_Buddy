@@ -1,4 +1,9 @@
 var db = require("../models");
+const express = require('express');
+const router = express.Router();
+const models = require('../models/index.js');
+let sequelizeConnection = models.sequelize;
+sequelizeConnection.sync();
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -158,5 +163,9 @@ module.exports = function(app) {
             });                  
     });
 
-}
+};
+
+
+
+
 

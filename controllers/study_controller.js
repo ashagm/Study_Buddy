@@ -52,11 +52,9 @@ router.get('/details/:id', function(req, res) {
 });
 
 router.post('/api/joingroup/:groupId/:userId', function(req, res) {
-	models.group.create().then(function() {
-		models.group.addUser(models.user, { through: { 
-			user_id: req.params.userId,
-			group_id: req.params.groupId
-		}})
+	models.group_member.create({
+		userId: req.params.userId,
+		groupId: req.params.groupId
 	}).then(function(result) {
 		if (result.changedRows === 0) {
 	  		return res.status(404).end();
