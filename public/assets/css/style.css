@@ -1,13 +1,13 @@
 body {
+
     margin: 0;
-   
     padding: 0;
     background: url("../images/banner1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
- form{
+#signup-form, #signin-form{
 	width:600px;
 	background:white;
 	padding:20px;
@@ -97,7 +97,7 @@ transition:0.5s;
 	}
 	body{
 	width:640px;
-	background-size:940px;
+	background-size:1100px;
 	}
 	.toplogo h3, h1 {
 	display:none;
