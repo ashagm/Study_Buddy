@@ -1,0 +1,16 @@
+<div class="wrapper">
+	<h1>{{user_name}}</h1>
+	</div>
+	<div class="profile-div">
+		{{#each user}}
+				{{first_name}} {{last_name}} <br>
+				{{user_name}} <br>
+				{{user_email}}
+		{{/each}}
+	</div>
+	<div class="user-groups">
+		{{#each user}}
+			{{group_name}}
+		{{/each}}
+	</div>
+</div>

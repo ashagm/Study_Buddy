@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const methodOverride = require('method-override');
 const session = require('client-sessions');
 
 const PORT = process.env.PORT || 3000;
@@ -9,7 +10,6 @@ const db = require('./models');
 // Creating express app and configuring middleware needed for authentication
 var app = express();
 
-
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,9 +18,7 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use(express.static("public"));
 
-// Set Handlebars.
 const exphbs = require("express-handlebars");
-
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
