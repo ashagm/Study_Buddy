@@ -105,10 +105,30 @@ module.exports = function(app) {
         });
     });
 
-    //display user groups
-    
+    //display user groups ( member and admin)    
     app.get("/api/groups/:userId", function(req, res) {
+        console.log("you are in the route" , req.params.userId);
 
+        db.group_member.findAll({
+            where: {
+                 user_id : req.params.userId
+            }
+        }).then(function(results){
+            res.json(results);
+        }); 
+    });
+
+     app.get("/api/admin/:userId", function(req, res) {
+        console.log("you are in the route" , req.params.userId);
+
+        db.group_member.findAll({
+            where: {
+                 user_id : req.params.userId,
+                 is_admin : true
+            }
+        }).then(function(results){
+            res.json(results);
+        }); 
     });
        
     //create group

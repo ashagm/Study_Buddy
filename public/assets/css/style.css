@@ -7,6 +7,7 @@ body {
     background-size: cover;
 }
 
+
 #signup-form, #signin-form{
 	width:600px;
 	background:white;
@@ -26,7 +27,7 @@ label{
 	font-family: 'Quicksand', sans-serif;
 }
 .btn{
-	width:100px;
+	width:150px;
 	margin-right:20px;
 	margin-top:20px;
 	margin-bottom:30px;
