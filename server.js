@@ -7,6 +7,9 @@ const PORT = process.env.PORT || 3000;
 // using sequelize to create tables in the database
 const db = require('./models');
 
+let models = require('./models')
+models.sequelize.sync();
+
 // Creating express app and configuring middleware needed for authentication
 var app = express();
 
@@ -32,14 +35,10 @@ app.use(
 	})
 );
 
-// require("./routes/api-routes.js")(app);
-// require("./routes/html-routes.js")(app);
+const apiRoutes = require("./routes/api-routes.js");
+require("./routes/html-routes.js")(app);
 
-const routes = require("./controllers/study_controller.js");
-app.use(routes);
-
-let models = require('./models')
-models.sequelize.sync();
+app.use(apiRoutes);
 
 db.sequelize.sync().then(function () {
 	app.listen(PORT, function() {
