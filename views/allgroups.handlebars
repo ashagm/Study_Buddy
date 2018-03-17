@@ -1,0 +1,14 @@
+<div class="container">
+	{{#each groups as |group|}}
+		<div class="row each-group">		
+			<div class="col-md-9">
+				<h2>Group Name: {{group.group_name}}</h2>
+				<h3>Group description: {{group.group_desc}}<h3>
+				<h5>Created On: {{group.createdAt}}<h5>	
+			</div>
+			<div class="col-md-3">
+				<button class="btn btn-warning"> Join Group </button>
+			</div>
+		</div>	
+	{{/each}}
+</div>
