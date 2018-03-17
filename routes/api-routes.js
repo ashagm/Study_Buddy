@@ -101,11 +101,11 @@ module.exports = function(app) {
 
 /* ------------------- GROUP MODEL ROUTES ---------------------------------*/ 
     
-    //display all groups
-    
+    //display all groups   
     app.get("/api/groups", function(req, res) {
-        db.group.findAll({}).then(function(results) {
-          res.json(results);
+        db.group.findAll({}).then(function(allgroups) {
+            // console.log("hbsgroups", hbsgroups);
+            res.render("allgroups", {groups: allgroups});
         });
     });
 

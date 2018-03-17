@@ -92,6 +92,11 @@ transition:0.5s;
 
 }
 
+.each-group{
+	border: 2px solid #fff;
+	color: #fff;
+}
+
 @media screen and (max-width:940px){
 
 	.toplogo{
