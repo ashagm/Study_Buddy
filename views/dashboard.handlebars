@@ -18,12 +18,17 @@
 			onclick="window.location.href='/api/groups'"> 
 		</div>
 		<div class="col-md-12">
- 		 	<input TYPE="button" class="btn btn-lg btn-success btn-block" 
-			id="btn-your-groups" value="VIEW YOUR GROUPS"
-			onclick="window.location.href='/groups/{{user.id}}'"> 
+ 		 	<input TYPE="button" class="btn btn-lg btn-warning btn-block" 
+			id="btn-your-groups" value="VIEW YOUR ADMIN GROUPS"
+			onclick="window.location.href='/api/admin/{{user.id}}'"> 
 		</div>
 		<div class="col-md-12">
-			<input TYPE="button" class="btn btn-lg btn-warning btn-block" 
+ 		 	<input TYPE="button" class="btn btn-lg btn-success btn-block" 
+			id="btn-your-groups" value="VIEW YOUR GROUPS"
+			onclick="window.location.href='/api/groups/{{user.id}}'"> 
+		</div>
+		<div class="col-md-12">
+			<input TYPE="button" class="btn btn-lg btn-danger btn-block" 
 			id="btn-create-group" value="CREATE A GROUP"
 			data-toggle="modal" data-target="#newGroupModal"> 
 		</div>
