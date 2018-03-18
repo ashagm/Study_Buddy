@@ -92,13 +92,13 @@ router.post('/api/signout', function(req,res){
 /* ------------------- GROUP MODEL ROUTES ---------------------------------*/ 
     
     //display all groups   
-    app.get("/api/groups", function(req, res) {
+    router.get("/api/groups", function(req, res) {
         db.group.findAll({}).then(function(allgroups) {
             // console.log("hbsgroups", hbsgroups);
             res.render("allgroups", {groups: allgroups});
         });
     });
-});
+
 
 // diplay all groups to the html
 router.get('/groups/:id', function(req, res) {
@@ -124,7 +124,16 @@ router.get('/details/:groupId/:userId', function(req, res) {
             models.group.findAll({
                 where: { id: req.params.groupId }
             }).then(function(group) {
-                res.render('details', {details: details, user: user, group: group});
+                models.group_member.findAll( {
+                    where: { groupId: req.params.groupId }
+                }).then(function(group_member) {
+                    res.render('details', {
+                        details: details, 
+                        user: user, 
+                        group: group, 
+                        group_member: group_member
+                    });
+                });   
             });
         });
     });
@@ -196,16 +205,15 @@ router.get('/user/:id', function(req, res) {
 
 /* ------------------- JOIN GROUP ROUTES ---------------------------------*/ 
 router.post('/api/joingroup/:groupId/:userId', function(req, res) {
+    let userId = req.params.userId;
+    let groupId = req.params.groupId;
     models.group_member.create({
-        userId: req.params.userId,
-        groupId: req.params.groupId,
-        is_admin: false
+        userId: userId,
+        groupId: groupId,
+        is_admin: false,
+        is_joined: true
     }).then(function(result) {
-        if (result.changedRows === 0) {
-            return res.status(404).end();
-        } else {
-            console.log('Welp');
-        }
+            res.redirect(req.get('referer'));
     });
 });
 

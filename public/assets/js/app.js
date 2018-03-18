@@ -12,6 +12,6 @@ $(function() {
 		.then(function() {
 			console.log('Joined group!');
 		});
-		// location.reload();
+		location.reload();
 	});
 });

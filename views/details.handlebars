@@ -9,7 +9,19 @@
 {{/each}}
 
 {{#each group}}
-		<button id="join-button" data-userId="{{#each ../user}}{{id}}{{/each}}" data-groupId="{{id}}" type="submit">Join group</button>	
+	<button id="join-button" 
+	data-userId="{{#each ../user}}{{id}}{{/each}}" 
+	data-groupId="{{id}}" 
+	class="{{#each ../group_member}}{{is_joined}}{{/each}}" 
+	type="submit">
+	Join Group!
+	</button>	
+{{/each}} <br> <br>
+
+{{#each group_member}}
+	{{#if is_joined}}
+		Joined!
+	{{/if}}	
 {{/each}}
 
 

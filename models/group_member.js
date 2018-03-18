@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   var group_member = sequelize.define('group_member', {
     is_admin: DataTypes.BOOLEAN,
     userId: DataTypes.INTEGER,
-    groupId: DataTypes.INTEGER
+    groupId: DataTypes.INTEGER,
+    is_joined: DataTypes.BOOLEAN
   }, {});
   group_member.associate = function(models) {
     // associations can be defined here
