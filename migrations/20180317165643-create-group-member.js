@@ -17,6 +17,9 @@ module.exports = {
       groupId: {
         type: Sequelize.INTEGER
       },
+        is_joined: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

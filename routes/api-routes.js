@@ -92,13 +92,13 @@ router.post('/api/signout', function(req,res){
 /* ------------------- GROUP MODEL ROUTES ---------------------------------*/ 
     
     //display all groups   
-    app.get("/api/groups", function(req, res) {
+    router.get("/api/groups", function(req, res) {
         db.group.findAll({}).then(function(allgroups) {
             // console.log("hbsgroups", hbsgroups);
             res.render("allgroups", {groups: allgroups});
         });
     });
-});
+
 
 // diplay all groups to the html
 router.get('/groups/:id', function(req, res) {
@@ -116,7 +116,7 @@ router.get('/groups/:id', function(req, res) {
 // display clicked group to the html
 router.get('/details/:groupId/:userId', function(req, res) {
     models.group_details.findAll({
-        where: { group_id: req.params.groupId }
+        where: { groupId: req.params.groupId }
     }).then(function(details) {
         models.user.findAll({
             where: { id: req.params.userId }
@@ -124,7 +124,16 @@ router.get('/details/:groupId/:userId', function(req, res) {
             models.group.findAll({
                 where: { id: req.params.groupId }
             }).then(function(group) {
-                res.render('details', {details: details, user: user, group: group});
+                models.group_member.findAll( {
+                    where: { groupId: req.params.groupId }
+                }).then(function(group_member) {
+                    res.render('details', {
+                        details: details, 
+                        user: user, 
+                        group: group, 
+                        group_member: group_member
+                    });
+                });   
             });
         });
     });
@@ -162,14 +171,18 @@ router.post("/api/group", function(req, res) {
             group_name: newGroup.groupName,
             group_desc: newGroup.groupDesc
         }).then(function(result){
-            console.log("New group Created in the Database", result.group_id);
+            console.log("New group Created in the Database", result.id);
             db.group_member.create({
-                group_id: result.group_id,
-                user_id: req.mySession.user.id,
-                is_admin: true
+                is_admin: true,
+                groupId: result.id,
+                userId: req.mySession.user.id,
+                is_joined: true
             }).then(function(subResult){
-                // console.log(result);
-                console.log("New group_member row Created!!");
+                console.log(result.id)
+                db.group_details.create({
+                    groupId: result.id
+                }).then(function(finalresult) {
+                    console.log("New group_member row Created!!");
                 // res.redirect('/dashboard');
             }).catch(function(err) {
                 console.log(err);
@@ -177,7 +190,21 @@ router.post("/api/group", function(req, res) {
         }).catch(function(err) {
             console.log(err);
             res.json(err);
-        });                  
+        });
+    });                  
+});
+
+router.post('/api/create/groupdetails/:groupId', function(req, res) {
+    models.group_details.update({
+        groupId: req.params.groupId,
+        grp_date_time: req.body.grp_date_time,
+        grp_location: req.body.grp_location
+    }, {
+        where: {groupId: req.params.groupId}
+    }).then(function(result) {
+        console.log('details added');
+        res.redirect('back');
+    });
 });
 
 /* ------------------- USER PROFILE ROUTES ---------------------------------*/ 
@@ -196,16 +223,15 @@ router.get('/user/:id', function(req, res) {
 
 /* ------------------- JOIN GROUP ROUTES ---------------------------------*/ 
 router.post('/api/joingroup/:groupId/:userId', function(req, res) {
+    let userId = req.params.userId;
+    let groupId = req.params.groupId;
     models.group_member.create({
-        userId: req.params.userId,
-        groupId: req.params.groupId,
-        is_admin: false
+        userId: userId,
+        groupId: groupId,
+        is_admin: false,
+        is_joined: true
     }).then(function(result) {
-        if (result.changedRows === 0) {
-            return res.status(404).end();
-        } else {
-            console.log('Welp');
-        }
+            res.redirect(req.get('referer'));
     });
 });
 
