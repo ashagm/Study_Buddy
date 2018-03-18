@@ -2,7 +2,6 @@ $(document).ready(function(){
 
 	$("#signup-btn").on('click', function(event){
 		event.preventDefault();
-
 	    var newUser = {
 	    	firstName : $("#signup-firstname").val().trim(),
 	      	lastName: $("#signup-lastname").val().trim(),
@@ -10,7 +9,6 @@ $(document).ready(function(){
 	     	userName: $("#signup-username").val().trim(),
 	      	password: $('#signup-password').val().trim()
 	    };
-
 	    $.ajax("/api/signup", {
 	      type: "POST",
 	      data: newUser
@@ -23,14 +21,11 @@ $(document).ready(function(){
 
 	$("#signin-btn").on('click', function(event){
 		event.preventDefault();
-
 	    var loginUser = {
 	     	userName: $("#signin-username").val().trim(),
 	      	password: $('#signin-password').val().trim()
 	    };
-
 	    console.log(loginUser);
-
 	    $.ajax("/api/signin", {
 	      type: "POST",
 	      data: loginUser
@@ -41,19 +36,15 @@ $(document).ready(function(){
 	      	window.location.replace("/dashboard");
 	      }
 	    );
-
 	});
 
 	$("#signout-btn").on('click', function(event){
 		console.log("Signout button clicked");
 		event.preventDefault();
-
 	    var logoutUser = {
 	     	userId: $(this).attr('data-id')
 	    };
-
 	    console.log(logoutUser);
-
 	    $.ajax("/api/signout", {
 	      type: "POST",
 	      data: logoutUser
@@ -63,7 +54,5 @@ $(document).ready(function(){
 	      	window.location.replace("/signin");
 	      }
 	    );
-
 	});
-
 });

@@ -1,23 +1,26 @@
 
 <div class="wrapper">
-	{{#each data.user}}
+	{{#each user}}
 		<p>Welcome {{user_name}}</p>
-		{{/each}}
-	<a href="/user">View Your Profile</a>
-	</div>
-	<h1>Groups</h1>
-	<div class="group-div">
-		{{#each data.group}}
-            {{#each ../data.user}}
-    			<li>
-    				<a href="/details/{{id}}/{{../id}}">{{group_name}}</a> <br>
-    				{{group_desc}} <br>
-    				{{!-- <button id="join-button" data-userId="{{id}}" data-groupId="{{id}}" type="submit">Join group</button> --}}
-    			</li>
-    		{{/each}}
-        {{/each}}
-	</div>
+        <a href="/user/{{id}}">View Your Profile</a>
+        {{id}}
+	{{/each}}
+{{user.user.id}}
 </div>
+<div class="group-div">
+    <form>
+	<h1>Groups</h1>
+	{{#each group}}
+    	<li>
+    		<a href="/details/{{id}}/{{#each ../user}}{{id}}{{/each}}">{{group_name}}</a> <br>
+    		{{group_desc}} <br>
+    	</li>
+    {{/each}}
+    </form>
+</div>
+
+
+
 
 {{!-- 
     <form>

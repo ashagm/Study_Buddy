@@ -1,17 +1,17 @@
-{{#each data.group}}
+{{#each group}}
 	<h1>{{group_name}}</h1>
 	{{group_desc}} <br>
 {{/each}}
 
-{{#each data.details}}
+{{#each details}}
 	Time: {{grp_date_time}} <br>
 	Location: {{grp_location}} <br>
 {{/each}}
 
-{{#each data.group}}
-	{{#each ../data.user}}
-	{{id}}
-	{{../id}}
-		<button id="join-button" data-userId="{{../id}}" data-groupId="{{id}}" type="submit">Join group</button>
-	{{/each}}
+{{#each group}}
+		<button id="join-button" data-userId="{{#each ../user}}{{id}}{{/each}}" data-groupId="{{id}}" type="submit">Join group</button>	
 {{/each}}
+
+
+
+

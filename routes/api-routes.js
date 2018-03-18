@@ -101,17 +101,14 @@ router.post('/api/signout', function(req,res){
 });
 
 // diplay all groups to the html
-router.get('/groups', function(req, res) {
+router.get('/groups/:id', function(req, res) {
     models.group.findAll({
     }).then(function(group) {
         models.user.findAll({
-            where: { id: 1 }
+            where: { id: req.params.id }
         }).then(function(user) {
-            let data = {
-                group: group,
-                user: user
-            };
-            res.render('index', {data: data});
+            console.log(user);
+            res.render('index', {group: group, user: user});
         }); 
     });
 });
@@ -127,12 +124,7 @@ router.get('/details/:groupId/:userId', function(req, res) {
             models.group.findAll({
                 where: { id: req.params.groupId }
             }).then(function(group) {
-                let data = {
-                    details: details,
-                    group: group,
-                    user: user
-                }
-                res.render('details', {data:data});
+                res.render('details', {details: details, user: user, group: group});
             });
         });
     });
@@ -189,10 +181,12 @@ router.post("/api/group", function(req, res) {
 });
 
 /* ------------------- USER PROFILE ROUTES ---------------------------------*/ 
-router.get('/user', function(req, res) {
+router.get('/user/:id', function(req, res) {
     models.user.findAll({
-        where: { id: 1 },
-        include: [{model: models.group}]
+        where: { id: req.params.id },
+        include: [{model: models.group,
+                   as: 'groupAlias'
+                  }]
     }).then(function(result) {
         res.render('profile', {
             user: result
@@ -202,8 +196,6 @@ router.get('/user', function(req, res) {
 
 /* ------------------- JOIN GROUP ROUTES ---------------------------------*/ 
 router.post('/api/joingroup/:groupId/:userId', function(req, res) {
-    console.log(req.params);
-    console.log(req.params);
     models.group_member.create({
         userId: req.params.userId,
         groupId: req.params.groupId,
@@ -212,7 +204,7 @@ router.post('/api/joingroup/:groupId/:userId', function(req, res) {
         if (result.changedRows === 0) {
             return res.status(404).end();
         } else {
-            res.redirect('/groups');
+            console.log('Welp');
         }
     });
 });

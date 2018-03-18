@@ -1,5 +1,3 @@
-//WILL HAVE TO GET BACK TO THIS, AND RESOLVE CONFLICTS
-
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var group = sequelize.define('group', {
@@ -15,27 +13,3 @@ module.exports = (sequelize, DataTypes) => {
   };
   return group;
 };
-
-// module.exports = function(sequelize, DataTypes) {
-// 	const Group = sequelize.define('group', {
-// 		group_id: 	{
-// 						type: DataTypes.INTEGER,
-//           				allowNull: false,
-//           				primaryKey: true,
-//           				autoIncrement: true
-// 					},
-// 		group_name: { 
-// 						type: DataTypes.STRING, 
-// 						allowNull: false, 
-// 						validate: { notEmpty: true}
-// 					},
-// 		group_desc: { 
-// 						type: DataTypes.STRING, 
-// 						allowNull: true
-// 					},
-
-//   	});
-
-
-// 	return Group;
-// };
