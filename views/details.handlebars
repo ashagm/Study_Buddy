@@ -10,6 +10,8 @@
 
 {{#each data.group}}
 	{{#each ../data.user}}
+	{{id}}
+	{{../id}}
 		<button id="join-button" data-userId="{{../id}}" data-groupId="{{id}}" type="submit">Join group</button>
 	{{/each}}
 {{/each}}

@@ -7,13 +7,15 @@
 	</div>
 	<h1>Groups</h1>
 	<div class="group-div">
-		{{#each data.groups}}
-			<li>
-				<a href="/details/{{id}}">{{group_name}}</a> <br>
-				{{group_desc}} <br>
-				{{!-- <button id="join-button" data-userId="{{id}}" data-groupId="{{id}}" type="submit">Join group</button> --}}
-			</li>
-		{{/each}}
+		{{#each data.group}}
+            {{#each ../data.user}}
+    			<li>
+    				<a href="/details/{{id}}/{{../id}}">{{group_name}}</a> <br>
+    				{{group_desc}} <br>
+    				{{!-- <button id="join-button" data-userId="{{id}}" data-groupId="{{id}}" type="submit">Join group</button> --}}
+    			</li>
+    		{{/each}}
+        {{/each}}
 	</div>
 </div>
 
