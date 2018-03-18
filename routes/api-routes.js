@@ -116,7 +116,7 @@ router.get('/groups/:id', function(req, res) {
 // display clicked group to the html
 router.get('/details/:groupId/:userId', function(req, res) {
     models.group_details.findAll({
-        where: { group_id: req.params.groupId }
+        where: { groupId: req.params.groupId }
     }).then(function(details) {
         models.user.findAll({
             where: { id: req.params.userId }
@@ -171,14 +171,18 @@ router.post("/api/group", function(req, res) {
             group_name: newGroup.groupName,
             group_desc: newGroup.groupDesc
         }).then(function(result){
-            console.log("New group Created in the Database", result.group_id);
+            console.log("New group Created in the Database", result.id);
             db.group_member.create({
-                group_id: result.group_id,
-                user_id: req.mySession.user.id,
-                is_admin: true
+                is_admin: true,
+                groupId: result.id,
+                userId: req.mySession.user.id,
+                is_joined: true
             }).then(function(subResult){
-                // console.log(result);
-                console.log("New group_member row Created!!");
+                console.log(result.id)
+                db.group_details.create({
+                    groupId: result.id
+                }).then(function(finalresult) {
+                    console.log("New group_member row Created!!");
                 // res.redirect('/dashboard');
             }).catch(function(err) {
                 console.log(err);
@@ -186,7 +190,21 @@ router.post("/api/group", function(req, res) {
         }).catch(function(err) {
             console.log(err);
             res.json(err);
-        });                  
+        });
+    });                  
+});
+
+router.post('/api/create/groupdetails/:groupId', function(req, res) {
+    models.group_details.update({
+        groupId: req.params.groupId,
+        grp_date_time: req.body.grp_date_time,
+        grp_location: req.body.grp_location
+    }, {
+        where: {groupId: req.params.groupId}
+    }).then(function(result) {
+        console.log('details added');
+        res.redirect('back');
+    });
 });
 
 /* ------------------- USER PROFILE ROUTES ---------------------------------*/ 
