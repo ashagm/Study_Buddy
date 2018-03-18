@@ -91,10 +91,12 @@ router.post('/api/signout', function(req,res){
 
 /* ------------------- GROUP MODEL ROUTES ---------------------------------*/ 
     
-//display all groups   
-router.get("/api/groups", function(req, res) {
-    db.group.findAll({}).then(function(results) {
-        res.json(results);
+    //display all groups   
+    app.get("/api/groups", function(req, res) {
+        db.group.findAll({}).then(function(allgroups) {
+            // console.log("hbsgroups", hbsgroups);
+            res.render("allgroups", {groups: allgroups});
+        });
     });
 });
 
