@@ -1,0 +1,37 @@
+<div class="container" style="color: #fff">
+<div class= "row" style="color: #fff">
+	<div class="col-md-12">
+		<h1> Welcome to  {{group.group_name}} {{user.user_name}}</h1>
+		<h3> Group Description : {{group.group_desc}}<h3>
+	</div>	
+</div>
+<div class="row" style="color: #fff">
+	<div class="col-md-12">
+	{{#if details}}
+		Time: {{details.grp_date_time}} <br>
+		Location: {{details.grp_location}} <br>
+	{{/if}}
+	{{!-- {{#if members.is_admin}} --}} 
+	{{!-- check how to get admin info here --}}
+		<form action="/api/create/groupdetails/{{group.id}}" method="POST"> 
+			Location: <input type="text" id="details-location" name="grp_location" placeholder="Location">
+			Date : 	<input type="text" id="details-time" name="grp_date_time" placeholder="Time">
+			<button class="btn-group-details" type="submit">Submit</button>   
+		</form>	
+	{{!-- {{/if}}				 --}}
+
+
+	</div>
+</div>	
+<div class="row" style="color: #fff">
+	<div class="col-md-12">
+		<h3> Group Members  [Ids for now, will have to get user names]</h3><br>
+		<ul>
+		{{#each members}}
+			<h2><li>{{userId}} </li></h2>
+			<h2><li>{{is_admin}} </li></h2>
+		{{/each}}
+		<ul>
+	</div>
+</div>	
+</div>

@@ -71,7 +71,7 @@ router.post("/api/signin", function(req, res) {
                     }).catch(function(err) {
                         console.log(err);
                     });  
-                res.redirect('/userpage');
+                res.redirect('/dashboard');
             } else {
                 console.log("passwords dont match");
                 //redirect to right place //todo
@@ -101,13 +101,56 @@ router.post('/api/signout', function(req,res){
 /* ----------------------DISPLAY ALL GROUPS --------------------------------*/
 
 router.get("/api/groups", function(req, res) {
-    models.group.findAll({}).then(function(groups) {
-        // console.log("hbsgroups", groups);
-        console.log("Is there a session?", req.mySession.user);
-        res.render("allgroups", {groups: groups, user: req.mySession.user});
-    });
+    models.group.findAll({})
+        .then(function(groups) {
+            // console.log("Is there a session?", req.mySession.user);
+            models.group_member.findAll({
+                where:{
+                    userId: req.mySession.user.id
+                }
+            }).then(function(grpStatus) {   
+                console.log(grpStatus[0]);            
+                res.render("allgroups", 
+                    {
+                        groups: groups, 
+                        user: req.mySession.user,
+                        status: grpStatus
+                    });
+            });
+        });    
 });
 
+/*------------------------DISPLAY SPECIFIC GROUP -------------------------------*/
+
+// display clicked group to the html
+router.get('/api/group/:groupId/:userId', function(req, res) {
+
+    // console.log(req.params.groupId);
+    // console.log(req.params.userId);
+
+    models.group.findOne({
+        where : {
+            id : req.params.groupId
+        }
+    }).then(function(group) {
+        models.group_details.findOne({
+            where: { groupId: req.params.groupId }
+        }).then(function(details){
+            console.log("details", details);
+            models.group_member.findAll( {
+                    where: { groupId: req.params.groupId }
+            }).then(function(grpMembers){
+                //todo: get usernames from userIds after this
+                res.render('group', {
+                    group: group, 
+                    user: req.mySession.user,
+                    details: details,
+                    members: grpMembers
+                });
+            });       
+        });
+    });
+});
 
 // diplay all groups for the userID to the html
 router.get('/groups/:userid', function(req, res) {
@@ -118,6 +161,26 @@ router.get('/groups/:userid', function(req, res) {
         }).then(function(user) {
             res.render('index', {group: group, user: user});
         }); 
+    });
+});
+
+/* ------------------- JOIN GROUP ROUTE ---------------------------------*/ 
+
+router.post('/api/joingroup/:groupId/:userId', function(req, res) {
+    console.log("in join group");
+    let userId = req.params.userId;
+    let groupId = req.params.groupId;
+    console.log(userId, groupId);
+
+    models.group_member.create({
+        userId: userId,
+        groupId: groupId,
+        is_admin: false,
+        is_joined: true
+    }).then(function(result) {
+        console.log("You have joined the group!", result);
+        console.log(req.get('referer'), );
+        res.redirect(req.get('referer'));
     });
 });
 
@@ -212,7 +275,7 @@ router.post("/api/group", function(req, res) {
         });
 });
 
-// creates/updates groups details
+/* --------------------__CREATE GROUP DETAILS -------------------------------------*/
 router.post('/api/create/groupdetails/:groupId', function(req, res) {
     models.group_details.update({
         groupId: req.params.groupId,
@@ -251,26 +314,6 @@ router.get('/user/:id', function(req, res) {
         res.render('profile', {
             user: result
         });
-    });
-});
-
-/* ------------------- JOIN GROUP ROUTES ---------------------------------*/ 
-router.post('/api/joingroup/:groupId/:userId/:username', function(req, res) {
-    console.log("in join group");
-    let userId = req.params.userId;
-    let groupId = req.params.groupId;
-    let user_name = req.params.username;
-    console.log(userId, groupId);
-
-    models.group_member.create({
-        userId: userId,
-        groupId: groupId,
-        user_name: user_name,
-        is_admin: false,
-        is_joined: true
-    }).then(function(result) {
-        console.log("You have joined the group!", result);
-        res.redirect(req.get('referer'));
     });
 });
 
