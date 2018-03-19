@@ -1,7 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var group_member = sequelize.define('group_member', {
-    is_admin: DataTypes.BOOLEAN,
+    is_admin:  { 
+                  type: DataTypes.BOOLEAN, 
+                  defaultValue: false
+               },
     userId: DataTypes.INTEGER,
     groupId: DataTypes.INTEGER,
     is_joined: DataTypes.BOOLEAN
