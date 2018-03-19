@@ -16,11 +16,11 @@ $(function() {
 	});
 
 	$('.create-details').on('click', function(event) {
+		// event.preventDefault();
 		let time = $('#details-time').val();
 		let location = $('#details-location').val();
 		if (time.length === 0 || time === null || location.length === 0 || location === null) {
 			alert('Please fill in a time and location for your study group!');
 		}
-		window.reload();
 	});
 });

@@ -22,17 +22,32 @@
 	{{#if is_joined}}
 		Joined!
 	{{/if}}	
-{{/each}}
+{{/each}} <br><br><br>
 
-{{#each group}}
-<h1>Group Details</h1>
-<form action="/api/create/groupdetails/{{id}}" method="POST">              
-    <input type="text" id="details-time" name="grp_date_time" placeholder="Time">
-    <input type="text" id="details-location" name="grp_location" placeholder="Location">
-    
-    <button class="create-details" data-id="{{id}}" type="submit">Submit Details</button>   
-</form> 
-{{/each}}  
+{{#each group_member_message}}
+	{{message_text}} <br>
+{{/each}} <br><br><br>
+
+
+	<form action="/api/postmessage/{{#each group}}{{id}}{{/each}}/{{#each user}}{{id}}{{/each}}" method="POST">              
+		<input type="text" id="message" name="message_text" placeholder="message">
+		    
+		<button class="post-message" type="submit">Post Message</button>   
+	</form> <br><br><br>
+
+
+{{#each group_member}}
+	{{#if is_admin}}
+		<h1>Group Details</h1>
+		<form action="/api/create/groupdetails/{{#each ../group}}{{id}}{{/each}}" method="POST">              
+		    <input type="text" id="details-time" name="grp_date_time" placeholder="Time">
+		    <input type="text" id="details-location" name="grp_location" placeholder="Location">
+		    
+		    <button class="create-details" data-id="{{#each ../group}}{{id}}{{/each}}" type="submit">Submit Details</button>   
+		</form> 
+	{{/if}}
+{{/each}} 
+ 
 
 
 
