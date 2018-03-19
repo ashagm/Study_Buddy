@@ -15,6 +15,7 @@ $(document).ready(function(){
 	    }).then(
 	      function() {
 	        console.log("Registered new User");
+	        window.location.replace('/signin');
 	      }
 	    );
   });
@@ -33,7 +34,7 @@ $(document).ready(function(){
 	      function(data) {
 	      	console.log("result from ajax request returned");
 	      	console.log(data);
-	      	window.location.replace("/dashboard");
+	      	window.location.replace("/userpage");
 	      }
 	    );
 	});
@@ -51,7 +52,7 @@ $(document).ready(function(){
 	    }).then(
 	      function(result) {
 	      	console.log("result from ajax request returned");
-	      	window.location.replace("/signin");
+	      	window.location.replace("/");
 	      }
 	    );
 	});
