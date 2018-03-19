@@ -12,12 +12,14 @@ const saltRounds = 10;
 
 /* ------------------- USER MODEL ROUTES ---------------------------------*/
 
+//SHOW ALL USERS
 router.get("/api/all", function(req, res) {
     models.user.findAll({}).then(function(results) {
         res.json(results);
     });
 });
 
+// SIGNUP
 router.post("/api/signup", function(req, res) {
     const newUser = req.body;
     bcrypt.hash(newUser.password, saltRounds, function(err, hash) {
@@ -40,6 +42,7 @@ router.post("/api/signup", function(req, res) {
 
 });  
 
+//SIGNIN
 router.post("/api/signin", function(req, res) {
     const loginUser = req.body;
     let reqPassword = req.body.password;
@@ -80,6 +83,7 @@ router.post("/api/signin", function(req, res) {
     });
 }); 
 
+//SIGNOUT
 router.post('/api/signout', function(req,res){
     console.log("Signing out User", req.body.userId); 
     models.user_status.destroy({
@@ -93,7 +97,8 @@ router.post('/api/signout', function(req,res){
 
 /* ------------------- GROUP MODEL ROUTES ---------------------------------*/ 
     
-//display all groups   
+/* ----------------------DISPLAY ALL GROUPS --------------------------------*/
+
 router.get("/api/groups", function(req, res) {
     models.group.findAll({}).then(function(groups) {
         // console.log("hbsgroups", groups);
@@ -154,7 +159,8 @@ router.get("/api/groups/:userId", function(req, res) {
     }); 
 });
 
-//display groups you admin
+/*------------------------- GROUPS YOU ADMIN ------------------------------*/
+
 router.get("/api/admin/:userId", function(req, res) {
     console.log("you are in the route" , req.params.userId);
     models.group_member.findAll({
@@ -167,7 +173,8 @@ router.get("/api/admin/:userId", function(req, res) {
     }); 
 });
        
-//create group
+/*------------------------CREATE GROUP -------------------------------------*/
+
 router.post("/api/group", function(req, res) {
     console.log("Creating new group for user", req.mySession.user.id);
     let newGroup = req.body;
