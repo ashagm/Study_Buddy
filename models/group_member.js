@@ -6,7 +6,9 @@ module.exports = (sequelize, DataTypes) => {
                   defaultValue: false
                },
     userId: DataTypes.INTEGER,
+    user_name: DataTypes.STRING,
     groupId: DataTypes.INTEGER,
+    user_name: DataTypes.STRING,
     is_joined: DataTypes.BOOLEAN
   }, {});
   group_member.associate = function(models) {

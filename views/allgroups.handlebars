@@ -9,7 +9,14 @@
 	<div class="col-md-3">				
 		<button class="btn btn-warning btn-join-grp"
 		 data-groupId='{{group.id}}'
-		 data-userId="{{../user.id}}"> Join Group </button>		
+		 data-userId="{{../user.id}}"> Join Group </button>	
+
+		 <a href="/details/{{id}}/{{../user.id}}">
+			 <button class="btn btn-warning btn-join-grp"
+			 data-groupId='{{group.id}}'
+			 data-userId="{{../user.id}}"> View Group </button>	
+		</a>
+	
 	</div>
 </div>
 {{/each}}	

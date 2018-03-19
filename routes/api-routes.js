@@ -227,10 +227,14 @@ router.post('/api/create/groupdetails/:groupId', function(req, res) {
 });
 
 // post message
-router.post('/api/postmessage/:groupId/:userId', function(req, res) {
+router.post('/api/postmessage/:groupId/:userId/:userName', function(req, res) {
+    console.log('*****************************');
+    console.log(req.params.userName);
+     console.log('*****************************');
     models.group_member_message.create({
         groupId: req.params.groupId,
         userId: req.params.userId,
+        user_name: req.params.userName,
         message_text: req.body.message_text
     }).then(function(result) {
         console.log('message posted!');
@@ -251,15 +255,17 @@ router.get('/user/:id', function(req, res) {
 });
 
 /* ------------------- JOIN GROUP ROUTES ---------------------------------*/ 
-router.post('/api/joingroup/:groupId/:userId', function(req, res) {
+router.post('/api/joingroup/:groupId/:userId/:username', function(req, res) {
     console.log("in join group");
     let userId = req.params.userId;
     let groupId = req.params.groupId;
+    let user_name = req.params.username;
     console.log(userId, groupId);
 
     models.group_member.create({
         userId: userId,
         groupId: groupId,
+        user_name: user_name,
         is_admin: false,
         is_joined: true
     }).then(function(result) {
