@@ -16,6 +16,9 @@ module.exports = function(app){
 	app.get("/signin", function(req, res) {
 		res.render('signin');
 	});
+	app.get("/userpage",function(req,res){
+		res.render('userpage');
+	});
 
 	app.get('/signout', function(req,res){
 		console.log("You are now signing out ....");	 	

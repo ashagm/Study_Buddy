@@ -31,9 +31,10 @@ router.post("/api/signup", function(req, res) {
             user_name: newUser.userName,
             user_password: newUser.password
         }).then(function(result){
+
             // console.log(result);
             console.log("New user Created in the Database");
-            res.redirect("/signin"); //why is this not working?
+            res.redirect("/"); //why is this not working?
         }).catch(function(err) {
             console.log(err);
             res.json(err);
@@ -70,7 +71,7 @@ router.post("/api/signin", function(req, res) {
                     }).catch(function(err) {
                         console.log(err);
                     });  
-                res.redirect('/dashboard');
+                res.redirect('/userpage');
             } else {
                 console.log("passwords dont match");
                 //redirect to right place //todo
