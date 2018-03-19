@@ -119,9 +119,7 @@ transition:0.5s;
 		
 }
 
-.membertrue {
-	display: none;
-}
+
 
 
  */
@@ -327,4 +325,9 @@ nav{
 }
 select{
     border-radius:5px;
+}
+
+/*needed to hide the join button after clicked*/
+.membertrue {
+	display: none;
 }

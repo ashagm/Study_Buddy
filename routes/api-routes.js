@@ -290,10 +290,14 @@ router.post('/api/create/groupdetails/:groupId', function(req, res) {
 });
 
 // post message
-router.post('/api/postmessage/:groupId/:userId', function(req, res) {
+router.post('/api/postmessage/:groupId/:userId/:userName', function(req, res) {
+    console.log('*****************************');
+    console.log(req.params.userName);
+     console.log('*****************************');
     models.group_member_message.create({
         groupId: req.params.groupId,
         userId: req.params.userId,
+        user_name: req.params.userName,
         message_text: req.body.message_text
     }).then(function(result) {
         console.log('message posted!');

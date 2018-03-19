@@ -14,6 +14,9 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER
       },
+      user_name: {
+        type: Sequelize.STRING
+      },
       message_text: {
         type: Sequelize.STRING
       },

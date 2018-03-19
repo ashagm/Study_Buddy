@@ -7,7 +7,6 @@
 		<h5>Created On: {{group.createdAt}}<h5>	
 	</div>
 
-
 {{!-- {{#each ../status}} --}}
 	<div class="col-md-3">	
 	{{!-- 	{{#if is_joined}}
@@ -23,6 +22,13 @@
 		 		data-groupId='{{group.id}}'
 		 		data-userId="{{../user.id}}"> GOTO Group
 		 	</button>	
+
+		 <a href="/details/{{id}}/{{../user.id}}">
+			 <button class="btn btn-warning btn-join-grp"
+			 data-groupId='{{group.id}}'
+			 data-userId="{{../user.id}}"> View Group </button>	
+		</a>
+
 	</div>
 {{!-- {{/each}}	 --}}
 </div>

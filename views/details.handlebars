@@ -12,28 +12,27 @@
 	<button id="join-button" 
 	data-userId="{{#each ../user}}{{id}}{{/each}}" 
 	data-groupId="{{id}}" 
+	data-userName="{{#each ../user}}{{user_name}}{{/each}}"
 	class="{{#each ../group_member}}member{{is_joined}}{{/each}}" 
 	type="submit">
 	Join Group!
 	</button>	
 {{/each}} <br> <br>
 
+{{#each group_member_message}}
+	{{user_name}}: {{message_text}}   ({{createdAt}})<br>
+{{/each}} <br><br><br>
+
 {{#each group_member}}
 	{{#if is_joined}}
 		Joined!
-	{{/if}}	
-{{/each}} <br><br><br>
-
-{{#each group_member_message}}
-	{{message_text}} <br>
-{{/each}} <br><br><br>
-
-
-	<form action="/api/postmessage/{{#each group}}{{id}}{{/each}}/{{#each user}}{{id}}{{/each}}" method="POST">              
+	<form action="/api/postmessage/{{#each ../group}}{{id}}{{/each}}/{{#each ../user}}{{id}}{{/each}}/{{#each ../user}}{{user_name}}{{/each}}" method="POST">              
 		<input type="text" id="message" name="message_text" placeholder="message">
 		    
 		<button class="post-message" type="submit">Post Message</button>   
 	</form> <br><br><br>
+	{{/if}}	
+{{/each}} <br><br><br>
 
 
 {{#each group_member}}
