@@ -17,6 +17,9 @@ module.exports = {
       groupId: {
         type: Sequelize.INTEGER
       },
+      user_name: {
+        type: Sequelize.STRING
+      },
         is_joined: {
         type: Sequelize.BOOLEAN
       },

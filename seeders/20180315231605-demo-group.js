@@ -2,8 +2,8 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
       return queryInterface.bulkInsert('groups', [{
-        group_name: 'javascript',
-        group_desc: 'Study group for javascript'
+        group_name: 'splatoon',
+        group_desc: 'Study group for splatoon'
       }], {});
     
   },
