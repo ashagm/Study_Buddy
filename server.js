@@ -5,10 +5,10 @@ const session = require('client-sessions');
 
 const PORT = process.env.PORT || 3000;
 // using sequelize to create tables in the database
-const db = require('./models');
+// const db = require('./models');
 
 let models = require('./models')
-models.sequelize.sync();
+// models.sequelize.sync();
 
 // Creating express app and configuring middleware needed for authentication
 var app = express();
@@ -40,7 +40,7 @@ require("./routes/html-routes.js")(app);
 
 app.use(apiRoutes);
 
-db.sequelize.sync().then(function () {
+models.sequelize.sync().then(function () {
 	app.listen(PORT, function() {
   		console.log("App now listening at localhost:" + PORT);
 	});

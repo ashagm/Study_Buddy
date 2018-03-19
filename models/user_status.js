@@ -3,7 +3,11 @@
 module.exports = (sequelize, DataTypes) => {
   var user_status = sequelize.define('user_status', {
     user_id: DataTypes.INTEGER,
-    login_status: DataTypes.BOOLEAN,
+    login_status: 
+        { 
+          type: DataTypes.BOOLEAN, 
+          defaultValue: false
+        },
     last_login_date_time: DataTypes.DATE
   }, {});
   user_status.associate = function(models) {

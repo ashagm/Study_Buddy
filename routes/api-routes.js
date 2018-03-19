@@ -13,7 +13,7 @@ const saltRounds = 10;
 /* ------------------- USER MODEL ROUTES ---------------------------------*/
 
 router.get("/api/all", function(req, res) {
-    db.user.findAll({}).then(function(results) {
+    models.user.findAll({}).then(function(results) {
         res.json(results);
     });
 });
@@ -22,7 +22,7 @@ router.post("/api/signup", function(req, res) {
     const newUser = req.body;
     bcrypt.hash(newUser.password, saltRounds, function(err, hash) {
         newUser.password = hash;
-        db.user.create({
+        models.user.create({
             first_name: newUser.firstName,
             last_name: newUser.lastName,
             user_email: newUser.email,
@@ -31,7 +31,7 @@ router.post("/api/signup", function(req, res) {
         }).then(function(result){
             // console.log(result);
             console.log("New user Created in the Database");
-            res.redirect("/signin");
+            res.redirect("/signin"); //why is this not working?
         }).catch(function(err) {
             console.log(err);
             res.json(err);
@@ -44,12 +44,14 @@ router.post("/api/signin", function(req, res) {
     const loginUser = req.body;
     let reqPassword = req.body.password;
     let reqUserName = req.body.userName;
-    db.user.findOne({
+    console.log("From request", reqPassword, reqUserName);
+    models.user.findOne({
         where: {
             user_name: reqUserName
         }
     }).then(function(dbUser) {
-        console.log("dbUser", dbUser.user_password);
+
+        console.log("dbUser", dbUser);
         console.log("reqPassword", reqPassword);
         // res.json(dbUser);
         bcrypt.compare(reqPassword, dbUser.user_password, function(err, result) {
@@ -57,9 +59,9 @@ router.post("/api/signin", function(req, res) {
             if(result) {
                 console.log("passwords match");
                 req.mySession.user = dbUser;
-                    db.user_status.create({
+                    models.user_status.create({
                         user_id: dbUser.id,
-                        user_status: true
+                        login_status: true
                     }).then(function(result){
                         console.log(result);
                     }).catch(function(err) {
@@ -80,7 +82,7 @@ router.post("/api/signin", function(req, res) {
 
 router.post('/api/signout', function(req,res){
     console.log("Signing out User", req.body.userId); 
-    db.user_status.destroy({
+    models.user_status.destroy({
         where: {
             user_id: req.body.userId
         }
@@ -91,16 +93,19 @@ router.post('/api/signout', function(req,res){
 
 /* ------------------- GROUP MODEL ROUTES ---------------------------------*/ 
     
-    //display all groups   
-    router.get("/api/groups", function(req, res) {
-        db.group.findAll({}).then(function(allgroups) {
-            // console.log("hbsgroups", hbsgroups);
-            res.render("allgroups", {groups: allgroups});
-        });
+//display all groups   
+router.get("/api/groups", function(req, res) {
+    console.log("in api/groups");
+    models.group.findAll({}).then(function(groups) {
+        console.log("hbsgroups", groups);
+        console.log("session", req.mySession.user);
+
+        res.render("allgroups", {groups: groups, user: req.mySession.user});
     });
+});
 
 
-// diplay all groups to the html
+// diplay all groups for the userID to the html
 router.get('/groups/:id', function(req, res) {
     models.group.findAll({
     }).then(function(group) {
