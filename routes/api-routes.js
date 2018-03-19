@@ -95,22 +95,20 @@ router.post('/api/signout', function(req,res){
     
 //display all groups   
 router.get("/api/groups", function(req, res) {
-    console.log("in api/groups");
     models.group.findAll({}).then(function(groups) {
-        console.log("hbsgroups", groups);
-        console.log("session", req.mySession.user);
-
+        // console.log("hbsgroups", groups);
+        console.log("Is there a session?", req.mySession.user);
         res.render("allgroups", {groups: groups, user: req.mySession.user});
     });
 });
 
 
 // diplay all groups for the userID to the html
-router.get('/groups/:id', function(req, res) {
+router.get('/groups/:userid', function(req, res) {
     models.group.findAll({
     }).then(function(group) {
         models.user.findAll({
-            where: { id: req.params.id }
+            where: { id: req.params.userid }
         }).then(function(user) {
             console.log(user);
             res.render('index', {group: group, user: user});
@@ -147,7 +145,7 @@ router.get('/details/:groupId/:userId', function(req, res) {
 //display user groups ( member and admin)    
 router.get("/api/groups/:userId", function(req, res) {
     console.log("you are in the route" , req.params.userId);
-    db.group_member.findAll({
+    models.group_member.findAll({
         where: {
             user_id : req.params.userId
         }
@@ -156,11 +154,12 @@ router.get("/api/groups/:userId", function(req, res) {
     }); 
 });
 
+//display groups you admin
 router.get("/api/admin/:userId", function(req, res) {
     console.log("you are in the route" , req.params.userId);
-    db.group_member.findAll({
+    models.group_member.findAll({
         where: {
-            user_id : req.params.userId,
+            id : req.params.userId,
             is_admin : true
         }
     }).then(function(results){
@@ -172,7 +171,7 @@ router.get("/api/admin/:userId", function(req, res) {
 router.post("/api/group", function(req, res) {
     console.log("Creating new group for user", req.mySession.user.id);
     let newGroup = req.body;
-        db.group.create({
+        models.group.create({
             group_name: newGroup.groupName,
             group_desc: newGroup.groupDesc
         }).then(function(result){
@@ -228,15 +227,19 @@ router.get('/user/:id', function(req, res) {
 
 /* ------------------- JOIN GROUP ROUTES ---------------------------------*/ 
 router.post('/api/joingroup/:groupId/:userId', function(req, res) {
+    console.log("in join group");
     let userId = req.params.userId;
     let groupId = req.params.groupId;
+    console.log(userId, groupId);
+
     models.group_member.create({
         userId: userId,
         groupId: groupId,
         is_admin: false,
         is_joined: true
     }).then(function(result) {
-            res.redirect(req.get('referer'));
+        console.log("You have joined the group!", result);
+        res.redirect(req.get('referer'));
     });
 });
 

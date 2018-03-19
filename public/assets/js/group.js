@@ -16,19 +16,21 @@ $(document).ready(function(){
 		);
 	});
 
-	$('.btn-join-grp').on('click', function(e){		
+	$('.btn-join-grp').on('click', function(e){	
+
+		let userId = ($(this).attr('data-userId'));
+		let groupId = ($(this).attr('data-groupId'));
+
 		let userJoinGrp = {
-			userId : $(this).attr('data-userId'),
-			groupId : $(this).attr('data-groupId')
+			userId : userId,
+			groupId : groupId
 		}
 
-		$.ajax("/api/group", {
-			type: "POST",
-			data: userJoinGrp
-		}).then(
-			function(result) {
-				console.log("User joined the group");
-			}
-		);
+		$.post('/api/joingroup/' + groupId + '/' + userId, userJoinGrp)
+		.then(function() {
+			console.log('Joined group!');
+		});
+
+		location.reload();
 	});
 });
