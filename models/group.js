@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     group.belongsToMany(models.user, { through: 'group_members', foreignKey: 'groupId' });
     group.hasOne(models.group_details);
-    // group.hasMany(models.group_member_message);
+    group.hasMany(models.group_member_message);
   };
   return group;
 };

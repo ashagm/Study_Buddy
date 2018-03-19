@@ -116,7 +116,6 @@ router.get('/groups/:userid', function(req, res) {
         models.user.findAll({
             where: { id: req.params.userid }
         }).then(function(user) {
-            console.log(user);
             res.render('index', {group: group, user: user});
         }); 
     });
@@ -136,11 +135,16 @@ router.get('/details/:groupId/:userId', function(req, res) {
                 models.group_member.findAll( {
                     where: { groupId: req.params.groupId }
                 }).then(function(group_member) {
-                    res.render('details', {
-                        details: details, 
-                        user: user, 
-                        group: group, 
-                        group_member: group_member
+                    models.group_member_message.findAll({
+                        where: { groupId: req.params.groupId}
+                    }).then(function(group_member_message) {
+                        res.render('details', {
+                            details: details, 
+                            user: user, 
+                            group: group, 
+                            group_member: group_member,
+                            group_member_message: group_member_message
+                        });
                     });
                 });   
             });
@@ -190,22 +194,25 @@ router.post("/api/group", function(req, res) {
                 userId: req.mySession.user.id,
                 is_joined: true
             }).then(function(subResult){
-                console.log(result.id)
                 db.group_details.create({
                     groupId: result.id
                 }).then(function(finalresult) {
                     console.log("New group_member row Created!!");
-                // res.redirect('/dashboard');
-            }).catch(function(err) {
-                console.log(err);
-            });  
-        }).catch(function(err) {
-            console.log(err);
-            res.json(err);
+                    db.group_member_message.create({
+                        groupId: result.id,
+                        message_text: 'Post your messages here!',
+                    }).catch(function(err) {
+                        console.log(err);
+                    });  
+                }).catch(function(err) {
+                    console.log(err);
+                    res.json(err);
+                });
+            });                  
         });
-    });                  
 });
 
+// creates/updates groups details
 router.post('/api/create/groupdetails/:groupId', function(req, res) {
     models.group_details.update({
         groupId: req.params.groupId,
@@ -219,13 +226,23 @@ router.post('/api/create/groupdetails/:groupId', function(req, res) {
     });
 });
 
+// post message
+router.post('/api/postmessage/:groupId/:userId', function(req, res) {
+    models.group_member_message.create({
+        groupId: req.params.groupId,
+        userId: req.params.userId,
+        message_text: req.body.message_text
+    }).then(function(result) {
+        console.log('message posted!');
+        res.redirect('back');
+    });
+});
+
 /* ------------------- USER PROFILE ROUTES ---------------------------------*/ 
 router.get('/user/:id', function(req, res) {
     models.user.findAll({
         where: { id: req.params.id },
-        include: [{model: models.group,
-                   as: 'groupAlias'
-                  }]
+        include: [{model: models.group}]
     }).then(function(result) {
         res.render('profile', {
             user: result
