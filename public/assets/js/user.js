@@ -34,7 +34,7 @@ $(document).ready(function(){
 	      function(data) {
 	      	console.log("result from ajax request returned");
 	      	console.log(data);
-	      	window.location.replace("/userpage");
+	      	window.location.replace("/dashboard");
 	      }
 	    );
 	});

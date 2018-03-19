@@ -33,4 +33,37 @@ $(document).ready(function(){
 
 		location.reload();
 	});
+
+	$('.btn-goto-grp').on('click', function(e){	
+
+		let userId = ($(this).attr('data-userId'));
+		let groupId = ($(this).attr('data-groupId'));
+
+		let userGotoGrp = {
+			userId : userId,
+			groupId : groupId
+		}
+
+		$.get('/api/group/' + groupId + '/' + userId, userGotoGrp)
+		.then(function() {
+			console.log('Goto group!');
+			window.location.replace('/api/group/' + groupId + '/' + userId)
+		});
+
+		// location.reload();
+	});
+
+	$('.btn-group-details').on('click', function(event) {
+		// event.preventDefault();
+		let time = $('#details-time').val();
+		let location = $('#details-location').val();
+		if (time.length === 0 || time === null || location.length === 0 || location === null) {
+			alert('Please fill in a time and location for your study group!');
+		}
+
+		$.post('/api/joingroup/' + groupId + '/' + userId, userJoinGrp)
+		.then(function() {
+			console.log('Joined group!');
+		});
+	});
 });

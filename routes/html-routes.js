@@ -3,7 +3,7 @@ module.exports = function(app){
 
 	app.get("/", function(req, res) {
 		if (req.mySession && req.mySession.user) {
-		  	res.userpage('dashboard', {"userId" : req.mySession.user.id});
+		  	res.render('dashboard', {"userId" : req.mySession.user.id});
 		}else{
 			res.redirect("/signin");
 		}
@@ -17,9 +17,9 @@ module.exports = function(app){
 		res.render('signin');
 	});
 	
-	// app.get("/userpage",function(req,res){
-	// 	res.render('userpage');
-	// });
+	app.get("/userpage",function(req,res){
+		res.render('userpage');
+	});
 
 	app.get('/signout', function(req,res){
 		console.log("You are now signing out ....");	 	
@@ -32,7 +32,7 @@ module.exports = function(app){
 //this requires some more tweaks to include the session as a middleware 
 //function so that it is available in every path.
 
-	app.get("/userpage", function(req, res) {
+	app.get("/dashboard", function(req, res) {
 		console.log("Is there a session? ", req.mySession);
 
 		if (req.mySession && req.mySession.user) { // Check if session exists
@@ -43,7 +43,7 @@ module.exports = function(app){
 	        res.locals.user = loggedInUser;		
 	        // console.log(res.locals); //check how to access from locals
 	        // res.render('dashboard', {"userId" : loggedInUser.id});
-	        res.render('userpage', {"user" : loggedInUser});
+	        res.render('dashboard', {"user" : loggedInUser});
 	  	} else {
 		  	console.log("in else");
 		    res.redirect('/signin');
