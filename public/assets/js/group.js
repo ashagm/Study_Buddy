@@ -15,4 +15,20 @@ $(document).ready(function(){
 			}
 		);
 	});
+
+	$('.btn-join-grp').on('click', function(e){		
+		let userJoinGrp = {
+			userId : $(this).attr('data-userId'),
+			groupId : $(this).attr('data-groupId')
+		}
+
+		$.ajax("/api/group", {
+			type: "POST",
+			data: userJoinGrp
+		}).then(
+			function(result) {
+				console.log("User joined the group");
+			}
+		);
+	});
 });
