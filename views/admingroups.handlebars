@@ -1,0 +1,25 @@
+<div class="container">
+{{#each groups as |group|}}	
+{{#if group.users}}
+	<div class="row" style="color:#fff; border: 1px solid red">
+		<div class="col-md-9">
+			<h2>Group Name: {{group.group_name}}</h2>
+			<h3>Group description: {{group.group_desc}}<h3>
+			<h5>Created On: {{group.createdAt}}<h5>	
+		</div>
+
+		{{#each group.users}}
+			{{user}}
+		{{/each}}
+
+		<div class="col-md-3">	
+	    		<button class="btn btn-warning btn-goto-grp"
+			 		data-groupId='{{group.id}}' data-userName="{{group.users.user_name}}"
+			 		data-userId="{{group.users.user.id}}"> GOTO Group
+			 	</button>	
+		</div>
+	</div>
+{{/if}}
+{{/each}}	
+</div>
+
