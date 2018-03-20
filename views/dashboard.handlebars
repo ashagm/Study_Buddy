@@ -1,42 +1,74 @@
 
 
-<div class="container">
-	<div class="row">
+
+ <nav class="navbar navbar-light bg-light justify-content-between navbar-fixed-top">
+            <a class="navbar-brand">STUDY BUDDY</a>
+            <div class="welcome">Welcome to study Buddy!!</div>
+            <form class="form-inline">
+
+			<input TYPE="button" class="btn btn-outline-success my-2 my-sm-0 create_btn" 
+			id="btn-create-group" value="CREATE A GROUP"
+			data-toggle="modal" data-target="#newGroupModal">
+             
+                <input class="form-control mr-sm-2" id="search-btn" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <div class="sign-out"></div>
+                <div class="username-display">{{user.user_name}}</div>
+                <!-- <button class="btn btn-outline-success my-2 my-sm-0 " id="sign-out" type="submit">Sign Out</button> -->
+                <button class="btn btn-danger" id="signout-btn" data-id={{user.id}}> 
+ 		 		Sign out </button>
+            </form>
+            
+        </nav>
+        <div class="divider">
+            
+        </div>
+
+<div class="wrap">
+	<!-- <div class="row">
 		<div class="col-md-12">
 			<div style="color: #fff">
- 				<h1> Welcome to Study Buddy!! 
- 					{{user.user_name}}
- 				<button class="btn btn-danger" id="signout-btn" data-id={{user.id}}> 
- 		 		Sign out </button></h1>
+	 				<h1> Welcome to Study Buddy!! 
+	 					{{user.user_name}}
+	 				<button class="btn btn-danger" id="signout-btn" data-id={{user.id}}> 
+	 		 		Sign out </button></h1>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
- 		 	<input TYPE="button" class="btn btn-lg btn-info btn-block" 
-			id="btn-all-groups" value="VIEW ALL GROUPS"
-			onclick="window.location.href='/api/groups'"> 
-			{{!-- onclick="window.location.href='groups/{{user.id}}'">  --}}
-		</div>
-		<div class="col-md-12">
- 		 	<input TYPE="button" class="btn btn-lg btn-warning btn-block" 
-			id="btn-your-groups" value="VIEW YOUR ADMIN GROUPS"
-			onclick="window.location.href='/api/admin/{{user.id}}'"> 
-		</div>
-		<div class="col-md-12">
- 		 	<input TYPE="button" class="btn btn-lg btn-success btn-block" 
-			id="btn-your-groups" value="VIEW YOUR GROUPS"
-			onclick="window.location.href='/api/groups/{{user.id}}'"> 
-		</div>
-		<div class="col-md-12">
-			<input TYPE="button" class="btn btn-lg btn-danger btn-block" 
-			id="btn-create-group" value="CREATE A GROUP"
-			data-toggle="modal" data-target="#newGroupModal"> 
-		</div>
-	</div>
+	</div> -->
+	<div class="body-container">
+            <div class="row">
+                <div class="col-md-7 list">
+	<div class="filtering">
+    <div class="btngroup"id="btn-all-groups" value="VIEW ALL GROUPS"
+			onclick="window.location.href='/api/groups'">VIEW ALL GROUPS</div>
+
+    <div class="btngroup" id="btn-your-groups" value="VIEW YOUR ADMIN GROUPS"
+			onclick="window.location.href='/api/admin/{{user.id}}'">VIEW YOUR ADMIN GROUPS</div>
+
+    <div class="btngroup" id="btn-your-groups" value="VIEW YOUR GROUPS"
+			onclick="window.location.href='/api/groups/{{user.id}}'">VIEW YOUR GROUPS</div>
+
 </div>
+   <div class="card">
+
+                    	<!-- list info--><!-- need to append this every single group creation-->
+                        <h5 class="card-header">{{group.group_name}}</h5>
+                        <div class="card-body">
+                            <h5 class="group-title">Group Subject</h5>
+                            <p class="group-user">Detail Info</p>
+                    
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-md-5" id="map">
+                </div>
+                   </div>
+        </div>
+         
 
 
+  <!-- google map API-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClQcm8IwvweRWwqoYG2pXFyv7RKh6Ed4Q&callback=initMap"></script>
 <!-- Modal -->
 <div id="newGroupModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
