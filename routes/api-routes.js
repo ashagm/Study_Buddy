@@ -396,10 +396,12 @@ router.post('/api/postmessage/:groupId/:userId/:userName', function(req, res) {
 
 /* ------------------- USER PROFILE ROUTES ---------------------------------*/ 
 router.get('/user/:id', function(req, res) {
-    models.user.findAll({
+    console.log("In USER PROFILE");
+    models.user.findOne({
         where: { id: req.params.id },
-        include: [{model: models.group}]
+        // include: [{model: models.group}]
     }).then(function(result) {
+        console.log("Results :", result);
         res.render('profile', {
             user: result
         });

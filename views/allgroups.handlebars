@@ -9,19 +9,17 @@
 
 {{!-- {{#each ../status}} --}}
 	<div class="col-md-3">	
-	{{!-- 	{{#if is_joined}}
-      			ALREADY A MEMBER!!
-    	{{else}} --}}
-			<button class="btn btn-warning btn-join-grp"
-		 		data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
-		 		data-userId="{{../user.id}}"> Join Group 
-		 	</button>	
-    	{{!-- {{/if}}		 --}}
-
+		{{!-- {{#if is_joined}} --}}
     		<button class="btn btn-warning btn-goto-grp"
 		 		data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
 		 		data-userId="{{../user.id}}"> GOTO Group
 		 	</button>	
+    	{{!-- {{else}} --}}
+			<button class="btn btn-warning btn-join-grp"
+		 		data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
+		 		data-userId="{{../user.id}}"> Join Group 
+		 	</button>	
+    	{{!-- {{/if}}		 --}}	
 
 {{!-- 		 <a href="/details/{{id}}/{{../user.id}}">
 			 <button class="btn btn-warning"
