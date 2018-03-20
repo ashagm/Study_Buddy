@@ -23,16 +23,16 @@
 	{{user_name}}: {{message_text}}   ({{createdAt}})<br>
 {{/each}} <br><br><br>
 
-{{#each group_member}}
-	{{#if is_joined}}
-		Joined!
+{{!-- {{#each group_member}} --}}
+	{{!-- {{#if ../is_joined}} --}}
+		
 	<form action="/api/postmessage/{{#each ../group}}{{id}}{{/each}}/{{#each ../user}}{{id}}{{/each}}/{{#each ../user}}{{user_name}}{{/each}}" method="POST">              
 		<input type="text" id="message" name="message_text" placeholder="message">
 		    
 		<button class="post-message" type="submit">Post Message</button>   
 	</form> <br><br><br>
-	{{/if}}	
-{{/each}} <br><br><br>
+	{{!-- {{/if}} --}}	
+{{!-- {{/each}} --}} <br><br><br>
 
 
 {{#each group_member}}
@@ -43,7 +43,8 @@
 		    <input type="text" id="details-location" name="grp_location" placeholder="Location">
 		    
 		    <button class="create-details" data-id="{{#each ../group}}{{id}}{{/each}}" type="submit">Submit Details</button>   
-		</form> 
+		</form> <br> <br>
+			<button id="delete-group" data-groupId="{{#each ../group}}{{id}}{{/each}}"type="submit">DELETE GROUP</button> <br> <br>
 	{{/if}}
 {{/each}} 
  
