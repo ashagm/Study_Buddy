@@ -123,6 +123,30 @@ router.get("/api/groups", function(req, res) {
         });    
 });
 
+/* -------------------DISPLAY GROUPS ON SEARCH ---------------------------------*/
+
+router.post("/api/search/:term", function(req, res) {
+    let searchTerm = req.params.term;
+
+    models.group.findAll({
+        where :{
+            group_desc: {
+                $like: searchTerm + '%'
+            }
+        }
+    }).then(function(groups) {   
+        // console.log(groups);         
+        res.render("allgroups", 
+        {
+            groups: groups, 
+            user: req.mySession.user
+        });
+    });    
+});
+        
+
+/* ----------------------DISPLAY GROUPS JOINED--------------------------------*/
+
 router.get("/api/groups/:userId", function(req, res) {
     models.group.findAll({})
         .then(function(groups) {
@@ -291,18 +315,18 @@ router.post("/api/group", function(req, res) {
             group_desc: newGroup.groupDesc
         }).then(function(result){
             console.log("New group Created in the Database", result.id);
-            db.group_member.create({
+            models.group_member.create({
                 is_admin: true,
                 groupId: result.id,
                 userId: req.mySession.user.id,
                 user_name: req.mySession.user.user_name,
                 is_joined: true
             }).then(function(subResult){
-                db.group_details.create({
+                models.group_details.create({
                     groupId: result.id
                 }).then(function(finalresult) {
                     console.log("New group_member row Created!!");
-                    db.group_member_message.create({
+                    models.group_member_message.create({
                         groupId: result.id,
                         message_text: 'Post your messages here!',
                     }).catch(function(err) {
@@ -317,6 +341,7 @@ router.post("/api/group", function(req, res) {
 });
 
 /* --------------------__CREATE GROUP DETAILS -------------------------------------*/
+
 router.post('/api/create/groupdetails/:groupId', function(req, res) {
     models.group_details.update({
         groupId: req.params.groupId,
@@ -331,6 +356,7 @@ router.post('/api/create/groupdetails/:groupId', function(req, res) {
 });
 
 /* --------------------DELETE GROUP DETAILS -------------------------------------*/
+
 router.delete('/api/deletegroup/:groupId', function(req, res) {
     let groupId = req.params.groupId;
     models.group.destroy({
