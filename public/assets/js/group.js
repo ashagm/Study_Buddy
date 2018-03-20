@@ -21,6 +21,8 @@ $(document).ready(function(){
 		let groupId = ($(this).attr('data-groupId'));
 		let userName = ($(this).attr('data-userName'));
 
+		let $self = $(this);
+
 		let userJoinGrp = {
 			userId : userId,
 			groupId : groupId,
@@ -29,11 +31,11 @@ $(document).ready(function(){
 
 		$.post('/api/joingroup/' + groupId + '/' + userId + "/" + userName, userJoinGrp)
 		.then(function(result) {
-			alert('You have joined the group!');
-			location.reload();
-		});
-
-		
+			$self.html('JOINED!');
+			$self.css("background-color", "grey");
+			$self.attr('disabled', true);
+			// location.reload();
+		});		
 	});
 
 	$('.btn-goto-grp').on('click', function(e){	
