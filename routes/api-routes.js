@@ -294,13 +294,18 @@ router.get("/api/admin/:userId", function(req, res) {
 router.get("/api/admin", function(req, res) {
     var userID = req.mySession.user.id;
 
-    models.group_member.findAll({
-        where: {
-            userId : userID,
-            is_admin : true
-        }
+    models.group.findAll({
+        include: [{ 
+                    model: models.user,
+                    through: {
+                      attributes: ['userId', 'groupId', 'is_admin'],
+                      where: {is_admin: true, userId : userID,}
+                    }             
+                }]
     }).then(function(results){
-        res.json(results);
+        console.log(results);
+        res.render('admingroups', { 'groups' : results });
+        // res.json(results);
     }); 
 });
 
