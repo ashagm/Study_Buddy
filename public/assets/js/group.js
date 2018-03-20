@@ -70,4 +70,16 @@ $(document).ready(function(){
 			console.log('Joined group!');
 		});
 	});
+
+	$('#btn-search').on('click', function(event){
+		event.preventDefault();
+
+		let inputSearchTerm = $("#input-search-term").val().trim();
+		console.log(inputSearchTerm);
+
+		$.post('/api/search/' + inputSearchTerm)
+		.then(function() {
+			console.log('Got results for the searched the term');
+		});
+	});
 });
