@@ -125,7 +125,7 @@ router.get("/api/groups", function(req, res) {
 
 /* -------------------DISPLAY GROUPS ON SEARCH ---------------------------------*/
 
-router.post("/api/search/:term", function(req, res) {
+router.get("/api/search/:term", function(req, res) {
     let searchTerm = req.params.term;
 
     models.group.findAll({
@@ -135,12 +135,9 @@ router.post("/api/search/:term", function(req, res) {
             }
         }
     }).then(function(groups) {   
-        // console.log(groups);         
-        res.render("allgroups", 
-        {
-            groups: groups, 
-            user: req.mySession.user
-        });
+        console.log(groups);    
+        // res.json(groups) ;   
+        res.render('searchgroups', { 'groups' : groups });
     });    
 });
         
@@ -303,7 +300,7 @@ router.get("/api/admin", function(req, res) {
                     }             
                 }]
     }).then(function(results){
-        console.log(results);
+        // console.log(results);
         res.render('admingroups', { 'groups' : results });
         // res.json(results);
     }); 

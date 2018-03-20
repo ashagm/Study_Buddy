@@ -77,9 +77,10 @@ $(document).ready(function(){
 		let inputSearchTerm = $("#input-search-term").val().trim();
 		console.log(inputSearchTerm);
 
-		$.post('/api/search/' + inputSearchTerm)
+		$.get('/api/search/' + inputSearchTerm)
 		.then(function() {
 			console.log('Got results for the searched the term');
+			// window.location.replace('/api/search');
 		});
 	});
 });
