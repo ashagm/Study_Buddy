@@ -154,12 +154,17 @@ label{
 	font-family: 'Quicksand', sans-serif;
 }
 .btn{
-	width:100px;
+	
 	margin-right:20px;
 	margin-top:20px;
 	margin-bottom:30px;
 	transition:1s;
 
+}
+.buttonGroup button{
+margin-right:0;
+margin-top:5px;
+margin-bottom:10px;
 }
 #btn-create-grp{
 	width:150px;
@@ -180,7 +185,10 @@ label{
 	color:white;
 }
 
-
+.cardgroup{
+	text-align:left;
+	margin-top:10px;
+}
 .loginTitle {
 	color:white;
 	text-align:center;
@@ -302,6 +310,7 @@ nav{
 	margin:0 auto;
 	text-align:center;
 }
+
 .btngroup{
 	display:inline;
 	padding:1%;
@@ -314,6 +323,9 @@ nav{
 	font-weight:bold;
 	color:#FFCA54;
 
+}
+.groupcontainer{
+	width:500px;
 }
 
 .filtering div:hover{
@@ -352,6 +364,7 @@ select{
 	display: none;
 }
 
+
 /* .welcome {
     width: auto;
     height: auto;
@@ -371,3 +384,4 @@ select{
     75%  {background: cyan; left: 0px; top: 0px;}
     100% {background: #FFCA54; left: 0px; top: 0px;}
 } */
+
