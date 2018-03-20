@@ -161,7 +161,9 @@ label{
 	transition:1s;
 
 }
-
+#btn-create-grp{
+	width:150px;
+}
 .btn-primary{
 	background-color:#FFCA54 !important;
 	border-color:#FFCA54 !important;
@@ -242,6 +244,17 @@ transition:0.5s;
 	}
 		
 }
+@media screen and (max-width:1070px){
+	nav{
+		width:1100px;
+	}
+}
+@media screen and (max-width:750px){
+	#map{
+		margin-top:20px;
+	}
+
+}
 
 
 
@@ -249,11 +262,15 @@ transition:0.5s;
 nav{
         box-shadow: 0 3px #E8E0D5; 
 }
+.dashboard-wrap{
+	width:900px;
+	 margin:0 auto;
+}
 .wrap{
     width:1400px;
     margin:0 auto;
 }
-.create_btn {
+.create_btn  {
     margin-right: 40px;
     width:150px;
 }
@@ -288,8 +305,8 @@ nav{
 .btngroup{
 	display:inline;
 	padding:1%;
-	padding-right:50px;
-	padding-left:50px;
+	padding-right:30px;
+	padding-left:30px;
 	background:white;
 	line-height:3;
 	border-radius:5px;
@@ -319,9 +336,12 @@ nav{
     overflow:hidden;
 }
 .username-display{
-    background:#FFCA54;
+    background:#f8f9fa;
     width:100px;
+    font-size:20px;
+    font-weight: bold
     margin:0 20px 0 20px;  
+  	text-align:center;
 }
 select{
     border-radius:5px;
@@ -331,3 +351,23 @@ select{
 .membertrue {
 	display: none;
 }
+
+/* .welcome {
+    width: auto;
+    height: auto;
+    background: red;
+    position: relative;
+    animation: myfirst 5s infinite;
+    animation-direction: alternate;
+    border-radius:20%;
+}
+
+
+
+@keyframes myfirst {
+    0%   {background: tomato; left: 0px; top: 0px;}
+    25%  {background: skyblue; left: 400px; top: 0px;}
+    50%  {background: pink; left: 400px; top: 0px;}
+    75%  {background: cyan; left: 0px; top: 0px;}
+    100% {background: #FFCA54; left: 0px; top: 0px;}
+} */
