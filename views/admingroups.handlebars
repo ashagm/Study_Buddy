@@ -8,10 +8,6 @@
 			<h5>Created On: {{group.createdAt}}<h5>	
 		</div>
 
-		{{#each group.users}}
-			{{user}}
-		{{/each}}
-
 		<div class="col-md-3">	
 	    		<button class="btn btn-warning btn-goto-grp"
 			 		data-groupId='{{group.id}}' data-userName="{{group.users.user_name}}"
