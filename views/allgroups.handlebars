@@ -13,21 +13,21 @@
       			ALREADY A MEMBER!!
     	{{else}} --}}
 			<button class="btn btn-warning btn-join-grp"
-		 		data-groupId='{{group.id}}'
+		 		data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
 		 		data-userId="{{../user.id}}"> Join Group 
 		 	</button>	
     	{{!-- {{/if}}		 --}}
 
     		<button class="btn btn-warning btn-goto-grp"
-		 		data-groupId='{{group.id}}'
+		 		data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
 		 		data-userId="{{../user.id}}"> GOTO Group
 		 	</button>	
 
-		 <a href="/details/{{id}}/{{../user.id}}">
+{{!-- 		 <a href="/details/{{id}}/{{../user.id}}">
 			 <button class="btn btn-warning"
 			 data-groupId='{{group.id}}'
 			 data-userId="{{../user.id}}"> View Group </button>	
-		</a>
+		</a> --}}
 
 	</div>
 {{!-- {{/each}}	 --}}
