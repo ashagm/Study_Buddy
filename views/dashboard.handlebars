@@ -14,7 +14,9 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" id=
                 "btn-search" type="submit">Search</button>
                 <div class="sign-out"></div>
-                <div class="username-display">{{user.user_name}}</div>
+                <div class="username-display">
+                  <a href="/user/{{user.id}}">{{user.first_name}}</a>
+                </div>
                 <!-- <button class="btn btn-outline-success my-2 my-sm-0 " id="sign-out" type="submit">Sign Out</button> -->
                 <button class="btn btn-danger" id="signout-btn" data-id={{user.id}}> Sign out </button>
             </form>

@@ -1,14 +1,15 @@
 <div class="wrapper">
-	<h1>{{user_name}}</h1>
+	<h1> My Profile</h1>
 	</div>
 	<div class="profile-div">
-		{{#each user}}
-				{{first_name}} {{last_name}} <br>
-				{{user_name}} <br>
-				{{user_email}}
-		{{/each}}
+		{{!-- {{#each user}} --}}
+				<h3>NAME : {{user.first_name}} {{user.last_name}} <br>
+				USERNAME : {{user.user_name}} <br>
+				EMAIL : {{user.user_email}} <h3>
+		{{!-- {{/each}} --}}
 	</div>
 	<div class="user-groups">
+		<h1> My GROUPS </h1>
 		{{#each user}}
 			{{group_name}}
 		{{/each}}
