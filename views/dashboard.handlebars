@@ -32,7 +32,7 @@
                       <div class="btngroup"id="btn-all-groups" value="VIEW ALL GROUPS"
                   			onclick="window.location.href='/api/groups'">VIEW ALL GROUPS</div>
                       <div class="btngroup" id="btn-your-groups" value="VIEW YOUR ADMIN GROUPS"
-                  			onclick="window.location.href='/api/admin/{{user.id}}'">VIEW YOUR ADMIN GROUPS</div>
+                  			onclick="window.location.href='/api/admin'">VIEW YOUR ADMIN GROUPS</div>
                        <div class="btngroup" id="btn-your-groups" value="VIEW YOUR GROUPS"
                 			onclick="window.location.href='/api/groups/{{user.id}}'">VIEW YOUR GROUPS</div>
                    </div>
@@ -49,22 +49,22 @@
     <div class="col-md-4 buttonGroup">
       <div>
         <button class="btn btn-warning btn-join-grp"
-        data-groupId='{{group.id}}'
+        data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
         data-userId="{{../user.id}}"> Join Group 
       </button> 
       </div>
       <div>
         <button class="btn btn-warning btn-goto-grp"
-        data-groupId='{{group.id}}'
+        data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
         data-userId="{{../user.id}}"> GOTO Group
       </button> 
       </div>
       <div>
-     <a href="/details/{{id}}/{{../user.id}}">
+{{!--      <a href="/details/{{id}}/{{../user.id}}">
        <button class="btn btn-warning btn-join-grp"
        data-groupId='{{group.id}}'
        data-userId="{{../user.id}}"> View Group </button> 
-    </a>
+    </a> --}}
     </div>
     </div>
     </div>

@@ -17,21 +17,23 @@ $(document).ready(function(){
 	});
 
 	$('.btn-join-grp').on('click', function(e){	
-
 		let userId = ($(this).attr('data-userId'));
 		let groupId = ($(this).attr('data-groupId'));
+		let userName = ($(this).attr('data-userName'));
 
 		let userJoinGrp = {
 			userId : userId,
-			groupId : groupId
+			groupId : groupId,
+			userName : userName
 		}
 
-		$.post('/api/joingroup/' + groupId + '/' + userId, userJoinGrp)
-		.then(function() {
-			console.log('Joined group!');
+		$.post('/api/joingroup/' + groupId + '/' + userId + "/" + userName, userJoinGrp)
+		.then(function(result) {
+			alert('You have joined the group!');
+			location.reload();
 		});
 
-		location.reload();
+		
 	});
 
 	$('.btn-goto-grp').on('click', function(e){	

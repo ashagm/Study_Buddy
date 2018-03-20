@@ -100,6 +100,29 @@ router.post('/api/signout', function(req,res){
     
 /* ----------------------DISPLAY ALL GROUPS --------------------------------*/
 
+router.get("/api/groups", function(req, res) {
+    models.group.findAll({})
+        .then(function(groups) {
+            // console.log("Is there a session?", req.mySession.user);
+            models.group_member.findAll({
+                where:{
+                    is_joined: false
+                }
+            }).then(function(grpStatus) {
+                models.user.findAll({
+                    where: { id: req.params.userId}
+                })  
+                console.log(grpStatus[0]);            
+                res.render("allgroups", 
+                    {
+                        groups: groups, 
+                        user: req.mySession.user,
+                        status: grpStatus
+                    });
+            });
+        });    
+});
+
 router.get("/api/groups/:userId", function(req, res) {
     models.group.findAll({})
         .then(function(groups) {
@@ -155,7 +178,8 @@ router.get('/api/group/:groupId/:userId', function(req, res) {
     });
 });
 
-// diplay all groups for the userID to the html
+/*------------------------Display User specific  groups --------------------------*/
+
 router.get('/groups/:userid', function(req, res) {
     models.group.findAll({
     }).then(function(group) {
@@ -235,13 +259,27 @@ router.get("/api/admin/:userId", function(req, res) {
     console.log("you are in the route" , req.params.userId);
     models.group_member.findAll({
         where: {
-            id : req.params.userId,
+            userId : req.params.userId,
             is_admin : true
         }
     }).then(function(results){
         res.json(results);
     }); 
 });
+
+router.get("/api/admin", function(req, res) {
+    var userID = req.mySession.user.id;
+
+    models.group_member.findAll({
+        where: {
+            userId : userID,
+            is_admin : true
+        }
+    }).then(function(results){
+        res.json(results);
+    }); 
+});
+
        
 /*------------------------CREATE GROUP -------------------------------------*/
 
