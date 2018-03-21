@@ -100,25 +100,24 @@ router.post('/api/signout', function(req,res){
     
 /* ----------------------DISPLAY ALL GROUPS --------------------------------*/
 
-router.get("/api/groups", function(req, res) {
-    models.group.findAll({})
-        .then(function(groups) {
-            // console.log("Is there a session?", req.mySession.user);
-            models.group_member.findAll({
-                where:{
-                    is_joined: false
-                }
-            }).then(function(grpStatus) {
-                models.user.findAll({
-                    where: { id: req.params.userId}
-                })  
-                console.log(grpStatus[0]);            
-                res.render("allgroups", 
-                    {
-                        groups: groups, 
-                        user: req.mySession.user,
-                        status: grpStatus
-                    });
+router.get("/api/all/groups/:userId", function(req, res) {
+    models.group_member.findAll({
+        where:{
+            is_joined: true
+        }
+    }).then(function(group_member) {
+        console.log(group_member);
+        models.group.findAll({
+        }).then(function(groups) {
+            models.user.findAll({
+                where: { id: req.params.userId}
+            })              
+            res.render("allgroups", 
+                {
+                    groups: groups, 
+                    user: req.mySession.user,
+                    status: group_member
+                });
             });
         });    
 });
@@ -147,13 +146,13 @@ router.post("/api/search/:term", function(req, res) {
 
 /* ----------------------DISPLAY GROUPS JOINED--------------------------------*/
 
-router.get("/api/groups/:userId", function(req, res) {
+router.get("/api/groups/joined/:userId", function(req, res) {
     models.group.findAll({})
         .then(function(groups) {
             // console.log("Is there a session?", req.mySession.user);
             models.group_member.findAll({
                 where:{
-                    is_joined: false
+                    is_joined: true
                 }
             }).then(function(grpStatus) {
                 models.user.findAll({
@@ -246,18 +245,32 @@ router.get('/details/:groupId/:userId', function(req, res) {
                 where: { id: req.params.groupId }
             }).then(function(group) {
                 models.group_member.findAll( {
-                    where: { groupId: req.params.groupId }
+                    where: { userId: req.params.userId,
+                             groupId: req.params.groupId 
+                            }
                 }).then(function(group_member) {
                     models.group_member_message.findAll({
                         where: { groupId: req.params.groupId}
                     }).then(function(group_member_message) {
-                        res.render('details', {
-                            details: details, 
-                            user: user, 
-                            group: group, 
-                            group_member: group_member,
-                            group_member_message: group_member_message
-                        });
+                        if(group_member.length === 0) {
+                            console.log('not a member');
+                            res.render('details', {
+                                details: details, 
+                                user: user, 
+                                group: group, 
+                                group_member: false,
+                                group_member_message: group_member_message
+                            });
+                        } else {
+                             res.render('details', {
+                                details: details, 
+                                user: user, 
+                                group: group, 
+                                group_member: group_member,
+                                group_member_message: group_member_message,
+                                is_joined: true
+                            });
+                         };
                     });
                 });   
             });

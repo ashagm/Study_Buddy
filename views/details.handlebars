@@ -8,31 +8,25 @@
 	Location: {{grp_location}} <br>
 {{/each}}
 
-{{#each group}}
-	<button id="join-button" 
-	data-userId="{{#each ../user}}{{id}}{{/each}}" 
-	data-groupId="{{id}}" 
-	data-userName="{{#each ../user}}{{user_name}}{{/each}}"
-	class="{{#each ../group_member}}member{{is_joined}}{{/each}}" 
-	type="submit">
-	Join Group!
-	</button>	
-{{/each}} <br> <br>
+{{#unless group_member}}
+	<button class="btn btn-warning btn-join-grp"
+		 data-groupId='{{#each group}}{{id}}{{/each}}' data-userName="{{#each user}}{{user_name}}{{/each}}"
+		 data-userId="{{#each user}}{{id}}{{/each}}"> Join Group 
+	</button>
+{{/unless}}	
+ <br> <br>
 
 {{#each group_member_message}}
 	{{user_name}}: {{message_text}}   ({{createdAt}})<br>
 {{/each}} <br><br><br>
 
-{{!-- {{#each group_member}} --}}
-	{{!-- {{#if ../is_joined}} --}}
-		
-	<form action="/api/postmessage/{{#each ../group}}{{id}}{{/each}}/{{#each ../user}}{{id}}{{/each}}/{{#each ../user}}{{user_name}}{{/each}}" method="POST">              
+{{#if is_joined}}		
+	<form action="/api/postmessage/{{#each group}}{{id}}{{/each}}/{{#each user}}{{id}}{{/each}}/{{#each user}}{{user_name}}{{/each}}" method="POST">              
 		<input type="text" id="message" name="message_text" placeholder="message">
 		    
 		<button class="post-message" type="submit">Post Message</button>   
 	</form> <br><br><br>
-	{{!-- {{/if}} --}}	
-{{!-- {{/each}} --}} <br><br><br>
+{{/if}}
 
 
 {{#each group_member}}
@@ -46,8 +40,8 @@
 		</form> <br> <br>
 			<button id="delete-group" data-groupId="{{#each ../group}}{{id}}{{/each}}"type="submit">DELETE GROUP</button> <br> <br>
 	{{/if}}
-{{/each}} 
- 
+{{/each}}
+
 
 
 

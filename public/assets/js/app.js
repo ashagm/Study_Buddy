@@ -1,11 +1,15 @@
+
+
 $(function() {
+
+
 	destroyGroup = (groupId) => {
 		$.ajax({
       		method: "DELETE",
       		url: "/api/deletegroup/" + groupId
     	}).then(function() {
       		console.log('group deleted');
-      		location.href = "/dashboard"
+      		window.location('/');
     	});
 	};
 
