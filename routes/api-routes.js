@@ -135,9 +135,9 @@ router.get("/api/search/:term", function(req, res) {
             }
         }
     }).then(function(groups) {   
-        console.log(groups);    
-        // res.json(groups) ;   
-        res.render('searchgroups', { 'groups' : groups });
+        // console.log(groups);    
+        res.json(groups) ;   
+        // res.render('searchgroups', { 'groups' : groups });
     });    
 });
         
