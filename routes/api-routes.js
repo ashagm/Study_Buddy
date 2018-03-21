@@ -178,24 +178,23 @@ router.get("/api/mygroups", function(req, res) {
                     {
                         groups: groups, 
                         user: req.mySession.user,
-                    });   
-            // res.json(groups);        
+                    });          
         });  
 });
 
 /*------------------------- DISPLAY GROUPS YOU ADMIN ------------------------------*/
 
-router.get("/api/admin/:userId", function(req, res) {
-    console.log("you are in the route" , req.params.userId);
-    models.group_member.findAll({
-        where: {
-            userId : req.params.userId,
-            is_admin : true
-        }
-    }).then(function(results){
-        res.json(results);
-    }); 
-});
+// router.get("/api/admin/:userId", function(req, res) {
+//     console.log("you are in the route" , req.params.userId);
+//     models.group_member.findAll({
+//         where: {
+//             userId : req.params.userId,
+//             is_admin : true
+//         }
+//     }).then(function(results){
+//         res.json(results);
+//     }); 
+// });
 
 router.get("/api/admin", function(req, res) {
     var userID = req.mySession.user.id;
@@ -209,8 +208,11 @@ router.get("/api/admin", function(req, res) {
                     }             
                 }]
     }).then(function(results){
-        // console.log(results);
-        res.render('displaygroups', { 'groups' : results });
+        console.log(results);
+        res.render('displaygroups', { 
+            groups : results,
+            user: req.mySession.user,
+            isAdmin : true });
         // res.json(results);
     }); 
 });
