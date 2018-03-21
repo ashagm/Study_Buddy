@@ -440,6 +440,20 @@ router.get('/user/:id', function(req, res) {
 module.exports = router;
 
 
+/* ------------------- USER LEAVE GROUP ROUTES ---------------------------------*/ 
+router.delete('/api/leavegroup/:userId/:groupId', function(req, res) {
+    let groupId = req.params.groupId;
+    let userId = req.params.userId;
+    models.group_member.destroy({
+        where: {
+            userId: userId,
+            groupId: groupId
+        }
+    }).then(function(result) {
+        console.log('user left');
+    });
+});
+
 
 
 
