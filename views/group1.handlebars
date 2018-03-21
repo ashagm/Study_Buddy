@@ -1,0 +1,40 @@
+<div class="container" style="color: #fff">
+<div class= "row text-center" style="color: #fff; border: 2px solid white">
+	<div class="col-md-12">
+		<h1> Hello {{user.user_name}}, Welcome to  {{group.group_name}} </h1>
+		<h4> Group Description : {{group.group_desc}}<h4>
+		<br>
+		<h5>
+		{{#if group.group_detail}}
+			<span> Meeting Time: {{group.group_detail.grp_date_time}} </span>
+			<span> Meeting Location: {{group.group_detail.grp_location}} </span>
+		{{/if}}
+		<h5>
+	</div>	
+</div>
+<div class="row text-center">
+	<div class="col-md-9 text-center" style="color: #fff; border: 2px solid #fff">
+		{{#each group.users as |groupUser|}}
+			{{#if groupUser.group_member.is_admin}}
+				{{#ifCond groupUser.group_member.userId ../user.id}}
+			        <div>Hi There Admin!! You can edit the Location/time!</div>
+					<form action="/api/create/groupdetails/{{../group.id}}" method="POST"> 
+						Location: <input type="text" id="details-location" name="grp_location" placeholder="Location">
+						Date : 	<input type="text" id="details-time" name="grp_date_time" placeholder="Time">
+						<button class="btn-group-details" type="submit">Submit</button>	
+					</form>	
+				{{/ifCond}}
+			{{/if}}		
+		{{/each}}	
+	</div>
+	<div class="col-md-3 text-center" style="color: #fff; border: 2px solid #fff">
+		<h3> Group Members</h3>
+		<h6> (Group Admin in Green) <h6>
+		<ul>
+			{{#each group.users as |user|}}			
+				<h4><li {{#if user.group_member.is_admin}}style="color:green"{{/if}}>{{user.user_name}}</li><h4>
+			{{/each}}
+		<ul>
+	</div>
+</div>	
+</div>

@@ -1,35 +1,30 @@
 <div class="container">
 {{#each groups as |group|}}	
+
 <div class="row" style="color:#fff; border: 1px solid red">
 	<div class="col-md-9">
 		<h2>Group Name: {{group.group_name}}</h2>
 		<h3>Group description: {{group.group_desc}}<h3>
 		<h5>Created On: {{group.createdAt}}<h5>	
-	</div>
+	</div>	
+	<div class="col-md-3">
+		{{#each group.users as |groupUser|}}
+			{{#ifCond groupUser.group_member.userId ../../user.id}}
+				You have joined this group!!
+    		{{/ifCond}} 
+		{{/each}} 
 
-{{!-- {{#each ../status}} --}}
-	<div class="col-md-3">	
-		{{!-- {{#if is_joined}} --}}
-    		<button class="btn btn-warning btn-goto-grp"
-		 		data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
-		 		data-userId="{{../user.id}}"> GOTO Group
-		 	</button>	
-    	{{!-- {{else}} --}}
-			<button class="btn btn-warning btn-join-grp"
-		 		data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
-		 		data-userId="{{../user.id}}"> Join Group 
-		 	</button>	
-    	{{!-- {{/if}}			 --}}
-
-{{!-- 		 <a href="/details/{{id}}/{{../user.id}}">
-			 <button class="btn btn-warning"
-			 data-groupId='{{group.id}}'
-			 data-userId="{{../user.id}}"> View Group </button>	
-		</a> --}}
-
-	</div>
-{{!-- {{/each}}	 --}}
-</div>
+		<button class="btn btn-warning btn-goto-grp"
+	 		data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
+	 		data-userId="{{../user.id}}"> GOTO Group
+	 	</button>
+{{!-- 
+		<button class="btn btn-warning btn-join-grp"
+ 		data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
+ 		data-userId="{{../user.id}}"> Join Group 
+ 		</button>    --}}		
+	</div>		
+</div>	
 {{/each}}	
 </div>
 
