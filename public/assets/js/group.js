@@ -48,10 +48,10 @@ $(document).ready(function(){
 	 		groupId : groupId
 	 	}
 
-		$.get('/group/' + groupId + '/' + userId, userGotoGrp)
+		$.get('/api/group/' + groupId + '/' + userId, userGotoGrp)
 		.then(function() {
 			console.log('Goto group!');
-			window.location.replace('/group/' + groupId + '/' + userId)
+			window.location.replace('/api/group/' + groupId + '/' + userId)
 	 	});
 
 	// 	// location.reload();
