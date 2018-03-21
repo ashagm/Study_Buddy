@@ -38,24 +38,24 @@ $(document).ready(function(){
 		});		
 	});
 
-	// $('.btn-goto-grp').on('click', function(e){	
+	 $('.btn-goto-grp').on('click', function(e){	
 
-	// 	let userId = ($(this).attr('data-userId'));
-	// 	let groupId = ($(this).attr('data-groupId'));
+	 	let userId = ($(this).attr('data-userId'));
+	 	let groupId = ($(this).attr('data-groupId'));
 
-	// 	let userGotoGrp = {
-	// 		userId : userId,
-	// 		groupId : groupId
-	// 	}
+	 	let userGotoGrp = {
+			userId : userId,
+	 		groupId : groupId
+	 	}
 
-	// 	$.get('/api/group/' + groupId + '/' + userId, userGotoGrp)
-	// 	.then(function() {
-	// 		console.log('Goto group!');
-	// 		window.location.replace('/api/group/' + groupId + '/' + userId)
-	// 	});
+		$.get('/api/group/' + groupId + '/' + userId, userGotoGrp)
+		.then(function() {
+			console.log('Goto group!');
+			window.location.replace('/api/group/' + groupId + '/' + userId)
+	 	});
 
 	// 	// location.reload();
-	// });
+	 });
 
 	$('.btn-group-details').on('click', function(event) {
 		// event.preventDefault();
