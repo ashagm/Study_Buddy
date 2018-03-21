@@ -10,9 +10,11 @@
 			id="btn-create-group" value="CREATE A GROUP"
 			data-toggle="modal" data-target="#newGroupModal">
              
-                <input class="form-control mr-sm-2" id="input-search-term" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control mr-sm-2" id="input-search-term" type="search" placeholder="Search Group" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" id=
-                "btn-search" type="submit">Search</button>
+                "btn-search" type="submit" 
+                {{!-- onclick="window.location.href='/api/search'" --}}
+                >Search</button>
                 <div class="sign-out"></div>
                 <div class="username-display">
                   <a href="/user/{{user.id}}">{{user.first_name}}</a>
