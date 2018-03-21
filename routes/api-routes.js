@@ -101,7 +101,6 @@ router.post('/api/signout', function(req,res){
 /* ----------------------DISPLAY ALL GROUPS --------------------------------*/
 
 router.get("/api/all/groups", function(req, res) {
-
     models.group.findAll({
         include: [{ 
             model: models.user,
