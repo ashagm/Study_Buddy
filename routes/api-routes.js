@@ -399,13 +399,21 @@ router.post('/api/postmessage/:groupId/:userId/:userName', function(req, res) {
 /* ------------------- USER PROFILE ROUTES ---------------------------------*/ 
 router.get('/user/:id', function(req, res) {
     console.log("In USER PROFILE");
-    models.user.findOne({
+    models.user.findAll({
         where: { id: req.params.id },
-        // include: [{model: models.group}]
-    }).then(function(result) {
-        console.log("Results :", result);
+        include: [
+            {
+                model: models.group,
+                through: {
+                  attributes: ['userId', 'groupId'],
+                  where: {is_joined: true, userId : req.params.id}
+                }     
+            }
+        ]
+    }).then(function(results) {
+        console.log("Results :", results);
         res.render('profile', {
-            user: result
+            user: results
         });
     });
 });
