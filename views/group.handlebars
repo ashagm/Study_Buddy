@@ -1,6 +1,7 @@
 <div class="container" style="color: #fff">
 <div class= "row" style="color: #fff">
 	<div class="col-md-12">
+	{{!-- header with group details --}}
 	{{#each group}}
 		<h1> Welcome to  {{group_name}} {{#each user}}{{user_name}}{{/each}}</h1>
 		<h3> Group Description : {{group_desc}}<h3>
@@ -13,7 +14,7 @@
 		Time: {{grp_date_time}} <br>
 		Location: {{grp_location}} <br>
 	{{/each}}
-
+{{!-- unless the user is a group member, the join group buttpn will be pn the page --}}
 {{#unless group_member}}
 	<button class="btn btn-warning btn-join-grp"
 		 data-groupId='{{#each group}}{{id}}{{/each}}' data-userName="{{#each user}}{{user_name}}{{/each}}"
@@ -24,21 +25,31 @@
 
  <div class="row" style="color: #fff">
 	<div class="col-md-12">
+		{{!-- All group members listed. If the user is the admin they will be labeled --}}
 		<h3> Group Members</h3><br>
 		<ul>
 		{{#each group_members}}
-			<h2><li>{{user_name}} {{#if is_admin}}- Admin{{/if}}</li></h2>
+			<h2><li>
+					{{#if online_status}}
+					<img class="online-photo" src="/assets/images/online.png">
+					{{/if}}
+				{{#unless online_status}}
+					<img class="offline-photo" src="/assets/images/offline.png">
+				{{/unless}}
+		{{user_name}} {{#if is_admin}}- Admin{{/if}}</li></h2>
 		{{/each}}
 		<ul>
 	</div>
 </div>	
 </div>
 
+{{!-- message area. if the user is joined they will be able to see this and post messages to the page --}}
+{{#if is_joined}}
 {{#each group_member_message}}
 	{{user_name}}: {{message_text}}   ({{createdAt}})<br>
 {{/each}} <br><br><br>
 
-{{#if is_joined}}		
+		
 	<form action="/api/postmessage/{{#each group}}{{id}}{{/each}}/{{#each user}}{{id}}{{/each}}/{{#each user}}{{user_name}}{{/each}}" method="POST">              
 		<input type="text" id="message" name="message_text" placeholder="message">
 		    
@@ -46,6 +57,12 @@
 	</form> <br><br><br>
 {{/if}}
 
+{{!-- button allowing the user to leave the group if they are joined --}}
+{{#if is_joined}}
+	<button id="leave-group" data-userId="{{#each user}}{{id}}{{/each}}" data-groupId="{{#each group}}{{id}}{{/each}}">Leave Group</button>
+{{/if}}
+
+{{!-- admin area: form to update the group details as well as a button to delete the group if they want tos --}}
 {{#each group_member}}
 	{{#if is_admin}}
 		<h1>Group Details</h1>
@@ -55,7 +72,7 @@
 		    
 		    <button class="create-details" data-id="{{#each ../group}}{{id}}{{/each}}" type="submit">Submit Details</button>   
 		</form> <br> <br>
-			<button id="delete-group" data-groupId="{{#each ../group}}{{id}}{{/each}}"type="submit">DELETE GROUP</button> <br> <br>
+			<button id="delete-group" data-groupId="{{#each ../group}}{{id}}{{/each}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
 	{{/if}}
 {{/each}}
 

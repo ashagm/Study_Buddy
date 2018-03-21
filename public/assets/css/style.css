@@ -359,11 +359,9 @@ select{
     border-radius:5px;
 }
 
-/*needed to hide the join button after clicked*/
-.membertrue {
-	display: none;
+.online-photo, .offline-photo {
+	max-width: 20px
 }
-
 
 /* .welcome {
     width: auto;
