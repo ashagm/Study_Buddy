@@ -77,9 +77,13 @@ $(document).ready(function(){
 		let inputSearchTerm = $("#input-search-term").val().trim();
 		console.log(inputSearchTerm);
 
-		$.post('/api/search/' + inputSearchTerm)
-		.then(function() {
-			console.log('Got results for the searched the term');
-		});
+		$.ajax("/api/search/" + inputSearchTerm, {
+			type: "GET"
+		}).then(
+			function(result) {
+				console.log("Got search results");
+				// window.location.replace('/api/search');
+			}
+		);
 	});
 });

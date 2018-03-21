@@ -124,7 +124,7 @@ router.get("/api/all/groups/:userId", function(req, res) {
 
 /* -------------------DISPLAY GROUPS ON SEARCH ---------------------------------*/
 
-router.post("/api/search/:term", function(req, res) {
+router.get("/api/search/:term", function(req, res) {
     let searchTerm = req.params.term;
 
     models.group.findAll({
@@ -134,40 +134,69 @@ router.post("/api/search/:term", function(req, res) {
             }
         }
     }).then(function(groups) {   
-        // console.log(groups);         
-        res.render("allgroups", 
-        {
-            groups: groups, 
-            user: req.mySession.user
-        });
+        // console.log(groups);    
+        res.json(groups) ;   
+        // res.render('searchgroups', { 'groups' : groups });
     });    
 });
         
 
 /* ----------------------DISPLAY GROUPS JOINED--------------------------------*/
 
-router.get("/api/groups/joined/:userId", function(req, res) {
-    models.group.findAll({})
-        .then(function(groups) {
-            // console.log("Is there a session?", req.mySession.user);
-            models.group_member.findAll({
-                where:{
-                    is_joined: true
-                }
-            }).then(function(grpStatus) {
-                models.user.findAll({
-                    where: { id: req.params.userId}
-                })  
-                console.log(grpStatus[0]);            
-                res.render("allgroups", 
+router.get("/api/mygroups", function(req, res) {
+    var userID = req.mySession.user.id;
+    models.group.findAll({
+        include: [{ 
+            model: models.user,
+                through: {
+                  attributes: ['userId', 'groupId', 'is_admin', 'is_joined'],
+                  where: {is_joined: true, userId : userID}
+                }             
+            }]
+        }).then(function(groups) {
+            // console.log(groups);
+            res.render("displaygroups", 
                     {
                         groups: groups, 
                         user: req.mySession.user,
-                        status: grpStatus
-                    });
-            });
-        });    
+                    });   
+            // res.json(groups);        
+        });  
 });
+
+/*------------------------- GROUPS YOU ADMIN ------------------------------*/
+
+router.get("/api/admin/:userId", function(req, res) {
+    console.log("you are in the route" , req.params.userId);
+    models.group_member.findAll({
+        where: {
+            userId : req.params.userId,
+            is_admin : true
+        }
+    }).then(function(results){
+        res.json(results);
+    }); 
+});
+
+router.get("/api/admin", function(req, res) {
+    var userID = req.mySession.user.id;
+
+    models.group.findAll({
+        include: [{ 
+                    model: models.user,
+                    through: {
+                      attributes: ['userId', 'groupId', 'is_admin'],
+                      where: {is_admin: true, userId : userID,}
+                    }             
+                }]
+    }).then(function(results){
+        // console.log(results);
+        res.render('displaygroups', { 'groups' : results });
+        // res.json(results);
+    }); 
+});
+
+
 
 /*------------------------DISPLAY SPECIFIC GROUP -------------------------------*/
 
@@ -290,39 +319,7 @@ router.get("/api/groups/:userId", function(req, res) {
     }); 
 });
 
-/*------------------------- GROUPS YOU ADMIN ------------------------------*/
 
-router.get("/api/admin/:userId", function(req, res) {
-    console.log("you are in the route" , req.params.userId);
-    models.group_member.findAll({
-        where: {
-            userId : req.params.userId,
-            is_admin : true
-        }
-    }).then(function(results){
-        res.json(results);
-    }); 
-});
-
-router.get("/api/admin", function(req, res) {
-    var userID = req.mySession.user.id;
-
-    models.group.findAll({
-        include: [{ 
-                    model: models.user,
-                    through: {
-                      attributes: ['userId', 'groupId', 'is_admin'],
-                      where: {is_admin: true, userId : userID,}
-                    }             
-                }]
-    }).then(function(results){
-        console.log(results);
-        res.render('admingroups', { 'groups' : results });
-        // res.json(results);
-    }); 
-});
-
-       
 /*------------------------CREATE GROUP -------------------------------------*/
 
 router.post("/api/group", function(req, res) {
@@ -415,13 +412,21 @@ router.post('/api/postmessage/:groupId/:userId/:userName', function(req, res) {
 /* ------------------- USER PROFILE ROUTES ---------------------------------*/ 
 router.get('/user/:id', function(req, res) {
     console.log("In USER PROFILE");
-    models.user.findOne({
+    models.user.findAll({
         where: { id: req.params.id },
-        // include: [{model: models.group}]
-    }).then(function(result) {
-        console.log("Results :", result);
+        include: [
+            {
+                model: models.group,
+                through: {
+                  attributes: ['userId', 'groupId'],
+                  where: {is_joined: true, userId : req.params.id}
+                }     
+            }
+        ]
+    }).then(function(results) {
+        console.log("Results :", results);
         res.render('profile', {
-            user: result
+            user: results
         });
     });
 });

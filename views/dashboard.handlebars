@@ -10,9 +10,11 @@
 			id="btn-create-group" value="CREATE A GROUP"
 			data-toggle="modal" data-target="#newGroupModal">
              
-                <input class="form-control mr-sm-2" id="input-search-term" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control mr-sm-2" id="input-search-term" type="search" placeholder="Search Group" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" id=
-                "btn-search" type="submit">Search</button>
+                "btn-search" type="submit" 
+                {{!-- onclick="window.location.href='/api/search'" --}}
+                >Search</button>
                 <div class="sign-out"></div>
                 <div class="username-display">
                   <a href="/user/{{user.id}}">{{user.first_name}}</a>
@@ -39,7 +41,7 @@
                   			onclick="window.location.href='/api/admin'">VIEW YOUR ADMIN GROUPS</div>
 
                        <div class="btngroup" id="btn-your-groups" value="VIEW YOUR GROUPS"
-                			onclick="window.location.href='/api/groups/joined/{{user.id}}'">VIEW YOUR GROUPS</div>
+                			onclick="window.location.href='/api/mygroups'">VIEW YOUR GROUPS</div>
                    </div>
                   
                   <div class="card group_list">
@@ -49,6 +51,7 @@
      <div class="col-md-8 cardgroup" >
     <div class="card-body">Group description: {{group.group_desc}}
     <h5>Created On: {{group.createdAt}}</h5>
+   
     </div>
     </div>
     <div class="col-md-4 buttonGroup">
@@ -107,6 +110,12 @@
 			<div class="form-group">
 	  			<label for="id-group-desc" style="color:red">Group Description:</label>
 	 			 <textarea class="form-control" rows="3" id="group-desc" placeholder="Enter group description"></textarea>
+
+  <label for="id-group-location" style="color:red">Location</label>
+         <input type="text" class="form-control" id="group-location" placeholder="Enter a group location(CITY)">
+
+
+
 			</div> 
 				<button class="btn btn-primary btn-lg" id="btn-create-grp" type="submit">Create Group</button>
 
@@ -117,10 +126,23 @@
 </div>
 
 
-<!-- 
+<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+
 <script>
- $('#btn-create-grp').on('click',function(err){
-  alert("clicked");
-  $(".modal.in").modal('hide');
- });
-</script>-->
+  window.sr = ScrollReveal({ reset: true });
+
+sr.reveal('.filtering',{ 
+  duration:500,
+  origin:'top'});
+
+sr.reveal('.card',{ 
+  duration:500,
+  origin:'bottom'});
+
+sr.reveal('#map',{ 
+  duration:500,
+  origin:'right'});
+sr.reveal('.navbar',{ 
+  duration:500,
+  origin:'bottom'});
+</script>
