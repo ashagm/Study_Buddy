@@ -34,7 +34,7 @@ $(document).ready(function(){
 			$self.html('JOINED!');
 			$self.css("background-color", "grey");
 			$self.attr('disabled', true);
-			// location.reload();
+			location.reload();
 		});		
 	});
 
@@ -48,10 +48,10 @@ $(document).ready(function(){
 	 		groupId : groupId
 	 	}
 
-		$.get('/api/group/' + groupId + '/' + userId, userGotoGrp)
+		$.get('/group/' + groupId + '/' + userId, userGotoGrp)
 		.then(function() {
 			console.log('Goto group!');
-			window.location.replace('/api/group/' + groupId + '/' + userId)
+			window.location.replace('/group/' + groupId + '/' + userId)
 	 	});
 
 	// 	// location.reload();

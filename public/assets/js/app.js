@@ -1,18 +1,15 @@
-
-
 $(function() {
+	// leave group button
+	$('#leave-group').on('click', function(event) {
+		let groupId = ($(this).attr('data-groupId'));
+		let userId = ($(this).attr('data-userId'));
+		if(confirm('Are you sure you want to leave this group? (You can always join again later.)')) {
+			console.log('user left group');
+			leaveGroup(userId, groupId);
+		}
+	});
 
-
-	destroyGroup = (groupId) => {
-		$.ajax({
-      		method: "DELETE",
-      		url: "/api/deletegroup/" + groupId
-    	}).then(function() {
-      		console.log('group deleted');
-      		window.location('/');
-    	});
-	};
-
+	// join group button
 	$('#join-button').on('click', function(event) {
 		let userId = ($(this).attr('data-userId'));
 		let groupId = ($(this).attr('data-groupId'));
@@ -29,6 +26,7 @@ $(function() {
 		location.reload();
 	});
 
+	// admin button to update/create group details
 	$('.create-details').on('click', function(event) {
 		// event.preventDefault();
 		let time = $('#details-time').val();
@@ -38,6 +36,7 @@ $(function() {
 		}
 	});
 
+	// admin button to delete group
 	$('#delete-group').on('click', function(event) {
 		let groupId = ($(this).attr('data-groupId'));
 		if(confirm('Are you sure you want to delete your group? (This cannot be undone)')) {
@@ -45,4 +44,26 @@ $(function() {
 			destroyGroup(groupId);
 		};
 	});
+
+	// delete group function
+	destroyGroup = (groupId) => {
+		$.ajax({
+      		method: 'DELETE',
+      		url: '/api/deletegroup/' + groupId
+    	}).then(function() {
+      	console.log('group deleted');
+      		
+    	});
+	};
+
+	// leave group button
+	leaveGroup = (userId, groupId) => {
+		$.ajax({
+			method: 'DELETE',
+			url: '/api/leavegroup/' + userId + '/' + groupId
+		}).then(function() {
+			console.log('bye');
+		})
+		location.reload();
+	};
 });
