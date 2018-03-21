@@ -44,11 +44,12 @@
 </div>
 
 {{!-- message area. if the user is joined they will be able to see this and post messages to the page --}}
+{{#if is_joined}}
 {{#each group_member_message}}
 	{{user_name}}: {{message_text}}   ({{createdAt}})<br>
 {{/each}} <br><br><br>
 
-{{#if is_joined}}		
+		
 	<form action="/api/postmessage/{{#each group}}{{id}}{{/each}}/{{#each user}}{{id}}{{/each}}/{{#each user}}{{user_name}}{{/each}}" method="POST">              
 		<input type="text" id="message" name="message_text" placeholder="message">
 		    

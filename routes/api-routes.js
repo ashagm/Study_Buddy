@@ -286,9 +286,8 @@ router.get('/group/:groupId/:userId', function(req, res) {
                     models.group_member.findAll({
                         where: { groupId: groupId }
                     }).then(function(group_members) {
-                        console.log(group_member.userId);
-                        models.user_status.findAll({
-                            where: { login_status: false }
+                        models.group_member_message.findAll({
+                            where: { groupId: groupId }
                             }).then(function(group_member_message) {
                                 if(group_member.length === 0) {
                                     console.log('not a member');
