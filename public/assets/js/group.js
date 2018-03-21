@@ -34,7 +34,7 @@ $(document).ready(function(){
 			$self.html('JOINED!');
 			$self.css("background-color", "grey");
 			$self.attr('disabled', true);
-			location.reload();
+			// location.reload();
 		});		
 	});
 
