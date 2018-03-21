@@ -1,14 +1,12 @@
-var db = require("../models");
+// var db = require("../models");
 const express = require('express');
 const router = express.Router();
 const models = require('../models/index.js');
-let sequelizeConnection = models.sequelize;
-sequelizeConnection.sync();
+// let sequelizeConnection = models.sequelize;
+// sequelizeConnection.sync();
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-
-
 
 /* ------------------- USER MODEL ROUTES ---------------------------------*/
 
@@ -102,6 +100,26 @@ router.post('/api/signout', function(req,res){
     
 /* ----------------------DISPLAY ALL GROUPS --------------------------------*/
 
+router.get("/api/all/groups", function(req, res) {
+
+    models.group.findAll({
+        include: [{ 
+            model: models.user,
+                through: {
+                  attributes: ['userId', 'groupId', 'is_admin', 'is_joined'],
+                }             
+            }]
+        }).then(function(allGroups) {
+            console.log(allGroups);
+            res.render("allgroups", 
+                    {
+                        groups: allGroups, 
+                        user: req.mySession.user,
+                    });   
+            // res.json(allGroups);        
+        });  
+});
+
 router.get("/api/all/groups/:userId", function(req, res) {
     models.group_member.findAll({
         where:{
@@ -166,7 +184,7 @@ router.get("/api/mygroups", function(req, res) {
         });  
 });
 
-/*------------------------- GROUPS YOU ADMIN ------------------------------*/
+/*------------------------- DISPLAY GROUPS YOU ADMIN ------------------------------*/
 
 router.get("/api/admin/:userId", function(req, res) {
     console.log("you are in the route" , req.params.userId);
@@ -198,60 +216,14 @@ router.get("/api/admin", function(req, res) {
     }); 
 });
 
-
-
-/*------------------------DISPLAY SPECIFIC GROUP -------------------------------*/
-
-// display clicked group to the html
-router.get('/api/group/:groupId/:userId', function(req, res) {
-
-    // console.log(req.params.groupId);
-    // console.log(req.params.userId);
-
-    models.group.findOne({
-        where : {
-            id : req.params.groupId
-        }
-    }).then(function(group) {
-        models.group_details.findOne({
-            where: { groupId: req.params.groupId }
-        }).then(function(details){
-            console.log("details", details);
-            models.group_member.findAll( {
-                    where: { groupId: req.params.groupId }
-            }).then(function(grpMembers){
-                //todo: get usernames from userIds after this
-                res.render('group', {
-                    group: group, 
-                    user: req.mySession.user,
-                    details: details,
-                    members: grpMembers
-                });
-            });       
-        });
-    });
-});
-
-/*------------------------Display User specific  groups --------------------------*/
-
-router.get('/groups/:userid', function(req, res) {
-    models.group.findAll({
-    }).then(function(group) {
-        models.user.findAll({
-            where: { id: req.params.userid }
-        }).then(function(user) {
-            res.render('index', {group: group, user: user});
-        }); 
-    });
-});
-
 /* ------------------- JOIN GROUP ROUTE ---------------------------------*/ 
 
 router.post('/api/joingroup/:groupId/:userId/:userName', function(req, res) {
-    console.log("in join group");
+    // console.log("in join group");
     let userId = req.params.userId;
     let groupId = req.params.groupId;
     let userName = req.params.userName;
+
     models.group_member.create({
         userId: userId,
         groupId: groupId,
@@ -265,7 +237,82 @@ router.post('/api/joingroup/:groupId/:userId/:userName', function(req, res) {
     });
 });
 
+/* ------------------- USER PROFILE ROUTE ---------------------------------*/ 
+
+router.get('/user/:id', function(req, res) {
+    console.log("In USER PROFILE");
+    models.user.findAll({
+        where: { id: req.params.id },
+        include: [
+            {
+                model: models.group,
+                through: {
+                  attributes: ['userId', 'groupId'],
+                  where: {is_joined: true, userId : req.params.id}
+                }     
+            }
+        ]
+    }).then(function(results) {
+        console.log("Results :", results);
+        res.render('profile', {
+            user: results
+        });
+    });
+});
+
+/*------------------------DISPLAY SPECIFIC GROUP -------------------------------*/
+
+router.get('/api/group/:groupId/:userId', function(req, res) {
+
+    models.group.findOne({
+        where: {id : req.params.groupId},
+        include: [
+            { 
+                model: models.group_details,
+                where: {groupId : req.params.groupId},
+                attributes: ['grp_date_time', 'grp_location']        
+            },
+            {
+                model: models.user,
+                through: {
+                  attributes: ['userId', 'groupId', 'user_name', 'is_admin', 'is_joined'],
+                  where: {is_joined: true}
+                } 
+            }]
+        }).then(function(result){
+            console.log(result);
+            //this is only for testing, will have to change
+            res.render('group1', {'group': result, 'user': req.mySession.user});
+        })
+
+    // models.group.findOne({
+    //     where : {id : req.params.groupId}
+                    
+    // }).then(function(group) {
+    //     models.group_details.findOne({
+    //         where: { groupId: req.params.groupId }
+    //     }).then(function(details){
+    //         console.log("details", details);
+    //         models.group_member.findAll( {
+    //                 where: { groupId: req.params.groupId }
+    //         }).then(function(grpMembers){
+    //             //todo: get usernames from userIds after this
+    //             res.render('group', {
+    //                 group: group, 
+    //                 user: req.mySession.user,
+    //                 details: details,
+    //                 members: grpMembers
+    //             });
+    //         });       
+    //     });
+    // });
+});
+
+
+// display clicked group to the html
+
 /*------------------------Display specific group --------------------------*/
+
 router.get('/group/:groupId/:userId', function(req, res) {
     let userId = req.params.userId;
     let groupId = req.params.groupId;
@@ -317,19 +364,6 @@ router.get('/group/:groupId/:userId', function(req, res) {
             });
         });
     });
-
-
-//display user groups ( member and admin)    
-router.get("/api/groups/:userId", function(req, res) {
-    console.log("you are in the route" , req.params.userId);
-    models.group_member.findAll({
-        where: {
-            user_id : req.params.userId
-        }
-    }).then(function(results){
-            res.json(results);
-    }); 
-});
 
 
 /*------------------------CREATE GROUP -------------------------------------*/
@@ -408,6 +442,7 @@ router.delete('/api/deletegroup/:groupId', function(req, res) {
 });
 
 /* --------------------POST MESSAGE DETAILS -------------------------------------*/
+
 router.post('/api/postmessage/:groupId/:userId/:userName', function(req, res) {
     models.group_member_message.create({
         groupId: req.params.groupId,
@@ -420,27 +455,30 @@ router.post('/api/postmessage/:groupId/:userId/:userName', function(req, res) {
     });
 });
 
-/* ------------------- USER PROFILE ROUTES ---------------------------------*/ 
-router.get('/user/:id', function(req, res) {
-    console.log("In USER PROFILE");
-    models.user.findAll({
-        where: { id: req.params.id },
-        include: [
-            {
-                model: models.group,
-                through: {
-                  attributes: ['userId', 'groupId'],
-                  where: {is_joined: true, userId : req.params.id}
-                }     
-            }
-        ]
-    }).then(function(results) {
-        console.log("Results :", results);
-        res.render('profile', {
-            user: results
-        });
-    });
-});
+/*------------------------Display User specific  groups --------------------------*/
+
+// router.get('/groups/:userid', function(req, res) {
+//     models.group.findAll({
+//     }).then(function(group) {
+//         models.user.findAll({
+//             where: { id: req.params.userid }
+//         }).then(function(user) {
+//             res.render('index', {group: group, user: user});
+//         }); 
+//     });
+// });
+// 
+// //display user groups ( member and admin)    
+// router.get("/api/groups/:userId", function(req, res) {
+//     console.log("you are in the route" , req.params.userId);
+//     models.group_member.findAll({
+//         where: {
+//             user_id : req.params.userId
+//         }
+//     }).then(function(results){
+//             res.json(results);
+//     }); 
+// });
 
 module.exports = router;
 

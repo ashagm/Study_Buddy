@@ -22,7 +22,20 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(express.static("public"));
 
 const exphbs = require("express-handlebars");
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+// app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+
+app.engine("handlebars", exphbs({
+  defaultLayout: "main",
+  helpers: {
+    ifCond: function(x, y, options) {
+      if(x == y) {
+        return options.fn(this);
+      }
+      return options.inverse(this);
+    }
+  }
+}));
+
 app.set("view engine", "handlebars");
 
 //session handler middleware
