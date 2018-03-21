@@ -1,32 +1,109 @@
+<style>
+	.wrapper{
+		width:1000px;
+		height:auto;
+		background: #E8E0D5;
+		margin:0 auto;
+		margin-top:40px;
+		overflow:hidden;
+		border-radius:5px 5px 5px 5px;
+	}
+	
+	.gotobtn{
+		float:right;
+	}
+	.grouplist{
+		width:800px;
+		margin-left:50px;
+		float:left;
+	}
+	.mygroupTitle{
+		text-align:center;
+		padding:2%;
+
+	}
+	hr{
+	border:2px solid lightgrey;
+	width:90%;
+	}
+	.user-profile{
+		background:coral;
+		padding:5%;
+		box-sizing: border-box;
+		font-family: 'Ubuntu Condensed', sans-serif;
+
+	}
+	.userGrouplist{
+		font-family: 'Ubuntu Condensed', sans-serif;
+	}
+	.top-text{
+		padding:2%;
+		margin-left:20px;
+	}
+	ul{
+		text-decoration:none;
+	}
+	.userimg{
+		width:80%;
+	height:100%;
+	background:lightgrey;
+	}
+
+
+</style>
 <div class="wrapper">
-	<h1> My Profile</h1>
+	<h1 class="top-text"> My PROFILE</h1>
+	<div class="row user-profile">
+	
+	<div class="col-md-4 userPicture">
+		<div class="userimg"></div>
 	</div>
-	<div class="profile-div" style="color:#fff">
+	
+	<div class="col-md-8 profile-div" style="color:#fff">
 		{{#each user as |user index|}}
-			<h3>NAME : {{user.first_name}} 
-				{{user.last_name}} <br>
-			USERNAME : {{user.user_name}} <br>
-			EMAIL : {{user.user_email}} <h3>
+			<h3>User Information</h3>
+			<br><ul>
+			<h4>USERNAME : {{user.user_name}} </h4>
+			<h4>EMAIL : {{user.user_email}} </h4>
+			First Name : {{user.first_name}}, Last Name :{{user.last_name}} <br>
+			</ul>
 		{{/each}}
 	</div>
+	</div>
+
 	<div class="user-groups">
 		{{#each user as |user|}}
-		<h1> My GROUPS </h1>
+		<h1 class="mygroupTitle"> My GROUPS </h1>
 			{{#each user.groups as |group index|}}
-			<div>
-			Group Name: {{group.group_name}} <br>
-			Group Desc : {{ group.group_desc}} <br>
-			Created On: {{ group.createdAt}} <br>
-			<div>
-			<button class="btn btn-warning btn-goto-grp"
-	 		data-groupId='{{group.id}}' 
-	 		data-userName=" {{user.user_name}}"
-		 	data-userId="{{user.id}}"> GOTO Group
-		 	</button>		
-			<hr>
 
+			<div class="userGrouplist">
+				<div class="grouplist">
+					<h4 class="groupName">Group Name: {{group.group_name}}</h4>
+					<ul>
+					<h4>Group Desc : {{ group.group_desc}} </h4>
+					<h5>Created On: {{ group.createdAt}} </h5>
+					</ul>
+				</div>
+					<button class="btn btn-warning btn-goto-grp"
+			 		data-groupId='{{group.id}}' 
+			 		data-userName=" {{user.user_name}}"
+				 	data-userId="{{user.id}}"> GOTO Group
+				 	</button>	
+			 </div>
+			<hr>
 			{{/each}}
 		{{/each}}
 	</div>
 </div>
 
+<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+
+<script>
+  window.sr = ScrollReveal({ reset: true });
+
+sr.reveal('.userGrouplist',{ 
+  duration:500,
+  origin:'bottom'});
+
+
+</script>
