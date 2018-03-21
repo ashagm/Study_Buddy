@@ -234,7 +234,7 @@ router.post('/api/joingroup/:groupId/:userId/:userName', function(req, res) {
 });
 
 // display clicked group to the html
-router.get('/details/:groupId/:userId', function(req, res) {
+router.get('/group/:groupId/:userId', function(req, res) {
     models.group_details.findAll({
         where: { groupId: req.params.groupId }
     }).then(function(details) {
@@ -249,6 +249,9 @@ router.get('/details/:groupId/:userId', function(req, res) {
                              groupId: req.params.groupId 
                             }
                 }).then(function(group_member) {
+                    models.group_member.findAll({
+                        where: { groupId: req.params.groupId }
+                    }).then(function(group_members) {
                     models.group_member_message.findAll({
                         where: { groupId: req.params.groupId}
                     }).then(function(group_member_message) {
@@ -259,14 +262,16 @@ router.get('/details/:groupId/:userId', function(req, res) {
                                 user: user, 
                                 group: group, 
                                 group_member: false,
+                                group_members: group_members,
                                 group_member_message: group_member_message
                             });
                         } else {
-                             res.render('details', {
+                             res.render('group', {
                                 details: details, 
                                 user: user, 
                                 group: group, 
                                 group_member: group_member,
+                                group_members:group_members,
                                 group_member_message: group_member_message,
                                 is_joined: true
                             });
@@ -276,6 +281,7 @@ router.get('/details/:groupId/:userId', function(req, res) {
             });
         });
     });
+});
 });
 
 //display user groups ( member and admin)    

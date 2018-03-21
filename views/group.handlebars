@@ -1,37 +1,63 @@
 <div class="container" style="color: #fff">
 <div class= "row" style="color: #fff">
 	<div class="col-md-12">
-		<h1> Welcome to  {{group.group_name}} {{user.user_name}}</h1>
-		<h3> Group Description : {{group.group_desc}}<h3>
+	{{#each group}}
+		<h1> Welcome to  {{group_name}} {{#each user}}{{user_name}}{{/each}}</h1>
+		<h3> Group Description : {{group_desc}}<h3>
+	{{/each}}
 	</div>	
 </div>
 <div class="row" style="color: #fff">
 	<div class="col-md-12">
-	{{#if details}}
-		Time: {{details.grp_date_time}} <br>
-		Location: {{details.grp_location}} <br>
-	{{/if}}
-	{{!-- {{#if members.is_admin}} --}} 
-	{{!-- check how to get admin info here --}}
-		<form action="/api/create/groupdetails/{{group.id}}" method="POST"> 
-			Location: <input type="text" id="details-location" name="grp_location" placeholder="Location">
-			Date : 	<input type="text" id="details-time" name="grp_date_time" placeholder="Time">
-			<button class="btn-group-details" type="submit">Submit</button>   
-		</form>	
-	{{!-- {{/if}}				 --}}
+	{{#each details}}
+		Time: {{grp_date_time}} <br>
+		Location: {{grp_location}} <br>
+	{{/each}}
 
+{{#unless group_member}}
+	<button class="btn btn-warning btn-join-grp"
+		 data-groupId='{{#each group}}{{id}}{{/each}}' data-userName="{{#each user}}{{user_name}}{{/each}}"
+		 data-userId="{{#each user}}{{id}}{{/each}}"> Join Group 
+	</button>
+{{/unless}}	
+ <br> <br>
 
-	</div>
-</div>	
-<div class="row" style="color: #fff">
+ <div class="row" style="color: #fff">
 	<div class="col-md-12">
-		<h3> Group Members  [Ids for now, will have to get user names]</h3><br>
+		<h3> Group Members</h3><br>
 		<ul>
-		{{#each members}}
-			<h2><li>{{userId}} </li></h2>
-			<h2><li>{{is_admin}} </li></h2>
+		{{#each group_members}}
+			<h2><li>{{user_name}} {{#if is_admin}}- Admin{{/if}}</li></h2>
 		{{/each}}
 		<ul>
 	</div>
 </div>	
 </div>
+
+{{#each group_member_message}}
+	{{user_name}}: {{message_text}}   ({{createdAt}})<br>
+{{/each}} <br><br><br>
+
+{{#if is_joined}}		
+	<form action="/api/postmessage/{{#each group}}{{id}}{{/each}}/{{#each user}}{{id}}{{/each}}/{{#each user}}{{user_name}}{{/each}}" method="POST">              
+		<input type="text" id="message" name="message_text" placeholder="message">
+		    
+		<button class="post-message" type="submit">Post Message</button>   
+	</form> <br><br><br>
+{{/if}}
+
+{{#each group_member}}
+	{{#if is_admin}}
+		<h1>Group Details</h1>
+		<form action="/api/create/groupdetails/{{#each ../group}}{{id}}{{/each}}" method="POST">              
+		    <input type="text" id="details-time" name="grp_date_time" placeholder="Time">
+		    <input type="text" id="details-location" name="grp_location" placeholder="Location">
+		    
+		    <button class="create-details" data-id="{{#each ../group}}{{id}}{{/each}}" type="submit">Submit Details</button>   
+		</form> <br> <br>
+			<button id="delete-group" data-groupId="{{#each ../group}}{{id}}{{/each}}"type="submit">DELETE GROUP</button> <br> <br>
+	{{/if}}
+{{/each}}
+
+	</div>
+</div>	
