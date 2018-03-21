@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 // const db = require('./models');
 
 let models = require('./models')
-// models.sequelize.sync();
+models.sequelize.sync();
 
 // Creating express app and configuring middleware needed for authentication
 var app = express();
