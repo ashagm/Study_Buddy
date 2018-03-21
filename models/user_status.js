@@ -2,7 +2,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var user_status = sequelize.define('user_status', {
-    user_id: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     login_status: 
         { 
           type: DataTypes.BOOLEAN, 

@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     user_name: DataTypes.STRING,
     groupId: DataTypes.INTEGER,
     user_name: DataTypes.STRING,
-    is_joined: DataTypes.BOOLEAN
+    is_joined: DataTypes.BOOLEAN,
+    online_status: DataTypes.BOOLEAN,
   }, {});
   group_member.associate = function(models) {
     // associations can be defined here

@@ -46,6 +46,7 @@ router.post("/api/signup", function(req, res) {
 //SIGNIN
 router.post("/api/signin", function(req, res) {
     const loginUser = req.body;
+    console.log(req.body);
     let reqPassword = req.body.password;
     let reqUserName = req.body.userName;
     console.log("From request", reqPassword, reqUserName);
@@ -63,9 +64,9 @@ router.post("/api/signin", function(req, res) {
             if(result) {
                 console.log("passwords match");
                 req.mySession.user = dbUser;
-                    models.user_status.create({
-                        user_id: dbUser.id,
-                        login_status: true
+                    models.group_member.update({
+                        online_status: true 
+                    }, { where: { userId: dbUser.id }   
                     }).then(function(result){
                         console.log(result);
                     }).catch(function(err) {
@@ -87,9 +88,10 @@ router.post("/api/signin", function(req, res) {
 //SIGNOUT
 router.post('/api/signout', function(req,res){
     console.log("Signing out User", req.body.userId); 
-    models.user_status.destroy({
+    models.group_member.update({
+        online_status: false }, {
         where: {
-            user_id: req.body.userId
+            userId: req.body.userId
         }
     }).then(function(result) {
         res.redirect('/signout');
@@ -255,63 +257,68 @@ router.post('/api/joingroup/:groupId/:userId/:userName', function(req, res) {
         groupId: groupId,
         user_name: userName,
         is_admin: false,
-        is_joined: true
+        is_joined: true,
+        online_status: true,
     }).then(function(result) {
         console.log("You have joined the group!", result);
         res.redirect('back');
     });
 });
 
-// display clicked group to the html
+/*------------------------Display specific group --------------------------*/
 router.get('/group/:groupId/:userId', function(req, res) {
+    let userId = req.params.userId;
+    let groupId = req.params.groupId;
     models.group_details.findAll({
-        where: { groupId: req.params.groupId }
+        where: { groupId: groupId }
     }).then(function(details) {
         models.user.findAll({
-            where: { id: req.params.userId }
+            where: { id: userId }
         }).then(function(user) {
             models.group.findAll({
-                where: { id: req.params.groupId }
+                where: { id: groupId }
             }).then(function(group) {
                 models.group_member.findAll( {
-                    where: { userId: req.params.userId,
-                             groupId: req.params.groupId 
+                    where: { userId: userId,
+                             groupId: groupId 
                             }
                 }).then(function(group_member) {
                     models.group_member.findAll({
-                        where: { groupId: req.params.groupId }
+                        where: { groupId: groupId }
                     }).then(function(group_members) {
-                    models.group_member_message.findAll({
-                        where: { groupId: req.params.groupId}
-                    }).then(function(group_member_message) {
-                        if(group_member.length === 0) {
-                            console.log('not a member');
-                            res.render('details', {
-                                details: details, 
-                                user: user, 
-                                group: group, 
-                                group_member: false,
-                                group_members: group_members,
-                                group_member_message: group_member_message
+                        console.log(group_member.userId);
+                        models.user_status.findAll({
+                            where: { login_status: false }
+                            }).then(function(group_member_message) {
+                                if(group_member.length === 0) {
+                                    console.log('not a member');
+                                    res.render('details', {
+                                        details: details, 
+                                        user: user, 
+                                        group: group, 
+                                        group_member: false,
+                                        group_members: group_members,
+                                        group_member_message: group_member_message
+                                    });
+                                } else {
+                                     res.render('group', {
+                                        details: details, 
+                                        user: user, 
+                                        group: group, 
+                                        group_member: group_member,
+                                        group_members:group_members,
+                                        group_member_message: group_member_message,
+                                        is_joined: true
+                                    });
+                                 };
                             });
-                        } else {
-                             res.render('group', {
-                                details: details, 
-                                user: user, 
-                                group: group, 
-                                group_member: group_member,
-                                group_members:group_members,
-                                group_member_message: group_member_message,
-                                is_joined: true
-                            });
-                         };
+                        });   
                     });
-                });   
+                });
             });
         });
     });
-});
-});
+
 
 //display user groups ( member and admin)    
 router.get("/api/groups/:userId", function(req, res) {
@@ -376,7 +383,7 @@ router.post('/api/create/groupdetails/:groupId', function(req, res) {
     });
 });
 
-/* --------------------DELETE GROUP DETAILS -------------------------------------*/
+/* --------------------DELETE GROUP -------------------------------------*/
 
 router.delete('/api/deletegroup/:groupId', function(req, res) {
     let groupId = req.params.groupId;
@@ -401,8 +408,7 @@ router.delete('/api/deletegroup/:groupId', function(req, res) {
         });
 });
 
-
-// post message
+/* --------------------POST MESSAGE DETAILS -------------------------------------*/
 router.post('/api/postmessage/:groupId/:userId/:userName', function(req, res) {
     models.group_member_message.create({
         groupId: req.params.groupId,

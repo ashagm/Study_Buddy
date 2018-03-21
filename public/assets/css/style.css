@@ -359,6 +359,10 @@ select{
     border-radius:5px;
 }
 
+.online-photo, .offline-photo {
+	max-width: 20px
+}
+
 /* .welcome {
     width: auto;
     height: auto;

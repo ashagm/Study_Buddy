@@ -29,7 +29,15 @@
 		<h3> Group Members</h3><br>
 		<ul>
 		{{#each group_members}}
-			<h2><li>{{user_name}} {{#if is_admin}}- Admin{{/if}}</li></h2>
+			<h2><li>
+				{{online_status}}
+					{{#if online_status}}
+					<img class="online-photo" src="/assets/images/online.png">
+					{{/if}}
+				{{#unless online_status}}
+					<img class="offline-photo" src="/assets/images/offline.png">
+				{{/unless}}
+		{{user_name}} {{#if is_admin}}- Admin{{/if}}</li></h2>
 		{{/each}}
 		<ul>
 	</div>

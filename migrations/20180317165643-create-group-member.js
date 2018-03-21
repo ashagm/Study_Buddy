@@ -23,6 +23,9 @@ module.exports = {
         is_joined: {
         type: Sequelize.BOOLEAN
       },
+      online_status: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
