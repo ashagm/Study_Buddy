@@ -1,5 +1,6 @@
 <div class="container">
 {{#each groups as |group|}}	
+
 {{#if group.users}}
 	<div class="row" style="color:#fff; border: 1px solid red">
 		<div class="col-md-9">
@@ -14,6 +15,9 @@
 	 		{{/each}}"
 		 	data-userId="{{#each group.users as |user|}}{{user.id}} {{/each}}"> GOTO Group
 		 	</button>	
+			{{#if ../isAdmin}}
+				<button id="delete-group" data-groupId="{{#each ../group}}{{id}}{{/each}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
+			{{/if}}	
 		</div>
 	</div>
 {{/if}}
