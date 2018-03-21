@@ -7,12 +7,13 @@
 			<h3>Group description: {{group.group_desc}}<h3>
 			<h5>Created On: {{group.createdAt}}<h5>	
 		</div>
-
 		<div class="col-md-3">	
-	    		<button class="btn btn-warning btn-goto-grp"
-			 		data-groupId='{{group.id}}' data-userName="{{group.users.user_name}}"
-			 		data-userId="{{group.users.user.id}}"> GOTO Group
-			 	</button>	
+    		<button class="btn btn-warning btn-goto-grp"
+	 		data-groupId='{{group.id}}' 
+	 		data-userName=" {{#each group.users as |user|}}{{user.user_name}} 
+	 		{{/each}}"
+		 	data-userId="{{#each group.users as |user|}}{{user.id}} {{/each}}"> GOTO Group
+		 	</button>	
 		</div>
 	</div>
 {{/if}}

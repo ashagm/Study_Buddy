@@ -1,17 +1,32 @@
 <div class="wrapper">
 	<h1> My Profile</h1>
 	</div>
-	<div class="profile-div">
-		{{!-- {{#each user}} --}}
-				<h3>NAME : {{user.first_name}} {{user.last_name}} <br>
-				USERNAME : {{user.user_name}} <br>
-				EMAIL : {{user.user_email}} <h3>
-		{{!-- {{/each}} --}}
+	<div class="profile-div" style="color:#fff">
+		{{#each user as |user index|}}
+			<h3>NAME : {{user.first_name}} 
+				{{user.last_name}} <br>
+			USERNAME : {{user.user_name}} <br>
+			EMAIL : {{user.user_email}} <h3>
+		{{/each}}
 	</div>
 	<div class="user-groups">
+		{{#each user as |user|}}
 		<h1> My GROUPS </h1>
-		{{#each user}}
-			{{group_name}}
+			{{#each user.groups as |group index|}}
+			<div>
+			Group Name: {{group.group_name}} <br>
+			Group Desc : {{ group.group_desc}} <br>
+			Created On: {{ group.createdAt}} <br>
+			<div>
+			<button class="btn btn-warning btn-goto-grp"
+	 		data-groupId='{{group.id}}' 
+	 		data-userName=" {{user.user_name}}"
+		 	data-userId="{{user.id}}"> GOTO Group
+		 	</button>		
+			<hr>
+
+			{{/each}}
 		{{/each}}
 	</div>
 </div>
+
