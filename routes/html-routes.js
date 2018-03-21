@@ -2,8 +2,9 @@ var db = require("../models");
 module.exports = function(app){
 
 	app.get("/", function(req, res) {
+		console.log(req.mySession);
 		if (req.mySession && req.mySession.user) {
-		  	res.render('dashboard', {"userId" : req.mySession.user.id});
+		  	res.render('dashboard', {"user" : req.mySession.user});
 		}else{
 			res.redirect("/signin");
 		}
