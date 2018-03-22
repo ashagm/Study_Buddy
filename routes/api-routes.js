@@ -289,9 +289,11 @@ router.get('/api/group/:groupId/:userId', function(req, res) {
             ]
         }).then(function(result){
             console.log(result);
-
             models.group_member_message.findAll({
-                include : [models.user]         
+                    where:{
+                        groupId : req.params.groupId
+                    }   
+                 
             }).then(function(subResult){
                 res.render('groupdetails', {'group': result, 'user': req.mySession.user, 'messages': subResult});
             });            
@@ -378,14 +380,14 @@ router.post("/api/group", function(req, res) {
                     grp_date_time: newGroup.groupDateTime
                 }).then(function(finalresult) {
                     console.log("New group_member row Created!!");
-                    models.group_member_message.create({
-                        groupId: result.id,
-                        userId: req.mySession.user.id,
-                        user_name: req.mySession.user.user_name,
-                        message_text: 'Post your messages here!',
-                    }).then(function(newGrpMember) {
-                        console.log(newGrpMember);
-                    });  
+                    // models.group_member_message.create({
+                    //     groupId: result.id,
+                    //     userId: req.mySession.user.id,
+                    //     user_name: req.mySession.user.user_name,
+                    //     // message_text: 'Post your messages here!',
+                    // }).then(function(newGrpMember) {
+                    //     console.log(newGrpMember);
+                    // });  
                 }).catch(function(err) {
                     console.log(err);
                     res.json(err);

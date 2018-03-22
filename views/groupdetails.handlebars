@@ -57,11 +57,13 @@
 			{{/each}}	
 		
 			{{#each messages}}
-				<div style="border: 1px solid white">
-					<p>{{message_text}}</p>
-					<p> By {{user_name}}</p>: 
-					<p> At :({{createdAt}})</p>
-				</div>			
+				{{#if message_text}}
+					<div style="border: 1px solid white">
+						<p>{{message_text}}</p>
+						<p> By {{user_name}}</p>: 
+						<p> At :({{createdAt}})</p>
+					</div>
+				{{/if}}				
 			{{/each}} <br>
 				
 
