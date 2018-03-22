@@ -1,0 +1,13 @@
+#right-card {
+    width: 108%;
+    margin-left: -8%;
+}
+#receivedmessage {
+	float: left;
+}
+#mymessage{
+	float: right;
+}
+/*#chatwindow {
+	margin-bottom: 60%;
+}*/
