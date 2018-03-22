@@ -128,10 +128,11 @@ router.get("/api/all/groups", function(req, res) {
             }]
         }).then(function(allGroups) {
             // console.log(allGroups);
-            res.render("allgroups", 
+            res.render("dashboard", 
                     {
                         groups: allGroups, 
                         user: req.mySession.user,
+                        displayAll: true
                     });   
             // res.json(allGroups);        
         });  
@@ -166,14 +167,17 @@ router.get("/api/search/:term", function(req, res) {
 
     models.group.findAll({
         where :{
-            group_desc: {
+            group_name: {
                 $like: searchTerm + '%'
             }
         }
     }).then(function(groups) {   
         console.log(groups);    
         res.json(groups) ;   
-        // res.render('searchgroups', { 'groups' : groups });
+        // res.render('dashboard', 
+        //     { 'groups' : groups,
+        //        user: req.mySession.user,
+        //        displayAll: true });
     });    
 });
         
@@ -192,10 +196,11 @@ router.get("/api/mygroups", function(req, res) {
             }]
         }).then(function(groups) {
             // console.log(groups);
-            res.render("displaygroups", 
+            res.render("dashboard", 
                     {
                         groups: groups, 
                         user: req.mySession.user,
+                        displayAll: false
                     });          
         });  
 });
@@ -215,9 +220,10 @@ router.get("/api/admin", function(req, res) {
                 }]
     }).then(function(results){
         console.log(results);
-        res.render('displaygroups', { 
+        res.render('dashboard', { 
             groups : results,
             user: req.mySession.user,
+            displayAll: false,
             isAdmin : true });
         // res.json(results);
     }); 
@@ -453,6 +459,7 @@ router.post('/api/postmessage/:groupId/:userId/:userName', function(req, res) {
 
 
 /* ------------------- LEAVE GROUP ROUTE ---------------------------------*/ 
+
 router.delete('/api/leavegroup/:userId/:groupId', function(req, res) {
     let groupId = req.params.groupId;
     let userId = req.params.userId;
