@@ -283,7 +283,7 @@ router.get('/api/group/:groupId/:userId', function(req, res) {
         }).then(function(result){
             console.log(result);
             //this is only for testing, will have to change
-            res.render('group1', {'group': result, 'user': req.mySession.user});
+            res.render('groupdetails', {'group': result, 'user': req.mySession.user});
         })
 
     // models.group.findOne({

@@ -1,6 +1,6 @@
 <div class="container" style="color: #fff">
-<div class= "row text-center" style="color: #fff; border: 2px solid white">
-	<div class="col-md-12">
+<div class= "row" style="color: #fff; border: 2px solid white">
+	<div class="col-md-10">
 		<h1> Hello {{user.user_name}}, Welcome to  {{group.group_name}} </h1>
 		<h4> Group Description : {{group.group_desc}}<h4>
 		<br>
@@ -10,6 +10,15 @@
 			<span> Meeting Location: {{group.group_detail.grp_location}} </span>
 		{{/if}}
 		<h5>
+	</div>
+	<div class="col-md-2">				
+		<button class="btn btn-warning btn-join-grp"
+			 data-groupId="{{group.id}}" data-userName="{{user.user_name}}"
+			 data-userId="{{user.id}}"
+			 {{#each group.users as |groupUser|}}	
+			 {{#ifCond groupUser.group_member.userId ../user.id}}
+			 disabled {{/ifCond}}{{/each}}	> Join Group 	 
+		</button>	
 	</div>	
 </div>
 <div class="row text-center">
