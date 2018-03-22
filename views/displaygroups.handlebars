@@ -16,7 +16,7 @@
 		 	data-userId="{{#each group.users as |user|}}{{user.id}} {{/each}}"> GOTO Group
 		 	</button>	
 			{{#if ../isAdmin}}
-				<button id="delete-group" data-groupId="{{#each ../group}}{{id}}{{/each}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
+				<button id="delete-group" data-groupId="{{group.id}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
 			{{/if}}	
 		</div>
 	</div>
