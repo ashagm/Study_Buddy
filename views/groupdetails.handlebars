@@ -19,10 +19,20 @@
 			 {{#ifCond groupUser.group_member.userId ../user.id}}
 			 disabled {{/ifCond}}{{/each}}	> Join Group 	 
 		</button>	
+		{{!-- button allowing the user to leave the group if they are joined --}}
+		{{#each group.users as |groupUser|}}	
+			{{#ifCond groupUser.group_member.userId ../user.id}}			
+				{{#if groupUser.group_member.is_admin}}
+				<button class="btn-danger" id="delete-group" data-groupId="{{../group.id}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
+				{{else}}
+				<button class="btn-warning" id="leave-group" data-userId="{{../user.id}}" data-groupId="{{../group.id}}">Leave Group</button>
+				{{/if}}
+			{{/ifCond}}
+		{{/each}}
 	</div>	
 </div>
-<div class="row text-center">
-	<div class="col-md-9 text-center" style="color: #fff; border: 2px solid #fff">
+<div class="row">
+	<div class="col-md-9" style="color: #fff; border: 2px solid #fff">
 		{{#each group.users as |groupUser|}}
 			{{#if groupUser.group_member.is_admin}}
 				{{#ifCond groupUser.group_member.userId ../user.id}}
@@ -32,10 +42,29 @@
 						Date : 	<input type="text" id="details-time" name="grp_date_time" placeholder="Time">
 						<button class="btn-group-details" type="submit">Submit</button>	
 					</form>	
-					<button id="delete-group" data-groupId="{{../group.id}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
 				{{/ifCond}}
 			{{/if}}		
 		{{/each}}	
+
+		<h1>DISCUSS</h1>
+			{{#each group.users as |groupUser|}}
+				{{#ifCond groupUser.group_member.userId ../user.id}}		
+					<form action="/api/postmessage/{{../group.id}}/{{../user.id}}/{{../user.user_name}}" method="POST">   
+						<textarea id="message" name="message_text" placeholder="Write your message" rows="4" cols="50"></textarea>           				    
+						<button class="post-message" type="submit">Post Message</button>   
+					</form> <br><br><br>
+				{{/ifCond}}	
+			{{/each}}	
+		
+			{{#each messages}}
+				<div style="border: 1px solid white">
+					<p>{{message_text}}</p>
+					<p> By {{user_name}}</p>: 
+					<p> At :({{createdAt}})</p>
+				</div>			
+			{{/each}} <br>
+				
+
 	</div>
 	<div class="col-md-3 text-center" style="color: #fff; border: 2px solid #fff">
 		<h3> Group Members</h3>
