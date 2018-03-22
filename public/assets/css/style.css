@@ -363,6 +363,10 @@ select{
 	max-width: 20px
 }
 
+ul {
+  list-style-type: none;
+}
+
 /* .welcome {
     width: auto;
     height: auto;

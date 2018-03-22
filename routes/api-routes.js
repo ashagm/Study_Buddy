@@ -276,7 +276,7 @@ router.get('/api/group/:groupId/:userId', function(req, res) {
             {
                 model: models.user,
                 through: {
-                  attributes: ['userId', 'groupId', 'user_name', 'is_admin', 'is_joined'],
+                  attributes: ['userId', 'groupId', 'user_name', 'is_admin', 'is_joined', 'online_status'],
                   where: {is_joined: true}
                 } 
             }]
