@@ -62,6 +62,14 @@ router.post("/api/signin", function(req, res) {
             if(result) {
                 console.log("passwords match");
                 req.mySession.user = dbUser;
+
+                    models.user_status.create({
+                        login_status: true,
+                        userId : dbUser.id
+                    }).then(function(status){
+                        console.log("You are online!", status)
+                    });
+
                     models.group_member.update({
                         online_status: true 
                     }, { where: { userId: dbUser.id }   
@@ -86,14 +94,24 @@ router.post("/api/signin", function(req, res) {
 //SIGNOUT
 router.post('/api/signout', function(req,res){
     console.log("Signing out User", req.body.userId); 
-    models.group_member.update({
-        online_status: false }, {
-        where: {
-            userId: req.body.userId
-        }
-    }).then(function(result) {
-        res.redirect('/signout');
-    });       
+    
+
+     models.user_status.destroy({
+        where : {
+            userId : req.body.userId
+            }
+        }).then(function(status){
+            console.log("You are offline!", status);
+            
+            models.group_member.update({
+            online_status: false }, {
+            where: {
+                userId: req.body.userId
+            }
+        }).then(function(result) {
+            res.redirect('/signout');
+        });  
+    });     
 });
 
 /* ------------------- GROUP MODEL ROUTES ---------------------------------*/ 
@@ -109,7 +127,7 @@ router.get("/api/all/groups", function(req, res) {
                 }             
             }]
         }).then(function(allGroups) {
-            console.log(allGroups);
+            // console.log(allGroups);
             res.render("allgroups", 
                     {
                         groups: allGroups, 

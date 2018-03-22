@@ -37,13 +37,22 @@ module.exports = function(app){
 
 		if (req.mySession && req.mySession.user) { // Check if session exists
 		    let userName =  req.mySession.user.user_name;
-		     console.log("Welcome ", userName);
+		    console.log("Welcome ", userName);
 
 		    let loggedInUser = req.mySession.user; 
 	        res.locals.user = loggedInUser;		
 	        // console.log(res.locals); //check how to access from locals
-	        // res.render('dashboard', {"userId" : loggedInUser.id});
-	        res.render('dashboard', {"user" : loggedInUser});
+
+	        db.user_status.findAll({
+		        where: {
+		            login_status : true
+		        }        
+		    }).then(function(results) {
+		        // res.render('dashboard', {"users" : results.length});
+		        res.render('dashboard', {"user" : loggedInUser , "total" : results.length});
+		    });
+
+	        // res.render('dashboard', {"user" : loggedInUser});
 	  	} else {
 		  	console.log("in else");
 		    res.redirect('/signin');
