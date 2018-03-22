@@ -1,13 +1,23 @@
 <style>
 	.wrapper{
-		width:1000px;
+		width:1050px;
 		height:auto;
 		background: #E8E0D5;
 		margin:0 auto;
 		margin-top:40px;
 		overflow:hidden;
-		border-radius:5px 5px 5px 5px;
+		border-radius:5px ;
+		padding:25px;
 	}
+ 
+			
+	.inner-wrap{
+		width:1000px;
+		height:auto;
+
+		background:white;
+
+	} 
 	
 	.gotobtn{
 		float:right;
@@ -30,6 +40,7 @@
 		background:coral;
 		padding:5%;
 		box-sizing: border-box;
+		border-radius:5px;
 		font-family: 'Ubuntu Condensed', sans-serif;
 
 	}
@@ -44,7 +55,7 @@
 		text-decoration:none;
 	}
 	.userimg{
-		width:80%;
+	width:80%;
 	height:100%;
 	background:lightgrey;
 	}
@@ -52,6 +63,7 @@
 
 </style>
 <div class="wrapper">
+	<div class="inner-wrap">
 	<h1 class="top-text"> My PROFILE</h1>
 	<div class="row user-profile">
 	
@@ -94,6 +106,7 @@
 			{{/each}}
 		{{/each}}
 	</div>
+</div>
 </div>
 
 <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
