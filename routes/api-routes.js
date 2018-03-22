@@ -62,6 +62,14 @@ router.post("/api/signin", function(req, res) {
             if(result) {
                 console.log("passwords match");
                 req.mySession.user = dbUser;
+
+                    models.user_status.create({
+                        login_status: true,
+                        userId : dbUser.id
+                    }).then(function(status){
+                        console.log("You are online!", status)
+                    });
+
                     models.group_member.update({
                         online_status: true 
                     }, { where: { userId: dbUser.id }   
@@ -86,14 +94,24 @@ router.post("/api/signin", function(req, res) {
 //SIGNOUT
 router.post('/api/signout', function(req,res){
     console.log("Signing out User", req.body.userId); 
-    models.group_member.update({
-        online_status: false }, {
-        where: {
-            userId: req.body.userId
-        }
-    }).then(function(result) {
-        res.redirect('/signout');
-    });       
+    
+
+     models.user_status.destroy({
+        where : {
+            userId : req.body.userId
+            }
+        }).then(function(status){
+            console.log("You are offline!", status);
+            
+            models.group_member.update({
+            online_status: false }, {
+            where: {
+                userId: req.body.userId
+            }
+        }).then(function(result) {
+            res.redirect('/signout');
+        });  
+    });     
 });
 
 /* ------------------- GROUP MODEL ROUTES ---------------------------------*/ 
@@ -109,7 +127,7 @@ router.get("/api/all/groups", function(req, res) {
                 }             
             }]
         }).then(function(allGroups) {
-            console.log(allGroups);
+            // console.log(allGroups);
             res.render("allgroups", 
                     {
                         groups: allGroups, 
@@ -153,7 +171,7 @@ router.get("/api/search/:term", function(req, res) {
             }
         }
     }).then(function(groups) {   
-        // console.log(groups);    
+        console.log(groups);    
         res.json(groups) ;   
         // res.render('searchgroups', { 'groups' : groups });
     });    
@@ -183,18 +201,6 @@ router.get("/api/mygroups", function(req, res) {
 });
 
 /*------------------------- DISPLAY GROUPS YOU ADMIN ------------------------------*/
-
-// router.get("/api/admin/:userId", function(req, res) {
-//     console.log("you are in the route" , req.params.userId);
-//     models.group_member.findAll({
-//         where: {
-//             userId : req.params.userId,
-//             is_admin : true
-//         }
-//     }).then(function(results){
-//         res.json(results);
-//     }); 
-// });
 
 router.get("/api/admin", function(req, res) {
     var userID = req.mySession.user.id;
@@ -261,7 +267,7 @@ router.get('/user/:id', function(req, res) {
     });
 });
 
-/*------------------------DISPLAY SPECIFIC GROUP -------------------------------*/
+/*------------------------DISPLAY SPECIFIC GROUP (ASHA) -------------------------------*/
 
 router.get('/api/group/:groupId/:userId', function(req, res) {
 
@@ -276,43 +282,24 @@ router.get('/api/group/:groupId/:userId', function(req, res) {
             {
                 model: models.user,
                 through: {
-                  attributes: ['userId', 'groupId', 'user_name', 'is_admin', 'is_joined'],
+                  attributes: ['userId', 'groupId', 'user_name', 'is_admin', 'is_joined', 'online_status'],
                   where: {is_joined: true}
                 } 
-            }]
+            }
+            ]
         }).then(function(result){
             console.log(result);
-            //this is only for testing, will have to change
-            res.render('group1', {'group': result, 'user': req.mySession.user});
-        })
 
-    // models.group.findOne({
-    //     where : {id : req.params.groupId}
-                    
-    // }).then(function(group) {
-    //     models.group_details.findOne({
-    //         where: { groupId: req.params.groupId }
-    //     }).then(function(details){
-    //         console.log("details", details);
-    //         models.group_member.findAll( {
-    //                 where: { groupId: req.params.groupId }
-    //         }).then(function(grpMembers){
-    //             //todo: get usernames from userIds after this
-    //             res.render('group', {
-    //                 group: group, 
-    //                 user: req.mySession.user,
-    //                 details: details,
-    //                 members: grpMembers
-    //             });
-    //         });       
-    //     });
-    // });
+            models.group_member_message.findAll({
+                include : [models.user]         
+            }).then(function(subResult){
+                res.render('groupdetails', {'group': result, 'user': req.mySession.user, 'messages': subResult});
+            });            
+        });
 });
 
 
-// display clicked group to the html
-
-/*------------------------Display specific group --------------------------*/
+/*------------------------Display specific group (COLE)--------------------------*/
 
 router.get('/group/:groupId/:userId', function(req, res) {
     let userId = req.params.userId;
@@ -382,17 +369,22 @@ router.post("/api/group", function(req, res) {
                 groupId: result.id,
                 userId: req.mySession.user.id,
                 user_name: req.mySession.user.user_name,
-                is_joined: true
+                is_joined: true,
+                online_status : true
             }).then(function(subResult){
                 models.group_details.create({
-                    groupId: result.id
+                    groupId: result.id,
+                    grp_location: newGroup.groupLocation,
+                    grp_date_time: newGroup.groupDateTime
                 }).then(function(finalresult) {
                     console.log("New group_member row Created!!");
                     models.group_member_message.create({
                         groupId: result.id,
+                        userId: req.mySession.user.id,
+                        user_name: req.mySession.user.user_name,
                         message_text: 'Post your messages here!',
-                    }).catch(function(err) {
-                        console.log(err);
+                    }).then(function(newGrpMember) {
+                        console.log(newGrpMember);
                     });  
                 }).catch(function(err) {
                     console.log(err);
@@ -445,6 +437,7 @@ router.delete('/api/deletegroup/:groupId', function(req, res) {
 /* --------------------POST MESSAGE DETAILS -------------------------------------*/
 
 router.post('/api/postmessage/:groupId/:userId/:userName', function(req, res) {
+    console.log(req.params);
     models.group_member_message.create({
         groupId: req.params.groupId,
         userId: req.params.userId,
@@ -456,35 +449,8 @@ router.post('/api/postmessage/:groupId/:userId/:userName', function(req, res) {
     });
 });
 
-/*------------------------Display User specific  groups --------------------------*/
 
-// router.get('/groups/:userid', function(req, res) {
-//     models.group.findAll({
-//     }).then(function(group) {
-//         models.user.findAll({
-//             where: { id: req.params.userid }
-//         }).then(function(user) {
-//             res.render('index', {group: group, user: user});
-//         }); 
-//     });
-// });
-// 
-// //display user groups ( member and admin)    
-// router.get("/api/groups/:userId", function(req, res) {
-//     console.log("you are in the route" , req.params.userId);
-//     models.group_member.findAll({
-//         where: {
-//             user_id : req.params.userId
-//         }
-//     }).then(function(results){
-//             res.json(results);
-//     }); 
-// });
-
-module.exports = router;
-
-
-/* ------------------- USER LEAVE GROUP ROUTES ---------------------------------*/ 
+/* ------------------- LEAVE GROUP ROUTE ---------------------------------*/ 
 router.delete('/api/leavegroup/:userId/:groupId', function(req, res) {
     let groupId = req.params.groupId;
     let userId = req.params.userId;
@@ -500,4 +466,4 @@ router.delete('/api/leavegroup/:userId/:groupId', function(req, res) {
 
 
 
-
+module.exports = router;

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Study Buddy!</title>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a class="navbar-brand" href="#"><h1>StudyBudy</h1></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Post a request</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled" href="#">My Account</a>
+                            </li>
+                        </ul>
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                            <button id="searchBttn" class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card" style="width: 20rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Admin Options</h5>
+                        <p id="location" class="card-text">Send Location</p>
+                        <p id="calendar" class="card-text">Send Calendar Invite</p>
+                        <p id="rename" class="card-text">Rename Group</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-secondary" type="button">Add to group</button>
+                                </div>
+                                <select class="custom-select" id="inputGroupSelect03">
+                                    <option selected>Choose...</option>
+                                    <option value="1">Member 1</option>
+                                    <option value="2">Member 2</option>
+                                    <option value="3">Member 3</option>
+                                </select>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-secondary" type="button">Change Group</button>
+                                </div>
+                                <select class="custom-select" id="inputGroupSelect03">
+                                    <option selected>Choose...</option>
+                                    <option value="1">Group 1</option>
+                                    <option value="2">Group 2</option>
+                                    <option value="3">Group 3s</option>
+                                </select>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">See all study groups</a>
+                        <a href="#" class="card-link">I can Tutor</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="right-card" class="card">
+                    <div class="card-header">
+                        <h2>Group Name</h2></div>
+                    <div id="chatwindow" class="card-body">
+                        <p id="receivedmessage" class="card-title">Messages received</p>
+                        <p id="mymessage" class="card-text">Messages sent</p>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Message" aria-label="Message" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
