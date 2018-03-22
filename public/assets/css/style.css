@@ -133,6 +133,7 @@ transition:0.5s;
     background: url("../images/banner1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    font-family: 'Cormorant Garamond', serif;
 }
 
 #signup-form, #signin-form{
@@ -153,8 +154,18 @@ label{
 	font-weight: bold;
 	font-family: 'Quicksand', sans-serif;
 }
-.btn{
-	
+
+#logo{
+	color: #FFCA54;
+	font-weight: bold;
+	font-size: 60px;
+}
+
+.modal-content{
+	background-color: #FFCA54;
+	color: white;
+}
+.btn{	
 	margin-right:20px;
 	margin-top:20px;
 	margin-bottom:30px;
@@ -166,6 +177,7 @@ margin-right:0;
 margin-top:5px;
 margin-bottom:10px;
 }
+
 #btn-create-grp{
 	width:150px;
 }
@@ -316,16 +328,22 @@ nav{
 	padding:1%;
 	padding-right:30px;
 	padding-left:30px;
+	margin: 0px 20px;
 	background:white;
 	line-height:3;
-	border-radius:5px;
+	border-radius:10px;
 	transition:0.2s;
 	font-weight:bold;
+	font-size: 20px;
 	color:#FFCA54;
 
 }
 .groupcontainer{
 	width:500px;
+}
+
+#wrapper{
+	margin-bottom: 50px;
 }
 
 .filtering div:hover{
@@ -336,7 +354,8 @@ nav{
 }
 
 .filtering{
-    height:50px;
+    height:100px;
+    padding-top: 25px;
     width:100%;
     background:#FFCA54;
     border:1px solid #FFCA54;

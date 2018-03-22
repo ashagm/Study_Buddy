@@ -15,6 +15,7 @@ $(document).ready(function(){
 		}).then(
 			function(result) {
 				console.log("Registered new group");
+				location.reload();
 			}
 		);
 	});

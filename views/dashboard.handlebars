@@ -1,82 +1,49 @@
 <nav class="navbar navbar-light bg-light justify-content-between navbar-fixed-top">
-            <a class="navbar-brand">STUDY BUDDY</a>
-            <div class="welcome">Welcome to study Buddy!!</div>
-            <a href="">{{> users/user-count-block}}</a>
-            <form class="form-inline">
-
+  <h1><a href="/" id="logo">STUDY BUDDY</a></h1>            
+  <a href="">{{> users/user-count-block}}</a>
+    <form class="form-inline">
 			<input TYPE="button" class="btn btn-outline-success my-2 my-sm-0 create_btn" 
 			id="btn-create-group" value="CREATE A GROUP"
 			data-toggle="modal" data-target="#newGroupModal">
              
-                <input class="form-control mr-sm-2" id="input-search-term" type="search" placeholder="Search Group" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" id=
-                "btn-search" type="submit" 
-                {{!-- onclick="window.location.href='/api/search'" --}}
-                >Search</button>
-                <div class="sign-out"></div>
-                <div class="username-display">
-                  <a href="/user/{{user.id}}">{{user.first_name}}</a>
-                </div>
-                <!-- <button class="btn btn-outline-success my-2 my-sm-0 " id="sign-out" type="submit">Sign Out</button> -->
-                <button class="btn btn-danger" id="signout-btn" data-id={{user.id}}> Sign out </button>
-            </form>
-            
-  </nav>
-        <div class="divider">
-            
-        </div>
-
-<div class="wrap">
-
-	<div class="body-container">
-            <div class="row">
-                <div class="col-md-7 list">
-	                 <div class="filtering">
-                      <div class="btngroup"id="btn-all-groups" value="VIEW ALL GROUPS"
-                  			onclick="window.location.href='/api/all/groups'">VIEW ALL GROUPS</div>
-                      <div class="btngroup" id="btn-your-groups" value="VIEW YOUR ADMIN GROUPS"
-                  			onclick="window.location.href='/api/admin'">VIEW YOUR ADMIN GROUPS</div>
-                       <div class="btngroup" id="btn-your-groups" value="VIEW YOUR GROUPS"
-                			onclick="window.location.href='/api/mygroups'">VIEW YOUR GROUPS</div>
-                   </div>
-                  
-                  <div class="card group_list">
-   
-    <h5 class="card-header">Group Name: {{group.group_name}}</h5>
-    <div class="row">
-     <div class="col-md-8 cardgroup" >
-    <div class="card-body">Group description: {{group.group_desc}}
-    <h5>Created On: {{group.createdAt}}</h5>
-   
-    </div>
-    </div>
-    <div class="col-md-4 buttonGroup">
-      <div>
-        <button class="btn btn-warning btn-goto-grp"
-        data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
-        data-userId="{{../user.id}}"> GOTO Group
-      </button> 
+      <input class="form-control mr-sm-2" id="input-search-term" type="search" placeholder="Search Group" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" id="btn-search" type="submit" {{!-- onclick="window.location.href='/api/search'" --}}>Search</button>
+                
+      <div class="sign-out"></div>                          
+      <div class="username-display">
+        <a href="/user/{{user.id}}">{{user.first_name}}</a>
       </div>
-      <div>
-    </div>
-    </div>
-    </div>
-  </div>
-            </div>
+      <button class="btn btn-danger" id="signout-btn" data-id={{user.id}}> Sign out </button>
+    </form>            
+</nav>
+<div class="divider"></div>
             
-            
-   
-
-    <div class="col-md-5" id="map"></div>
+<div class="wrapper">
+	<div class="body-container">
+    <div class="row">
+      <div class="col-md-12 list">
+        <div class="filtering">
+          <div class="btngroup" id="btn-all-groups" value="VIEW ALL GROUPS"
+    			onclick="window.location.href='/api/all/groups'">VIEW ALL GROUPS</div>
+          <div class="btngroup" id="btn-your-groups" value="VIEW YOUR ADMIN GROUPS"
+    			onclick="window.location.href='/api/admin'">VIEW YOUR ADMIN GROUPS</div>
+          <div class="btngroup" id="btn-your-groups" value="VIEW YOUR GROUPS"
+    			onclick="window.location.href='/api/mygroups'">VIEW YOUR GROUPS</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">  
+       <div class="col-md-12 cardgroup" >
+              {{> groups/display-all-groups}}
+        </div>         
      </div>
-   </div>
-         
-
+  </div>
+</div>
+        
 
   <!-- google map API-->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClQcm8IwvweRWwqoYG2pXFyv7RKh6Ed4Q&callback=initMap"></script>
+{{!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClQcm8IwvweRWwqoYG2pXFyv7RKh6Ed4Q&callback=initMap"></script> --}}
 
-        <!-- grop printing-->
 
 <!-- Modal -->
 <div id="newGroupModal" class="modal fade" role="dialog">
@@ -84,31 +51,29 @@
     <div class="modal-content">
       <div class="modal-header">
       	<h4 class="modal-title">CREATE A NEW GROUP</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>       
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
       	<form id="group-form" name="group" method="post">
 	        <div class="form-group">
-	  			  <label for="id-group-name" style="color:red">Group Name</label>
+	  			  <label for="id-group-name">Group Name</label>
 	 			    <input type="text" class="form-control" id="group-name" placeholder="Enter a group name">
           </div>
 			    <div class="form-group">
-	  			  <label for="id-group-desc" style="color:red">Group Description:</label>
+	  			  <label for="id-group-desc">Group Description:</label>
 	 			    <textarea class="form-control" rows="3" id="group-desc" placeholder="Enter group description"></textarea>
           </div>
           <div class="form-group">
-            <label for="id-group-location" style="color:red">Location</label>
+            <label for="id-group-location">Location</label>
             <input type="text" class="form-control" id="group-location" placeholder="Enter a group location(CITY)">            
           </div>
           <div class="form-group">
-            <label for="id-group-datetime" style="color:red">Date/Time</label>
+            <label for="id-group-datetime">Date/Time</label>
             <input type="text" class="form-control" id="group-datetime" placeholder="Enter date and time">            
           </div>
 			</div> 
-
-				<button class="btn btn-primary btn-lg" id="btn-create-grp" data-dismiss="modal" type="submit">Create Group</button>
-
-		</form>	
+				<button class="btn btn-primary btn-lg" id="btn-create-grp" style="background-color: #fff" data-dismiss="modal" type="submit">Create Group</button>
+		  </form>	
       </div>
     </div>
   </div>
