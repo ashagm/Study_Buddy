@@ -32,6 +32,7 @@
 						Date : 	<input type="text" id="details-time" name="grp_date_time" placeholder="Time">
 						<button class="btn-group-details" type="submit">Submit</button>	
 					</form>	
+					<button id="delete-group" data-groupId="{{../group.id}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
 				{{/ifCond}}
 			{{/if}}		
 		{{/each}}	
@@ -39,16 +40,18 @@
 	<div class="col-md-3 text-center" style="color: #fff; border: 2px solid #fff">
 		<h3> Group Members</h3>
 		<ul>
-			{{#each group.users as |user|}}			
-				<h4><li 
-					{{#if user.group_member.is_admin}}style="color:yellow"{{/if}}>
-				{{#if user.group_member.online_status}}
+			{{#each group.users as |groupUser|}}			
+				<h4><li {{#if groupUser.group_member.is_admin}}style="color:yellow"{{/if}}>
+				{{#if groupUser.group_member.online_status}}
 					<img class="online-photo" src="/assets/images/online.png">
-					{{/if}}
-				{{#unless user.group_member.online_status}}
+				{{/if}}
+				{{#unless groupUser.group_member.online_status}}
 					<img class="offline-photo" src="/assets/images/offline.png">
 				{{/unless}}
-				{{user.user_name}} {{#if user.group_member.is_admin}}- (Admin){{/if}}</li><h4>
+				{{groupUser.user_name}}
+				{{#ifCond groupUser.group_member.userId ../user.id}} (You) {{/ifCond}}
+				{{#if groupUser.group_member.is_admin}}- (Admin){{/if}}
+			</li><h4>
 			{{/each}}
 		<ul>
 	</div>
