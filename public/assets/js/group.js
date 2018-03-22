@@ -3,7 +3,10 @@ $(document).ready(function(){
 		e.preventDefault();
 		 var newGroup = {
 	    	groupName : $("#group-name").val().trim(),
-	      	groupDesc: $("#group-desc").val().trim()
+	      	groupDesc: $("#group-desc").val().trim(),
+	      	groupLocation: $("#group-location").val().trim(),
+	      	groupDateTime: $("#group-datetime").val().trim(),
+
 	    };
 	    console.log(newGroup);
 		$.ajax("/api/group", {
@@ -11,6 +14,7 @@ $(document).ready(function(){
 			data: newGroup
 		}).then(
 			function(result) {
+				alert("Your group created!!");
 				console.log("Registered new group");
 			}
 		);

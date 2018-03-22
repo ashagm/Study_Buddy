@@ -171,7 +171,7 @@ router.get("/api/search/:term", function(req, res) {
             }
         }
     }).then(function(groups) {   
-        // console.log(groups);    
+        console.log(groups);    
         res.json(groups) ;   
         // res.render('searchgroups', { 'groups' : groups });
     });    
@@ -400,10 +400,13 @@ router.post("/api/group", function(req, res) {
                 groupId: result.id,
                 userId: req.mySession.user.id,
                 user_name: req.mySession.user.user_name,
-                is_joined: true
+                is_joined: true,
+                online_status : true
             }).then(function(subResult){
                 models.group_details.create({
-                    groupId: result.id
+                    groupId: result.id,
+                    grp_location: newGroup.groupLocation,
+                    grp_date_time: newGroup.groupDateTime
                 }).then(function(finalresult) {
                     console.log("New group_member row Created!!");
                     models.group_member_message.create({
