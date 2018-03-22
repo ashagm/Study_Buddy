@@ -38,10 +38,17 @@
 	</div>
 	<div class="col-md-3 text-center" style="color: #fff; border: 2px solid #fff">
 		<h3> Group Members</h3>
-		<h6> (Group Admin in Red) <h6>
 		<ul>
 			{{#each group.users as |user|}}			
-				<h4><li {{#if user.group_member.is_admin}}style="color:red"{{/if}}>{{user.user_name}}</li><h4>
+				<h4><li 
+					{{#if user.group_member.is_admin}}style="color:yellow"{{/if}}>
+				{{#if user.group_member.online_status}}
+					<img class="online-photo" src="/assets/images/online.png">
+					{{/if}}
+				{{#unless user.group_member.online_status}}
+					<img class="offline-photo" src="/assets/images/offline.png">
+				{{/unless}}
+				{{user.user_name}} {{#if user.group_member.is_admin}}- (Admin){{/if}}</li><h4>
 			{{/each}}
 		<ul>
 	</div>
