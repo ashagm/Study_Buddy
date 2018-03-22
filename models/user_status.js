@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   user_status.associate = function(models) {
     // associations can be defined here
-    user_status.belongsTo(models.user);
+    user_status.belongsTo(models.user, {foreignKey : 'userId'});
   };
   return user_status;
 };

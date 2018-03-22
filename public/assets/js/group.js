@@ -14,7 +14,6 @@ $(document).ready(function(){
 			data: newGroup
 		}).then(
 			function(result) {
-				alert("Your group created!!");
 				console.log("Registered new group");
 			}
 		);

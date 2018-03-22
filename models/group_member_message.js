@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   group_member_message.associate = function(models) {
     // associations can be defined here
+    group_member_message.belongsTo(models.user, {foreignKey : 'userId'});
   };
   return group_member_message;
 };
