@@ -59,12 +59,15 @@
 	height:100%;
 	background:lightgrey;
 	}
+	#profileBack-btn{
+		margin-left:63%;
+	}
 
 
 </style>
 <div class="wrapper">
 	<div class="inner-wrap">
-	<h1 class="top-text"> My PROFILE</h1>
+	<h1 class="top-text"> My PROFILE <a href="/" class="btn btn-primary btn-lg" id="profileBack-btn"><span class="glyphicon glyphicon-plus"></span> Back</a></h1>
 	<div class="row user-profile">
 	
 	<div class="col-md-4 userPicture">
@@ -117,6 +120,10 @@
 sr.reveal('.userGrouplist',{ 
   duration:500,
   origin:'bottom'});
+
+sr.reveal('.top-text',{ 
+  duration:500,
+  origin:'left'});
 
 
 </script>
