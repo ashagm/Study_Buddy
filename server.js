@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const methodOverride = require('method-override');
 const session = require('client-sessions');
+const env = require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 // using sequelize to create tables in the database

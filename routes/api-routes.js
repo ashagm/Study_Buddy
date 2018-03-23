@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models/index.js');
+var nodemailer = require('nodemailer');
 // let sequelizeConnection = models.sequelize;
 // sequelizeConnection.sync();
 
@@ -32,6 +33,7 @@ router.post("/api/signup", function(req, res) {
 
             // console.log(result);
             console.log("New user Created in the Database");
+            sendEmail(newUser);
             res.redirect("/"); //why is this not working?
         }).catch(function(err) {
             console.log(err);
@@ -473,6 +475,34 @@ router.delete('/api/leavegroup/:userId/:groupId', function(req, res) {
     });
 });
 
+function sendEmail(newUser){
+    console.log(newUser);
 
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'study.buddy.rcb@gmail.com',
+        pass: 'studybuddy123'
+      },
+      tls: {
+        rejectUnauthorized: false
+      }
+    });
+
+    var mailOptions = {
+      from: 'study.buddy.rcb@gmail.com',
+      to: 'ashaagm@gmail.com',
+      subject: 'Hello there StudyBuddy!',
+      text: 'You are now registered into Study Buddy!'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+}
 
 module.exports = router;
