@@ -292,7 +292,7 @@ ul {
     background: url("../images/banner1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Roboto', sans-serif;
 }
 a{
 	
@@ -563,6 +563,40 @@ select{
 ul {
   list-style-type: none;
 }
+
+/*Mariuxi's CSS*/
+
+.container{
+	padding: 0;
+}
+.col-sm-4 {
+	padding: 0;
+}
+
+.col-sm-8{
+	padding: 0;
+}
+.col-sm-12{
+	padding: 0;
+}
+#mymessage{
+	text-align: right;
+}
+#online{
+	font-size: small;
+	margin-left: -20%;
+}
+
+
+/* .welcome {
+    width: auto;
+    height: auto;
+    background: red;
+    position: relative;
+    animation: myfirst 5s infinite;
+    animation-direction: alternate;
+    border-radius:20%;
+
 hr{
 	border:2px solid lightgrey;
 }
