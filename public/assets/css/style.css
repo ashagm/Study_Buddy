@@ -133,7 +133,7 @@ transition:0.5s;
     background: url("../images/banner1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 #signup-form, #signin-form{
@@ -385,6 +385,30 @@ select{
 ul {
   list-style-type: none;
 }
+
+/*Mariuxi's CSS*/
+
+.container{
+	padding: 0;
+}
+.col-sm-4 {
+	padding: 0;
+}
+
+.col-sm-8{
+	padding: 0;
+}
+.col-sm-12{
+	padding: 0;
+}
+#mymessage{
+	text-align: right;
+}
+#online{
+	font-size: small;
+	margin-left: -20%;
+}
+
 
 /* .welcome {
     width: auto;

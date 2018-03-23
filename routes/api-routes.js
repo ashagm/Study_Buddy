@@ -301,7 +301,7 @@ router.get('/api/group/:groupId/:userId', function(req, res) {
                     }   
                  
             }).then(function(subResult){
-                res.render('groupdetails', {'group': result, 'user': req.mySession.user, 'messages': subResult});
+                res.render('user', {'group': result, 'user': req.mySession.user, 'messages': subResult});
             });            
         });
 });
