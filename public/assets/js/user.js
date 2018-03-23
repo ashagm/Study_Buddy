@@ -56,4 +56,11 @@ $(document).ready(function(){
 	      }
 	    );
 	});
+
+	$('#signup-confirm-password').on('keyup', function () {
+		if ($('#signup-password').val() == $('#signup-confirm-password').val()) {
+			$('#message').html('Matching!!').css('color', 'green');
+		} else 
+		$('#message').html('Not Matching Yet!!').css('color', 'red');
+	});
 });
