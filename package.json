@@ -28,6 +28,7 @@
     "method-override": "^2.3.10",
     "mysql": "^2.15.0",
     "mysql2": "^1.5.2",
+    "nodemon": "^1.17.2",
     "npm": "^5.7.1",
     "path": "^0.12.7",
     "sequelize": "^4.37.4",

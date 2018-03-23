@@ -1,22 +1,17 @@
+<link href="https://fonts.googleapis.com/css?family=Roboto:100i,400" rel="stylesheet">
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
             <nav class="navbar navbar-light bg-light justify-content-between navbar-fixed-top">
               <h1><a href="/" id="logo">STUDY BUDDY</a></h1> 
               <a href="">{{> users/user-count-block}}</a>
-                <form class="form-inline">
-                        <input TYPE="button" class="btn btn-outline-success my-2 my-sm-0 create_btn" 
-                        id="btn-create-group" value="CREATE A GROUP"
-                        data-toggle="modal" data-target="#newGroupModal">
-                         
-                  <input class="form-control mr-sm-2" id="input-search-term" type="search" placeholder="Search Group" aria-label="Search">
-                  <button class="btn btn-outline-success my-2 my-sm-0" id="btn-search" type="submit" {{!-- onclick="window.location.href='/api/search'" --}}>Search</button>
-                            
+                <form class="form-inline">                            
                   <div class="sign-out"></div>                          
-                  <div class="username-display">Hey!
+                  <div class="username-display">
                     <a href="/user/{{user.id}}">{{user.first_name}}</a>
                   </div>
                   <button class="btn btn-danger" id="signout-btn" data-id={{user.id}}> Sign out </button>
+                  <a href="/" class="btn btn-primary btn-md" id="profileBack-btn"><span class="glyphicon glyphicon-plus"></span> Back</a>
                 </form>            
             </nav>
         </div>
@@ -27,40 +22,22 @@
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Admin Options</h5>
-                    {{#if group.group_detail}}
-            <span> Meeting Time: {{group.group_detail.grp_date_time}} </span><br>
-            <span> Meeting Location: {{group.group_detail.grp_location}} </span>
-        {{/if}}
-                    <p id="rename" class="card-text">Rename Group</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
+                    {{!-- Admin section  --}}
+                    <h5 id="admin" class="card-title">Admin Options</h5>
+                    {{#each group.users as |groupUser|}}
+                        {{#if groupUser.group_member.is_admin}}
+                            {{#ifCond groupUser.group_member.userId ../user.id}}
+                                <div><p style="margin:0;font-weight:bold;">Edit Location & Time</p></div>
+                                <form action="/api/create/groupdetails/{{../group.id}}" method="POST"> 
+                                    Location<input type="text" id="details-location" class="form-control" name="grp_location" placeholder="Location" aria-label="Message" aria-describedby="basic-addon2"><br>
+                                    Date<input type="text" id="details-time" class="form-control" name="grp_date_time" name="grp_location" placeholder="MM/DD/YR - Time" aria-label="Message" aria-describedby="basic-addon2"><br>
+                                    <button class="btn btn-warning btn-group-details" type="submit">Submit</button> 
+                                </form> 
+                            {{/ifCond}}
+                        {{/if}}     
+                    {{/each}}   
+                        {{!-- buttons to join delete and leave group  --}}
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                            </div>
-                            <div>
-                                <h5> Group Members</h5>
-                                <ul>
-                                    {{#each group.users as |groupUser|}}
-                                    <h4> <li id="online" {{#if groupUser.group_member.is_admin}}style="color:grey;"{{/if}}>
-                                     {{#if groupUser.group_member.online_status}}
-                                     <img class="online-photo" src="/assets/images/online.png">
-                                    {{/if}}
-                                    {{#unless groupUser.group_member.online_status}}
-                                     <img class="offline-photo" src="/assets/images/offline.png">
-                                    {{/unless}}
-                                    {{groupUser.user_name}}
-                                    {{#ifCond groupUser.group_member.userId ../user.id}} (You) {{/ifCond}}
-                                    {{#if groupUser.group_member.is_admin}}- (Admin){{/if}}
-                                    </li></h4>
-                                    {{/each}}
-                                    <ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <button class="btn btn-warning btn-join-grp"
                                          data-groupId="{{group.id}}" data-userName="{{user.user_name}}"
@@ -73,7 +50,7 @@
                                     {{#each group.users as |groupUser|}}    
                                         {{#ifCond groupUser.group_member.userId ../user.id}}            
                                             {{#if groupUser.group_member.is_admin}}
-                                            <button class="btn btn-danger" id="delete-group" data-groupId="{{../group.id}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
+                                            <button class="btn btn-warning" id="delete-group" data-groupId="{{../group.id}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
                                             {{else}}
                                             <button class="btn-warning" id="leave-group" data-userId="{{../user.id}}" data-groupId="{{../group.id}}">Leave Group</button>
                                             {{/if}}
@@ -81,60 +58,68 @@
                                     {{/each}}
                                 </div>
                             </div>
+                </div>
+                {{!-- display members of group  --}}
+                <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                            </div>
+                                <h5 class="groupmembers"> Group Members</h5>
+                                    <ul>
+                                        {{#each group.users as |groupUser|}}
+                                        <h4> <li id="online" {{#if groupUser.group_member.is_admin}}style="color:grey;"{{/if}}>
+                                         {{#if groupUser.group_member.online_status}}
+                                         <img class="online-photo" src="/assets/images/online.png">
+                                        {{/if}}
+                                        {{#unless groupUser.group_member.online_status}}
+                                         <img class="offline-photo" src="/assets/images/offline.png">
+                                        {{/unless}}
+                                        {{groupUser.user_name}}
+                                        {{#ifCond groupUser.group_member.userId ../user.id}} (You) {{/ifCond}}
+                                        {{#if groupUser.group_member.is_admin}}- (Admin){{/if}}
+                                        </li></h4>
+                                        {{/each}}
+                                    <ul>
+                          
+                            </div>
                         </li>
                     </ul>
-                    <div class="card-body">
-                        {{#each group.users as |groupUser|}}
-                        {{#if groupUser.group_member.is_admin}}
-                            {{#ifCond groupUser.group_member.userId ../user.id}}
-                                <div><h5>Edit Location & Time</h5></div>
-                                <form action="/api/create/groupdetails/{{../group.id}}" method="POST"> 
-                                    Location<input type="text" id="details-location" class="form-control" name="grp_location" placeholder="Location" aria-label="Message" aria-describedby="basic-addon2"><br>
-                                    Date<input type="text" id="details-time" class="form-control" name="grp_date_time" name="grp_location" placeholder="MM/DD/YR - Time" aria-label="Message" aria-describedby="basic-addon2"><br>
-                                    <button class="btn btn-warning btn-group-details" type="submit">Submit</button> 
-                                </form> 
-                            {{/ifCond}}
-                        {{/if}}     
-                    {{/each}}   
-
-                    </div>
                 </div>
             </div>
+            {{!-- chat section  --}}
+            {{!-- header --}}
             <div class="col-sm-8">
                 <div id="right-card" class="card">
                     <div class="card-header">
-                        <h2>{{group.group_name}}</h2>
-                        <p> {{group.group_desc}}</p>
+                        <h2 style="float:left;color: #FFCA54;font-weight: bolder;">{{group.group_name}}</h2><br><br>
+                        <p style="float:left;color:grey;"> {{group.group_desc}}</p>
+                        {{#if group.group_detail}}
+                            <span style="float:right;margin-top: -7%;"><b>Meeting Time:</b> {{group.group_detail.grp_date_time}} </span><br>
+                            <span style="float:right; margin-top: -7%;"><b>Meeting Location:</b> {{group.group_detail.grp_location}} </span>
+                        {{/if}}
                         </div>
+                    {{!-- chat window --}}
                     <div id="chatwindow" class="card-body">
+                        <div style="height:20rem;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+                            {{#each messages}}
+                                {{#if message_text}}
+                                    <div style="border: 1px solid white">
+                                        <p id="message">{{message_text}}</p><br>
+                                        <p id="author" class="text-justify font-weight-light">By {{{user_name}}} on {{{createdAt}}}</p>
+                                    </div>
+                                {{/if}}             
+                            {{/each}}
+                        </div>
                         {{#each group.users as |groupUser|}}
                             {{#ifCond groupUser.group_member.userId ../user.id}}        
                                 <form action="/api/postmessage/{{../group.id}}/{{../user.id}}/{{../user.user_name}}" method="POST">   
-                                    <textarea id="message" name="message_text" placeholder="Write your message" rows="4" cols="50"></textarea>                              
+                                    <textarea id="message" class="form-control" name="message_text" placeholder="Write your message" rows="4" cols="50"></textarea>                              
                                     <button class="btn btn-warning post-message" type="submit">Post Message</button>   
                                 </form> <br><br><br>
                             {{/ifCond}} 
-                        {{/each}}   
-                    
-                        {{#each messages}}
-                            {{#if message_text}}
-                                <div style="border: 1px solid white">
-                                    <p>{{message_text}}</p>
-                                    <p> By {{user_name}}</p>: 
-                                    <p> At :({{createdAt}})</p>
-                                </div>
-                            {{/if}}             
-                        {{/each}} <br>
-
-
-{{!--                         <p id="receivedmessage" class="card-title">Messages received</p>
-                        <p id="mymessage" class="card-text">Messages sent</p>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Message" aria-label="Message" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button">Send</button>
-                            </div>
-                        </div> --}}
+                        {{/each}}  
+                
                     </div>
                 </div>
             </div>
