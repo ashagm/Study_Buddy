@@ -500,8 +500,8 @@ function sendEmail(newUser){
       if (error) {
         console.log(error);
       } else {
-        console.log('Email successfully sent to : ', newUser.email);
-        console.log('Got response', info.response);
+        console.log('Email sent to: ',  newUser.email);
+        console.log('Response got :', info.response);
       }
     });
 }
