@@ -1,6 +1,9 @@
 {
   "name": "study_buddy",
   "version": "1.0.0",
+  "engines": {
+    "node": "9.4.0"
+  },
   "description": "An app to find a study partner",
   "main": "server.js",
   "scripts": {
