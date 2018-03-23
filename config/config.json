@@ -16,9 +16,14 @@
   },
   "production": {
     "use_env_variable": "JAWSDB_URL",
+    "ssl": true,
+        "dialectOptions": {
+            "ssl": true
+        },
      "dialect":"mysql",
         "dialectOptions": {
             "bigNumberStrings": true
         }
+
   }
 }
