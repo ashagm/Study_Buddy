@@ -16,6 +16,9 @@
   },
   "production": {
     "use_env_variable": "JAWSDB_URL",
-    "dialect": "mysql"
+     "dialect":"mysql",
+        "dialectOptions": {
+            "bigNumberStrings": true
+        }
   }
 }
