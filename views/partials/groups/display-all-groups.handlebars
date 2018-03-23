@@ -1,59 +1,56 @@
-<div class="container">
-
+<div class="container" style="padding: 20px">
 {{#if displayAll}}	
-
-{{#each groups as |group|}}	
-	<div class="row groupList" >
-		<div class="col-md-9">
-			<h2>Group Name: {{group.group_name}}</h2>
-			<ul>
-			<h4>Group description: {{group.group_desc}}<h3>
-			<h5>Created On: {{group.createdAt}}<h5>
-			</ul>	
-			<hr>
-	  	</div>	
-		<div class="col-md-3">
-			{{#each group.users as |groupUser|}}
-				{{#ifCond groupUser.group_member.userId ../../user.id}}
-					<h5>You have joined this group!!</h5>
-	    		{{/ifCond}} 
-			{{/each}} 
-
-			<button class="btn btn-warning btn-goto-grp"
-		 		data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
-		 		data-userId="{{../user.id}}"> GOTO Group
-		 	</button>	
-		</div>		
-	</div>	
-{{/each}}	
+	{{#each groups as |group|}}	
+		<div class="row" >
+			<div class="col-md-9">
+				<ul>
+					<h2>Group Name: {{group.group_name}}</h2>
+					<h4>Description: {{group.group_desc}}<h3>
+					<h5>Created On: {{formatDate group.createdAt}}<h5> 			
+				</ul>					
+		  	</div>	
+			<div class="col-md-3">
+				{{#each group.users as |groupUser|}}
+					{{#ifCond groupUser.group_member.userId ../../user.id}}
+						<h6 style="color: green">You have joined this group!!</h6>
+		    		{{/ifCond}} 
+				{{/each}} 
+				<button class="btn btn-warning btn-goto-grp"
+			 		data-groupId='{{group.id}}' data-userName="{{../user.user_name}}"
+			 		data-userId="{{../user.id}}"> GOTO Group
+			 	</button>	
+			</div>		
+		</div>
+		<hr>			
+	{{/each}}	
 
 {{else}}
 
-{{#each groups as |group|}}	
-{{#if group.users}}
-	<div class="row groupList">
-		<div class="col-md-9 groupdisplay">
-			<h2>Group Name: {{group.group_name}}</h2>
-			<ul>
-			<h3>Group description: {{group.group_desc}}<h3>
-			<h5>Created On: {{group.createdAt}}<h5>	
-				</ul>
-				<hr>
-		</div>
-		<div class="col-md-3">	
-    		<button class="btn btn-warning btn-goto-grp"
-	 		data-groupId='{{group.id}}' 
-	 		data-userName=" {{#each group.users as |user|}}{{user.user_name}} 
-	 		{{/each}}"
-		 	data-userId="{{#each group.users as |user|}}{{user.id}} {{/each}}"> GOTO Group
-		 	</button>	
-			{{#if ../isAdmin}}
-				<button id="delete-group" data-groupId="{{group.id}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
-			{{/if}}	
-		</div>
-	</div>
-{{/if}}
-{{/each}}	
+	{{#each groups as |group|}}	
+		{{#if group.users}}
+			<div class="row">
+				<div class="col-md-9">
+					<ul>					
+						<h2>Group Name: {{group.group_name}}</h2>
+						<h3>Description: {{group.group_desc}}<h3>
+						<h5>Created On: {{formatDate group.createdAt}}<h5>	
+					</ul>					
+				</div>
+				<div class="col-md-3">	
+		    		<button class="btn btn-warning btn-goto-grp"
+			 		data-groupId='{{group.id}}' 
+			 		data-userName=" {{#each group.users as |user|}}{{user.user_name}} 
+			 		{{/each}}"
+				 	data-userId="{{#each group.users as |user|}}{{user.id}} {{/each}}"> GOTO Group
+				 	</button>	
+					{{#if ../isAdmin}}
+						<button id="delete-group" class="btn-danger btn-delete" data-groupId="{{group.id}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
+					{{/if}}	
+				</div>
+			</div>
+			<hr>
+		{{/if}}
+	{{/each}}	
 </div>
 
 {{/if}}

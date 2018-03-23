@@ -23,6 +23,9 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(express.static("public"));
 
 const exphbs = require("express-handlebars");
+var handlebars     = require('handlebars');
+var handlebarsIntl = require('handlebars-intl');
+handlebarsIntl.registerWith(handlebars);
 // app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 
 app.engine("handlebars", exphbs({

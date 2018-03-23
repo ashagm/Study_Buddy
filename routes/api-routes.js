@@ -3,8 +3,6 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models/index.js');
 var nodemailer = require('nodemailer');
-// let sequelizeConnection = models.sequelize;
-// sequelizeConnection.sync();
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -129,7 +127,6 @@ router.get("/api/all/groups", function(req, res) {
                 }             
             }]
         }).then(function(allGroups) {
-            // console.log(allGroups);
             res.render("dashboard", 
                     {
                         groups: allGroups, 
