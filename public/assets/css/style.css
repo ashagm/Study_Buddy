@@ -586,7 +586,39 @@ ul {
 	font-size: small;
 	margin-left: -20%;
 }
-
+#admin{
+	text-align: center;
+	font-weight: bold;
+	color: #FFCA54;
+}
+.groupmembers{
+	text-align: center;
+	font-weight: bold;
+	color: #FFCA54;
+}
+#message{
+	float: left;
+	text-align: left;
+	font-family: 'Roboto', sans-serif;
+	color: #007bff;
+}
+#author{
+	float: right;
+	text-align: right;
+	font-size: x-small;
+	color: grey;
+	font-family: 'Roboto', sans-serif;
+}
+#time{
+	float: right;
+	text-align: right;
+	font-size: x-small;
+	color: grey;
+	font-family: 'Roboto', sans-serif;
+}
+#right-card{
+	height: 86%;
+}
 
 /* .welcome {
     width: auto;
