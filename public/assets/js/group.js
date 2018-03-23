@@ -86,7 +86,7 @@ $(document).ready(function(){
 		}).then(
 			function(result) {
 				console.log("Got search results");
-				// window.location.replace('/api/search');
+				window.location.replace('/api/search/' + inputSearchTerm);
 			}
 		);
 	});
