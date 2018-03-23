@@ -491,7 +491,7 @@ function sendEmail(newUser){
 
     var mailOptions = {
       from: 'study.buddy.rcb@gmail.com',
-      to: 'ashaagm@gmail.com',
+      to: newUser.email,
       subject: 'Hello there StudyBuddy!',
       text: 'You are now registered into Study Buddy!'
     };
@@ -500,7 +500,8 @@ function sendEmail(newUser){
       if (error) {
         console.log(error);
       } else {
-        console.log('Email sent: ' + info.response);
+        console.log('Email successfully sent to : ', newUser.email);
+        console.log('Got response', info.response);
       }
     });
 }
