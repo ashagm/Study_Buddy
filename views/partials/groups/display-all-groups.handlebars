@@ -1,18 +1,21 @@
 <div class="container">
 
-{{#if display}}	
+{{#if displayAll}}	
 
 {{#each groups as |group|}}	
-	<div class="row" style="color:#fff;border: 2px solid #fff">
+	<div class="row groupList" >
 		<div class="col-md-9">
 			<h2>Group Name: {{group.group_name}}</h2>
-			<h3>Group description: {{group.group_desc}}<h3>
-			<h5>Created On: {{group.createdAt}}<h5>	
+			<ul>
+			<h4>Group description: {{group.group_desc}}<h3>
+			<h5>Created On: {{group.createdAt}}<h5>
+			</ul>	
+			<hr>
 	  	</div>	
 		<div class="col-md-3">
 			{{#each group.users as |groupUser|}}
 				{{#ifCond groupUser.group_member.userId ../../user.id}}
-					You have joined this group!!
+					<h5>You have joined this group!!</h5>
 	    		{{/ifCond}} 
 			{{/each}} 
 
@@ -28,11 +31,14 @@
 
 {{#each groups as |group|}}	
 {{#if group.users}}
-	<div class="row" style="color:#fff; border: 1px solid red">
-		<div class="col-md-9">
+	<div class="row groupList">
+		<div class="col-md-9 groupdisplay">
 			<h2>Group Name: {{group.group_name}}</h2>
+			<ul>
 			<h3>Group description: {{group.group_desc}}<h3>
 			<h5>Created On: {{group.createdAt}}<h5>	
+				</ul>
+				<hr>
 		</div>
 		<div class="col-md-3">	
     		<button class="btn btn-warning btn-goto-grp"

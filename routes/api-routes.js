@@ -173,11 +173,11 @@ router.get("/api/search/:term", function(req, res) {
         }
     }).then(function(groups) {   
         console.log(groups);    
-        res.json(groups) ;   
-        // res.render('dashboard', 
-        //     { 'groups' : groups,
-        //        user: req.mySession.user,
-        //        displayAll: true });
+        // res.json(JSON.stringify(groups)) ;   
+        res.render('dashboard', 
+            { 'groups' : groups,
+               user: req.mySession.user,
+               displayAll: true });
     });    
 });
         
