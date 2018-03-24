@@ -67,7 +67,7 @@
 </style>
 <div class="wrapper">
 	<div class="inner-wrap">
-	<h1 class="top-text"> My PROFILE <a href="/" class="btn btn-primary btn-lg" id="profileBack-btn"><span class="glyphicon glyphicon-plus"></span> Back</a></h1>
+	<h1 class="top-text"> My PROFILE <a href="/api/all/groups" class="btn btn-primary btn-lg" id="profileBack-btn"><span class="glyphicon glyphicon-plus"></span> Back</a></h1>
 	<div class="row user-profile">
 	
 	<div class="col-md-4 userPicture">
@@ -80,7 +80,7 @@
 			<br><ul>
 			<h4>USERNAME : {{user.user_name}} </h4>
 			<h4>EMAIL : {{user.user_email}} </h4>
-			First Name : {{user.first_name}}, Last Name :{{user.last_name}} <br>
+			<h4>First Name : {{user.first_name}}, Last Name :{{user.last_name}} <h4><br>
 			</ul>
 		{{/each}}
 	</div>
