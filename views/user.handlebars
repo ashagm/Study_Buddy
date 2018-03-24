@@ -37,8 +37,8 @@
                         {{/if}}     
                     {{/each}}   
                         {{!-- buttons to join delete and leave group  --}}
-                        <div class="input-group mb-3">
-                                <div class="input-group-prepend">
+                        {{!-- <div class="input-group mb-3"> --}}
+                                {{!-- <div class="input-group-prepend"> --}}
                                     <button class="btn btn-warning btn-join-grp"
                                          data-groupId="{{group.id}}" data-userName="{{user.user_name}}"
                                          data-userId="{{user.id}}"
@@ -50,14 +50,14 @@
                                     {{#each group.users as |groupUser|}}    
                                         {{#ifCond groupUser.group_member.userId ../user.id}}            
                                             {{#if groupUser.group_member.is_admin}}
-                                            <button class="btn-danger" id="delete-group" data-groupId="{{../group.id}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
+                                            <button class="btn-danger" id="delete-group" data-groupId="{{../group.id}}"type="submit" onclick="window.location.href='/'" style="background-color:red">DELETE GROUP</button> <br> <br>
                                             {{else}}
                                             <button class="btn btn-warning" id="leave-group" data-userId="{{../user.id}}" data-groupId="{{../group.id}}">Leave Group</button>
                                             {{/if}}
                                         {{/ifCond}}
                                     {{/each}}
-                                </div>
-                            </div>
+                                {{!-- </div> --}}
+                            {{!-- </div> --}}
                 </div>
                 {{!-- display members of group  --}}
                 <ul class="list-group list-group-flush">
