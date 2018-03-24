@@ -52,7 +52,7 @@
                                             {{#if groupUser.group_member.is_admin}}
                                             <button class="btn-danger" id="delete-group" data-groupId="{{../group.id}}"type="submit" onclick="window.location.href='/'">DELETE GROUP</button> <br> <br>
                                             {{else}}
-                                            <button class="btn-warning" id="leave-group" data-userId="{{../user.id}}" data-groupId="{{../group.id}}">Leave Group</button>
+                                            <button class="btn btn-warning" id="leave-group" data-userId="{{../user.id}}" data-groupId="{{../group.id}}">Leave Group</button>
                                             {{/if}}
                                         {{/ifCond}}
                                     {{/each}}
