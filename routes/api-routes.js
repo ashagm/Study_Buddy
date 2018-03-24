@@ -28,8 +28,6 @@ router.post("/api/signup", function(req, res) {
             user_name: newUser.userName,
             user_password: newUser.password
         }).then(function(result){
-
-            // console.log(result);
             console.log("New user Created in the Database");
             sendEmail(newUser);
             res.redirect("/"); //why is this not working?
@@ -95,7 +93,6 @@ router.post("/api/signin", function(req, res) {
 router.post('/api/signout', function(req,res){
     console.log("Signing out User", req.body.userId); 
     
-
      models.user_status.destroy({
         where : {
             userId : req.body.userId
@@ -132,8 +129,7 @@ router.get("/api/all/groups", function(req, res) {
                         groups: allGroups, 
                         user: req.mySession.user,
                         displayAll: true
-                    });   
-            // res.json(allGroups);        
+                    });          
         });  
 });
 
@@ -224,7 +220,6 @@ router.get("/api/admin", function(req, res) {
             user: req.mySession.user,
             displayAll: false,
             isAdmin : true });
-        // res.json(results);
     }); 
 });
 
@@ -384,15 +379,7 @@ router.post("/api/group", function(req, res) {
                     grp_location: newGroup.groupLocation,
                     grp_date_time: newGroup.groupDateTime
                 }).then(function(finalresult) {
-                    console.log("New group_member row Created!!");
-                    // models.group_member_message.create({
-                    //     groupId: result.id,
-                    //     userId: req.mySession.user.id,
-                    //     user_name: req.mySession.user.user_name,
-                    //     // message_text: 'Post your messages here!',
-                    // }).then(function(newGrpMember) {
-                    //     console.log(newGrpMember);
-                    // });  
+                    console.log("New group_member row Created!!"); 
                 }).catch(function(err) {
                     console.log(err);
                     res.json(err);
@@ -471,6 +458,8 @@ router.delete('/api/leavegroup/:userId/:groupId', function(req, res) {
         console.log('user left');
     });
 });
+
+/*----------------------SEND EMAIL ----------------------------------------*/
 
 function sendEmail(newUser){
     console.log(newUser);

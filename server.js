@@ -5,8 +5,6 @@ const session = require('client-sessions');
 const env = require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
-// using sequelize to create tables in the database
-// const db = require('./models');
 
 let models = require('./models')
 models.sequelize.sync();
@@ -23,10 +21,10 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(express.static("public"));
 
 const exphbs = require("express-handlebars");
-var handlebars     = require('handlebars');
+const handlebars  = require('handlebars');
 var handlebarsIntl = require('handlebars-intl');
 handlebarsIntl.registerWith(handlebars);
-// app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+
 
 app.engine("handlebars", exphbs({
   defaultLayout: "main",
