@@ -106,7 +106,7 @@
                                 {{#if message_text}}
                                     <div style="border: 1px solid black">
                                         <p id="message">{{message_text}}</p><br>
-                                        <p id="author" class="font-weight-light">By {{{user_name}}} on {{{createdAt}}}</p>
+                                        <p id="author" class="font-weight-light">By {{{user_name}}} on {{{formatTime createdAt}}}</p>
                                     </div>
                                 {{/if}}             
                             {{/each}}
