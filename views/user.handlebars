@@ -104,9 +104,9 @@
                         <div style="height:20rem;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
                             {{#each messages}}
                                 {{#if message_text}}
-                                    <div style="border: 1px solid white">
+                                    <div style="border: 1px solid black">
                                         <p id="message">{{message_text}}</p><br>
-                                        <p id="author" class="text-justify font-weight-light">By {{{user_name}}} on {{{createdAt}}}</p>
+                                        <p id="author" class="font-weight-light">By {{{user_name}}} on {{{createdAt}}}</p>
                                     </div>
                                 {{/if}}             
                             {{/each}}

@@ -597,10 +597,12 @@ ul {
 	color: #FFCA54;
 }
 #message{
-	float: left;
-	text-align: left;
-	font-family: 'Roboto', sans-serif;
+	/*float: left;*/
+	/*text-align: left;*/
+	padding: 5px;
+	/*font-family: 'Roboto', sans-serif;*/
 	color: #007bff;
+
 }
 #author{
 	float: right;
