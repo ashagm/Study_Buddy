@@ -23,10 +23,10 @@
             <div class="card">
                 <div class="card-body">
                     {{!-- Admin section  --}}
-                    <h5 id="admin" class="card-title">Admin Options</h5>
                     {{#each group.users as |groupUser|}}
                         {{#if groupUser.group_member.is_admin}}
                             {{#ifCond groupUser.group_member.userId ../user.id}}
+                            <h5 id="admin" class="card-title">Admin Options</h5>
                                 <div><p style="margin:0;font-weight:bold;">Edit Location & Time</p></div>
                                 <form action="/api/create/groupdetails/{{../group.id}}" method="POST"> 
                                     Location<input type="text" id="details-location" class="form-control" name="grp_location" placeholder="Location" aria-label="Message" aria-describedby="basic-addon2"><br>
